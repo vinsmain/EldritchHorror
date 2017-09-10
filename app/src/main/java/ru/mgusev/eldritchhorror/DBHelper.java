@@ -33,12 +33,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABBLE IF NOT EXISTS " + TABLE_GAMES + " (" + KEY_ID + " INTEGER PRIMARY KEY, "
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_GAMES + " (" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + KEY_DATE + " TEXT, " + KEY_ANCIENT_ONE + " TEXT, " + KEY_PLAYERS_COUNT + " INTEGER, "
                 + KEY_SIMPLE_MYTHS + " INTEGER, " + KEY_NORMAL_MYTHS + " INTEGER, " + KEY_HARD_MYTHS + " INTEGER, "
                 + KEY_STARTING_RUMOR + " INTEGER, " + KEY_GATES_COUNT + " INTEGER, " + KEY_MONSTERS_COUNT + " INTEGER, "
                 + KEY_CURSE_COUNT + " INTEGER, " + KEY_RUMORS_COUNT + " INTEGER, " + KEY_CLUES_COUNT + " INTEGER, "
                 + KEY_BLESSED_COUNT + " INTEGER, " + KEY_DOOM_COUNT + " INTEGER, " + KEY_SCORE + " INTEGER)");
+        System.out.println("123");
     }
 
     @Override

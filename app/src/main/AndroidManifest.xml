@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddPartyActivity" />
-        <activity android:name=".ResultPartyActivity"></activity>
+        <activity android:name=".ResultPartyActivity" />
+        <activity android:name=".PartyDetails"></activity>
     </application>
 
 </manifest>

@@ -18,11 +18,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -39,23 +41,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/gatesCountHeader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:gravity="center_vertical"
-                    android:text="Число открытых врат на поле" />
+                    android:text="@string/gatesCount" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/gatesCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:ems="10"
                     android:inputType="number"
                     android:selectAllOnFocus="false"
-                    android:singleLine="false"
-                    android:text="0"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -65,21 +65,20 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/monstersCountHeader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:gravity="center_vertical"
-                    android:text="Число монстров на поле" />
+                    android:text="@string/monstersCount" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/monstersCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:ems="10"
                     android:inputType="number"
-                    android:text="0"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -89,21 +88,20 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/curseCountHeader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:gravity="center_vertical"
-                    android:text='Общее число состояний "Проклятие" и "Темная сделака" на руках у сыщиков' />
+                    android:text="@string/curseCount" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/curseCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:ems="10"
                     android:inputType="number"
-                    android:text="0"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -113,21 +111,20 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/rumorsCountHeader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:gravity="center_vertical"
-                    android:text="Число карт слуха в игре" />
+                    android:text="@string/rumorsCount" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/rumorsCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:ems="10"
                     android:inputType="number"
-                    android:text="0"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -137,21 +134,20 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/cluesCountHeader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:gravity="center_vertical"
-                    android:text="Общее число улик на руках у сыщиков" />
+                    android:text="@string/cluesCount" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/cluesCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:ems="10"
                     android:inputType="number"
-                    android:text="0"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -161,21 +157,20 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/blessedCountHeader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:gravity="center_vertical"
-                    android:text='Общее число состояний "Благословение" на руках у сыщиков' />
+                    android:text="@string/blessedCount" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/blessedCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:ems="10"
                     android:inputType="number"
-                    android:text="0"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -186,58 +181,56 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/doomCountHeader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:gravity="center_vertical"
-                    android:text="Текущий уровень безысходности" />
+                    android:text="@string/doomCount" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/doomCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:ems="10"
                     android:inputType="number"
-                    android:text="0"
                     android:textAlignment="center" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginTop="24dp"
                 android:layout_weight="0.3"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/totalScoreHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Победный счет"
+                    android:text="@string/totalScore"
                     android:textAlignment="center"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/totalScore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="-6"
                     android:textAlignment="center"
                     android:textSize="24sp" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/savePartyButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_weight="1"
-                    android:text="Сохранить результат" />
+                    android:text="@string/saveResult" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

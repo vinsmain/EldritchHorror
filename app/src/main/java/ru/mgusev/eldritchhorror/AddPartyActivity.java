@@ -9,16 +9,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class AddPartyActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView dateButton;
     Toolbar toolbar;
+    ImageView dateButton;
+    TextView dateField;
     Spinner ancientOneSpinner;
     Spinner playersCountSpinner;
+    CheckBox isSimpleMyths;
+    CheckBox isNormalMyths;
+    CheckBox isHardMyths;
+    CheckBox isStartingMyth;
     Button nextButton;
+    String[] ancientOneArray;
+    String[] playersCountArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +36,24 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
         dateButton = (ImageView) findViewById(R.id.dateButtonIV);
         dateButton.setOnClickListener(this);
 
+        dateField = (TextView) findViewById(R.id.dateField);
+        isSimpleMyths = (CheckBox) findViewById(R.id.isSimpleMyths);
+        isNormalMyths = (CheckBox) findViewById(R.id.isNormalMyths);
+        isHardMyths = (CheckBox) findViewById(R.id.isHardMyths);
+        isStartingMyth = (CheckBox) findViewById(R.id.isStartingMyth);
+
         nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(this);
 
+        ancientOneArray = getResources().getStringArray(R.array.ancientOneArray);
+        playersCountArray = getResources().getStringArray(R.array.playersCountArray);
+
         initAncientOneSpinner();
         initPlayersCountSpinner();
+        initToolbar();
+    }
 
+    private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,6 +75,7 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.nextButton:
                 Intent intent = new Intent(this, ResultPartyActivity.class);
+                intent.putExtra("party", createParty());
                 startActivity(intent);
                 break;
             default:
@@ -61,8 +83,20 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private Party createParty() {
+        String date = dateField.getText().toString();
+        String ancientOne = ancientOneArray[ancientOneSpinner.getSelectedItemPosition()];
+        int playersCount = Integer.parseInt(playersCountArray[playersCountSpinner.getSelectedItemPosition()]);
+        boolean isSimpleMythsChecked = isSimpleMyths.isChecked();
+        boolean isNormalMythsChecked = isNormalMyths.isChecked();
+        boolean isHardMythsChecked = isHardMyths.isChecked();
+        boolean isStartingMythChecked = isStartingMyth.isChecked();
+
+        return new Party(date, ancientOne, playersCount, isSimpleMythsChecked, isNormalMythsChecked, isHardMythsChecked, isStartingMythChecked);
+    }
+
     private void initAncientOneSpinner() {
-        ArrayAdapter<String> ancientOneAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.ancientOneList));
+        ArrayAdapter<String> ancientOneAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.ancientOneArray));
         ancientOneAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ancientOneSpinner = (Spinner) findViewById(R.id.ancientOneSpinner);
@@ -82,7 +116,7 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initPlayersCountSpinner() {
-        ArrayAdapter<String> playersCountAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.playersCountList));
+        ArrayAdapter<String> playersCountAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, playersCountArray);
         playersCountAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         playersCountSpinner = (Spinner) findViewById(R.id.playersCountSpinner);

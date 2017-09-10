@@ -1,5 +1,6 @@
 package ru.mgusev.eldritchhorror;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,7 +30,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
         }
     }
 
+    //declare interface
+    private OnItemClicked onClick;
     List<Party> partyList;
+
+    //make interface like this
+    public interface OnItemClicked {
+        void onItemClick(int position);
+    }
 
     public RVAdapter(List<Party> partyList) {
         this.partyList = partyList;
@@ -43,11 +51,18 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RVAdapter.PartyViewHolder holder, int position) {
+    public void onBindViewHolder(RVAdapter.PartyViewHolder holder, final int position) {
         holder.date.setText(partyList.get(position).date);
         holder.ancientOne.setText(partyList.get(position).ancientOne);
         holder.playersCount.setText(String.valueOf(partyList.get(position).playersCount));
         holder.score.setText(String.valueOf(partyList.get(position).score));
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick.onItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -58,5 +73,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public void setOnClick(OnItemClicked onClick)
+    {
+        this.onClick=onClick;
     }
 }

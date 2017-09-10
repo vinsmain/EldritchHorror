@@ -2,14 +2,34 @@
     <string name="app_name">Древний ужас</string>
     <string name="choose_date">Выберите дату</string>
     <string name="ready">Готово</string>
+    <string name="date">Дата</string>
+    <string name="ancientOne">Древний</string>
+    <string name="playersCount">Число игроков</string>
+    <string name="additionalRules">Дополнительные правила</string>
+    <string name="simpleMyths">Легкие карты мифов</string>
+    <string name="normalMyths">Обычные карты мифов</string>
+    <string name="hardMyths">Сложные карты мифов</string>
+    <string name="startingRumor">Стартовый слух</string>
+    <string name="next">Далее</string>
+    <string name="gatesCount">Число открытых врат на поле</string>
+    <string name="monstersCount">Число монстров на поле</string>
+    <string name="curseCount">Общее число состояний \"Проклятие\" и \"Темная сделака\" на руках у сыщиков</string>
+    <string name="rumorsCount">Число карт слуха в игре</string>
+    <string name="cluesCount">Общее число улик на руках у сыщиков</string>
+    <string name="blessedCount">Общее число состояний \"Благословение\" на руках у сыщиков</string>
+    <string name="doomCount">Текущий уровень безысходности</string>
+    <string name="totalScore">Победный счет</string>
+    <string name="saveResult">Сохранить результат</string>
+    <string name="partyDetails">Детали игры</string>
+    <string name="gameResult">Результаты игры</string>
 
-    <string-array name="ancientOneList">
+    <string-array name="ancientOneArray">
         <item>Азатот</item>
         <item>Ктулху</item>
         <item>Йиг</item>
     </string-array>
 
-    <string-array name="playersCountList">
+    <string-array name="playersCountArray">
         <item>1</item>
         <item>2</item>
         <item>3</item>
