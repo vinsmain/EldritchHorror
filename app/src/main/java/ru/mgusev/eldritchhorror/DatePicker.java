@@ -33,8 +33,7 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
     public void onStart() {
         super.onStart();
         // добавляем кастомный текст для кнопки
-        Button nButton =  ((AlertDialog) getDialog())
-                .getButton(DialogInterface.BUTTON_POSITIVE);
+        Button nButton =  ((AlertDialog) getDialog()).getButton(DialogInterface.BUTTON_POSITIVE);
         nButton.setText(getResources().getString(R.string.ready));
     }
 

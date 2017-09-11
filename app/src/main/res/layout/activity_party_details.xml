@@ -75,7 +75,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:minWidth="200dp" />
+                    android:minWidth="200dp"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
             <TableRow
@@ -95,7 +96,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end" />
+                    android:gravity="end"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
             <TableRow
@@ -115,7 +117,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end" />
+                    android:gravity="end"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
             <TableRow
@@ -157,8 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:layout_constraintRight_toRightOf="parent"
-                        tools:layout_editor_absoluteY="0dp" />
+                        app:layout_constraintRight_toRightOf="parent" />
                 </android.support.constraint.ConstraintLayout>
 
             </TableRow>
@@ -185,8 +187,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:layout_constraintRight_toRightOf="parent"
-                        tools:layout_editor_absoluteY="0dp" />
+                        app:layout_constraintRight_toRightOf="parent" />
                 </android.support.constraint.ConstraintLayout>
 
             </TableRow>
@@ -213,8 +214,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:layout_constraintRight_toRightOf="parent"
-                        tools:layout_editor_absoluteY="0dp" />
+                        app:layout_constraintRight_toRightOf="parent" />
                 </android.support.constraint.ConstraintLayout>
 
             </TableRow>
@@ -241,8 +241,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:layout_constraintRight_toRightOf="parent"
-                        tools:layout_editor_absoluteY="0dp" />
+                        app:layout_constraintRight_toRightOf="parent" />
                 </android.support.constraint.ConstraintLayout>
 
             </TableRow>
@@ -281,7 +280,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end" />
+                    android:gravity="end"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
             <TableRow
@@ -301,7 +301,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end" />
+                    android:gravity="end"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
             <TableRow
@@ -321,7 +322,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical|end" />
+                    android:gravity="center_vertical|end"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
             <TableRow
@@ -341,7 +343,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end" />
+                    android:gravity="end"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
             <TableRow
@@ -361,7 +364,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical|end" />
+                    android:gravity="center_vertical|end"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
             <TableRow
@@ -381,7 +385,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical|end" />
+                    android:gravity="center_vertical|end"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
             <TableRow
@@ -401,7 +406,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end" />
+                    android:gravity="end"
+                    android:paddingEnd="8dp" />
             </TableRow>
 
         </TableLayout>
@@ -436,7 +442,7 @@
             android:id="@+id/totalScoreDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:gravity="end"
             android:textColor="@android:color/black"

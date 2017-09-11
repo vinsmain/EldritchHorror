@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AddPartyActivity extends AppCompatActivity implements View.OnClickListener {
 
     Toolbar toolbar;
@@ -37,6 +40,8 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
         dateButton.setOnClickListener(this);
 
         dateField = (TextView) findViewById(R.id.dateField);
+        dateField.setText(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
+
         isSimpleMyths = (CheckBox) findViewById(R.id.isSimpleMyths);
         isNormalMyths = (CheckBox) findViewById(R.id.isNormalMyths);
         isHardMyths = (CheckBox) findViewById(R.id.isHardMyths);
