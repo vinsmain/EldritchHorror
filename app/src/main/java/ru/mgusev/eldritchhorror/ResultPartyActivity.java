@@ -64,6 +64,7 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
         doomCount.addTextChangedListener(this);
 
         party = (Party) getIntent().getParcelableExtra("party");
+        if (party.id != -1) setPartyForEdit();
         refreshScore();
 
         dbHelper = new DBHelper(this);
@@ -103,7 +104,8 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
         contentValues.put(DBHelper.KEY_DOOM_COUNT, doomCountResult);
         contentValues.put(DBHelper.KEY_SCORE, getScore());
 
-        database.insert(DBHelper.TABLE_GAMES, null, contentValues);
+        if (party.id != -1) database.update(DBHelper.TABLE_GAMES, contentValues, "_id=" + party.id, null);
+        else database.insert(DBHelper.TABLE_GAMES, null, contentValues);
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("refreshPartyList", true);
@@ -118,6 +120,16 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
         cluesCountResult = getResultToField(cluesCount);
         blessedCountResult = getResultToField(blessedCount);
         doomCountResult = getResultToField(doomCount);
+    }
+
+    private void setPartyForEdit() {
+        gatesCount.setText(String.valueOf(party.gatesCount));
+        monstersCount.setText(String.valueOf(party.monstersCount));
+        curseCount.setText(String.valueOf(party.curseCount));
+        rumorsCount.setText(String.valueOf(party.rumorsCount));
+        cluesCount.setText(String.valueOf(party.cluesCount));
+        blessedCount.setText(String.valueOf(party.blessedCount));
+        doomCount.setText(String.valueOf(party.doomCount));
     }
 
     private int getResultToField(EditText editText) {

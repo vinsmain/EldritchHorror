@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Cursor cursor = database.query(DBHelper.TABLE_GAMES, null, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(DBHelper.KEY_ID);
             int dateIndex = cursor.getColumnIndex(DBHelper.KEY_DATE);
             int ancientOneIndex = cursor.getColumnIndex(DBHelper.KEY_ANCIENT_ONE);
             int playersCountIndex = cursor.getColumnIndex(DBHelper.KEY_PLAYERS_COUNT);
@@ -76,8 +77,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int scoreIndex = cursor.getColumnIndex(DBHelper.KEY_SCORE);
 
             do {
-                Party party = new Party(cursor.getString(dateIndex), cursor.getString(ancientOneIndex), cursor.getInt(playersCountIndex), cursor.getInt(isSimpleMythsIndex) == 1,
-                        cursor.getInt(isNormalMythsIndex) == 1, cursor.getInt(isHardMythsIndex) == 1, cursor.getInt(isStartingRumorIndex) == 1);
+                Party party = new Party();
+                party.id = cursor.getInt(idIndex);
+                party.date = cursor.getString(dateIndex);
+                party.ancientOne = cursor.getString(ancientOneIndex);
+                party.playersCount = cursor.getInt(playersCountIndex);
+                party.isSimpleMyths = cursor.getInt(isSimpleMythsIndex) == 1;
+                party.isNormalMyths = cursor.getInt(isNormalMythsIndex) == 1;
+                party.isHardMyths = cursor.getInt(isHardMythsIndex) == 1;
+                party.isStartingRumor = cursor.getInt(isStartingRumorIndex) == 1;
                 party.gatesCount = cursor.getInt(gatesCountIndex);
                 party.monstersCount = cursor.getInt(monstersCountIndex);
                 party.curseCount = cursor.getInt(curseCountIndex);

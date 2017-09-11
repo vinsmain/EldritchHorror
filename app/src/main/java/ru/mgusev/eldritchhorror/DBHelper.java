@@ -39,7 +39,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 + KEY_STARTING_RUMOR + " INTEGER, " + KEY_GATES_COUNT + " INTEGER, " + KEY_MONSTERS_COUNT + " INTEGER, "
                 + KEY_CURSE_COUNT + " INTEGER, " + KEY_RUMORS_COUNT + " INTEGER, " + KEY_CLUES_COUNT + " INTEGER, "
                 + KEY_BLESSED_COUNT + " INTEGER, " + KEY_DOOM_COUNT + " INTEGER, " + KEY_SCORE + " INTEGER)");
-        System.out.println("123");
     }
 
     @Override

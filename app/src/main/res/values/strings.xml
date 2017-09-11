@@ -22,11 +22,19 @@
     <string name="saveResult">Сохранить результат</string>
     <string name="partyDetails">Детали игры</string>
     <string name="gameResult">Результаты игры</string>
+    <string name="deleteDialogAlert">Удаление результата игры!</string>
+    <string name="deleteDialogMessage">Удалить данный результат игры?</string>
+    <string name="messageOK">OK</string>
+    <string name="messageCancel">Отмена</string>
 
     <string-array name="ancientOneArray">
+        <item>Абхот</item>
         <item>Азатот</item>
-        <item>Ктулху</item>
         <item>Йиг</item>
+        <item>Йог-сотот</item>
+        <item>Ктулху</item>
+        <item>Нефрен-Ка</item>
+        <item>Шуб-ниггурат</item>
     </string-array>
 
     <string-array name="playersCountArray">

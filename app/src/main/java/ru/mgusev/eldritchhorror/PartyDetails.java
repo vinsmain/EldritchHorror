@@ -1,5 +1,10 @@
 package ru.mgusev.eldritchhorror;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,9 +12,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class PartyDetails extends AppCompatActivity {
+public class PartyDetails extends AppCompatActivity implements View.OnClickListener {
 
     Party party;
+    DBHelper dbHelper;
+
     Toolbar toolbar;
     TextView dateField;
     TextView ancientOne;
@@ -26,6 +33,8 @@ public class PartyDetails extends AppCompatActivity {
     TextView blessedCount;
     TextView doomCount;
     TextView score;
+    FloatingActionButton editButton;
+    FloatingActionButton deleteButton;
 
 
     @Override
@@ -63,6 +72,8 @@ public class PartyDetails extends AppCompatActivity {
         isStartingRumor.setEnabled(false);
 
         initPartyDetails();
+
+        dbHelper = new DBHelper(this);
     }
 
     private void initToolbar() {
@@ -76,6 +87,11 @@ public class PartyDetails extends AppCompatActivity {
                 finish();
             }
         });
+
+        editButton = (FloatingActionButton) findViewById(R.id.editButton);
+        deleteButton = (FloatingActionButton) findViewById(R.id.deleteButton);
+        editButton.setOnClickListener(this);
+        deleteButton.setOnClickListener(this);
     }
 
     private void initPartyDetails() {
@@ -94,5 +110,52 @@ public class PartyDetails extends AppCompatActivity {
         blessedCount.setText(String.valueOf(party.blessedCount));
         doomCount.setText(String.valueOf(party.doomCount));
         score.setText(String.valueOf(party.score));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.editButton:
+                Intent intentEdit = new Intent(this, AddPartyActivity.class);
+                intentEdit.putExtra("editParty", party);
+                startActivity(intentEdit);
+                break;
+            case R.id.deleteButton:
+                deleteDialog();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void deleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.deleteDialogAlert))
+                .setMessage(getResources().getString(R.string.deleteDialogMessage))
+                .setIcon(android.R.drawable.ic_menu_delete)
+                .setCancelable(false)
+                .setPositiveButton(getResources().getString(R.string.messageOK),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                deleteParty();
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton(getResources().getString(R.string.messageCancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void deleteParty() {
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        database.delete(DBHelper.TABLE_GAMES, DBHelper.KEY_ID + "=?", new String[] { String.valueOf(party.id) });
+        Intent intentDelete = new Intent(this, MainActivity.class);
+        intentDelete.putExtra("refreshPartyList", true);
+        startActivity(intentDelete);
     }
 }

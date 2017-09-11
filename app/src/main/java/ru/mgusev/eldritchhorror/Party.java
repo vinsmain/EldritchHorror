@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class Party implements Parcelable {
 
+    public int id;
     public String date;
     public String ancientOne;
     public int playersCount;
@@ -21,17 +22,12 @@ public class Party implements Parcelable {
     public int doomCount = 0;
     public int score = 0;
 
-    public Party(String date, String ancientOne, int playersCount, boolean isSimpleMyths, boolean isNormalMyths, boolean isHardMyths, boolean isStartingRumor) {
-        this.date = date;
-        this.ancientOne = ancientOne;
-        this.playersCount = playersCount;
-        this.isSimpleMyths = isSimpleMyths;
-        this.isNormalMyths = isNormalMyths;
-        this.isHardMyths = isHardMyths;
-        this.isStartingRumor = isStartingRumor;
+    public Party() {
+        id = -1;
     }
 
     protected Party(Parcel in) {
+        id = in.readInt();
         date = in.readString();
         ancientOne = in.readString();
         playersCount = in.readInt();
@@ -68,6 +64,7 @@ public class Party implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeString(date);
         parcel.writeString(ancientOne);
         parcel.writeInt(playersCount);

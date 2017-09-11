@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class DatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -40,6 +41,8 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
     @Override
     public void onDateSet(android.widget.DatePicker datePicker, int i, int i1, int i2) {
         TextView textView = (TextView) getActivity().findViewById(R.id.dateField);
-        textView.setText(i2 + "." + (i1  + 1) + "." + i);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(i, i1, i2);
+        textView.setText(String.format(Locale.getDefault(), "%td.%tm.%tY", calendar, calendar, calendar));
     }
 }

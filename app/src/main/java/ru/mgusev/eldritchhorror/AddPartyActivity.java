@@ -16,9 +16,12 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddPartyActivity extends AppCompatActivity implements View.OnClickListener {
 
+    Party party;
+    boolean isEdit;
     Toolbar toolbar;
     ImageView dateButton;
     TextView dateField;
@@ -27,7 +30,7 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
     CheckBox isSimpleMyths;
     CheckBox isNormalMyths;
     CheckBox isHardMyths;
-    CheckBox isStartingMyth;
+    CheckBox isStartingRumor;
     Button nextButton;
     String[] ancientOneArray;
     String[] playersCountArray;
@@ -40,12 +43,12 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
         dateButton.setOnClickListener(this);
 
         dateField = (TextView) findViewById(R.id.dateField);
-        dateField.setText(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
+        dateField.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date()));
 
         isSimpleMyths = (CheckBox) findViewById(R.id.isSimpleMyths);
         isNormalMyths = (CheckBox) findViewById(R.id.isNormalMyths);
         isHardMyths = (CheckBox) findViewById(R.id.isHardMyths);
-        isStartingMyth = (CheckBox) findViewById(R.id.isStartingMyth);
+        isStartingRumor = (CheckBox) findViewById(R.id.isStartingMyth);
 
         nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(this);
@@ -56,6 +59,12 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
         initAncientOneSpinner();
         initPlayersCountSpinner();
         initToolbar();
+
+        party = (Party) getIntent().getParcelableExtra("editParty");
+        if (party != null) {
+            setPartyForEdit();
+            isEdit = true;
+        }
     }
 
     private void initToolbar() {
@@ -80,7 +89,12 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.nextButton:
                 Intent intent = new Intent(this, ResultPartyActivity.class);
-                intent.putExtra("party", createParty());
+                if (isEdit) addValuesToParty();
+                else {
+                    party = new Party();
+                    addValuesToParty();
+                }
+                intent.putExtra("party", party);
                 startActivity(intent);
                 break;
             default:
@@ -88,16 +102,33 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private Party createParty() {
-        String date = dateField.getText().toString();
-        String ancientOne = ancientOneArray[ancientOneSpinner.getSelectedItemPosition()];
-        int playersCount = Integer.parseInt(playersCountArray[playersCountSpinner.getSelectedItemPosition()]);
-        boolean isSimpleMythsChecked = isSimpleMyths.isChecked();
-        boolean isNormalMythsChecked = isNormalMyths.isChecked();
-        boolean isHardMythsChecked = isHardMyths.isChecked();
-        boolean isStartingMythChecked = isStartingMyth.isChecked();
+    private void addValuesToParty() {
+        party.date = dateField.getText().toString();
+        party.ancientOne = ancientOneArray[ancientOneSpinner.getSelectedItemPosition()];
+        party.playersCount = Integer.parseInt(playersCountArray[playersCountSpinner.getSelectedItemPosition()]);
+        party.isSimpleMyths = isSimpleMyths.isChecked();
+        party.isNormalMyths = isNormalMyths.isChecked();
+        party.isHardMyths = isHardMyths.isChecked();
+        party.isStartingRumor = isStartingRumor.isChecked();
+    }
 
-        return new Party(date, ancientOne, playersCount, isSimpleMythsChecked, isNormalMythsChecked, isHardMythsChecked, isStartingMythChecked);
+    private void setPartyForEdit() {
+        dateField.setText(party.date);
+        ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, party.ancientOne));
+        playersCountSpinner.setSelection(getItemIndexInArray(playersCountArray, String.valueOf(party.playersCount)));
+        isSimpleMyths.setChecked(party.isSimpleMyths);
+        isNormalMyths.setChecked(party.isNormalMyths);
+        isHardMyths.setChecked(party.isHardMyths);
+        isStartingRumor.setChecked(party.isStartingRumor);
+    }
+
+    private int getItemIndexInArray(String[] array, String value) {
+        for (int i = 0; i < array.length; i++) {
+            if(array[i].equals(value)) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     private void initAncientOneSpinner() {

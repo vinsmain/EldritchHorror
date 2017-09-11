@@ -56,7 +56,8 @@
                     android:ems="10"
                     android:inputType="number"
                     android:selectAllOnFocus="false"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:maxLength="2" />
             </TableRow>
 
             <TableRow
@@ -79,7 +80,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:maxLength="2" />
             </TableRow>
 
             <TableRow
@@ -102,7 +104,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:maxLength="2" />
 
             </TableRow>
 
@@ -126,7 +129,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:maxLength="2" />
             </TableRow>
 
             <TableRow
@@ -149,7 +153,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:maxLength="2" />
             </TableRow>
 
             <TableRow
@@ -172,7 +177,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:maxLength="2" />
             </TableRow>
 
             <TableRow
@@ -195,7 +201,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:maxLength="2" />
             </TableRow>
 
         </TableLayout>
