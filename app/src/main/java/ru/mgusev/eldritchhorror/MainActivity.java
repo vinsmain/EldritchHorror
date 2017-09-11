@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(adapter);
         adapter.setOnClick(this);
 
-        if ((Boolean) getIntent().getBooleanExtra("refresh", false)) initPartyList();
+        if ((Boolean) getIntent().getBooleanExtra("refreshPArtyList", false)) initPartyList();
 
         //partyCount.setText("Всего выигранных партий: " + adapter.getItemCount());
     }

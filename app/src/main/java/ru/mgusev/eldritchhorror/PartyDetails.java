@@ -57,6 +57,10 @@ public class PartyDetails extends AppCompatActivity {
         isNormalMyths.setClickable(false);
         isHardMyths.setClickable(false);
         isStartingRumor.setClickable(false);
+        isSimpleMyths.setEnabled(false);
+        isNormalMyths.setEnabled(false);
+        isHardMyths.setEnabled(false);
+        isStartingRumor.setEnabled(false);
 
         initPartyDetails();
     }

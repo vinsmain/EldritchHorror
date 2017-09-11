@@ -26,6 +26,14 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
     TextView score;
     Button savePartyButton;
 
+    int gatesCountResult;
+    int monstersCountResult;
+    int curseCountResult;
+    int rumorsCountResult;
+    int cluesCountResult;
+    int blessedCountResult;
+    int doomCountResult;
+
     Party party;
     DBHelper dbHelper;
 
@@ -48,8 +56,15 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
 
         savePartyButton.setOnClickListener(this);
         gatesCount.addTextChangedListener(this);
+        monstersCount.addTextChangedListener(this);
+        curseCount.addTextChangedListener(this);
+        rumorsCount.addTextChangedListener(this);
+        cluesCount.addTextChangedListener(this);
+        blessedCount.addTextChangedListener(this);
+        doomCount.addTextChangedListener(this);
 
         party = (Party) getIntent().getParcelableExtra("party");
+        refreshScore();
 
         dbHelper = new DBHelper(this);
     }
@@ -69,9 +84,6 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        writeDataToParty();
-        score.setText(String.valueOf(party.score));
-
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -82,39 +94,41 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
         contentValues.put(DBHelper.KEY_NORMAL_MYTHS, party.isNormalMyths);
         contentValues.put(DBHelper.KEY_HARD_MYTHS, party.isHardMyths);
         contentValues.put(DBHelper.KEY_STARTING_RUMOR, party.isStartingRumor);
-        contentValues.put(DBHelper.KEY_GATES_COUNT, party.gatesCount);
-        contentValues.put(DBHelper.KEY_MONSTERS_COUNT, party.monstersCount);
-        contentValues.put(DBHelper.KEY_CURSE_COUNT, party.curseCount);
-        contentValues.put(DBHelper.KEY_RUMORS_COUNT, party.rumorsCount);
-        contentValues.put(DBHelper.KEY_CLUES_COUNT, party.cluesCount);
-        contentValues.put(DBHelper.KEY_BLESSED_COUNT, party.blessedCount);
-        contentValues.put(DBHelper.KEY_DOOM_COUNT, party.doomCount);
-        contentValues.put(DBHelper.KEY_SCORE, party.score);
+        contentValues.put(DBHelper.KEY_GATES_COUNT, gatesCountResult);
+        contentValues.put(DBHelper.KEY_MONSTERS_COUNT, monstersCountResult);
+        contentValues.put(DBHelper.KEY_CURSE_COUNT, curseCountResult);
+        contentValues.put(DBHelper.KEY_RUMORS_COUNT, rumorsCountResult);
+        contentValues.put(DBHelper.KEY_CLUES_COUNT, cluesCountResult);
+        contentValues.put(DBHelper.KEY_BLESSED_COUNT, blessedCountResult);
+        contentValues.put(DBHelper.KEY_DOOM_COUNT, doomCountResult);
+        contentValues.put(DBHelper.KEY_SCORE, getScore());
 
         database.insert(DBHelper.TABLE_GAMES, null, contentValues);
 
-        boolean refresh = true;
-
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("refresh", refresh);
+        intent.putExtra("refreshPartyList", true);
         startActivity(intent);
     }
 
-    private void writeDataToParty() {
-        party.gatesCount = Integer.parseInt(gatesCount.getText().toString());
-        party.monstersCount = Integer.parseInt(monstersCount.getText().toString());
-        party.curseCount = Integer.parseInt(curseCount.getText().toString());
-        party.rumorsCount = Integer.parseInt(rumorsCount.getText().toString());
-        party.cluesCount = Integer.parseInt(cluesCount.getText().toString());
-        party.blessedCount = Integer.parseInt(blessedCount.getText().toString());
-        party.doomCount = Integer.parseInt(doomCount.getText().toString());
-        party.score = getScore();
+    private void setResultsForCalculation() {
+        gatesCountResult = getResultToField(gatesCount);
+        monstersCountResult = getResultToField(monstersCount);
+        curseCountResult = getResultToField(curseCount);
+        rumorsCountResult = getResultToField(rumorsCount);
+        cluesCountResult = getResultToField(cluesCount);
+        blessedCountResult = getResultToField(blessedCount);
+        doomCountResult = getResultToField(doomCount);
+    }
+
+    private int getResultToField(EditText editText) {
+        if (editText.getText().toString().equals("")) return 0;
+        else return Integer.parseInt(editText.getText().toString());
     }
 
     private int getScore() {
-        int monstersCount = (int)Math.ceil(party.monstersCount / 3.0f);
-        int cluesCount = (int)Math.ceil(party.cluesCount / 3.0f);
-        return party.gatesCount + monstersCount + party.curseCount + party.rumorsCount * 3 - cluesCount - party.blessedCount - party.doomCount;
+        int monstersCount = (int)Math.ceil(monstersCountResult / 3.0f);
+        int cluesCount = (int)Math.ceil(cluesCountResult / 3.0f);
+        return gatesCountResult + monstersCount + curseCountResult + rumorsCountResult * 3 - cluesCount - blessedCountResult - doomCountResult;
     }
 
     @Override
@@ -124,12 +138,16 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        System.out.println(getScore());
-        score.setText(String.valueOf(getScore()));
+        refreshScore();
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    private void refreshScore() {
+        setResultsForCalculation();
+        score.setText(String.valueOf(getScore()));
     }
 }
