@@ -47,26 +47,15 @@
 
             </android.support.v7.widget.Toolbar>
 
-
-
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/partyList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/partyList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:focusableInTouchMode="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:background="@android:color/darker_gray" />
-    </android.support.v4.widget.NestedScrollView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@android:color/darker_gray" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addPartyButton"

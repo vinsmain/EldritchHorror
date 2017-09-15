@@ -26,25 +26,4 @@
     <string name="deleteDialogMessage">Удалить данный результат игры?</string>
     <string name="messageOK">OK</string>
     <string name="messageCancel">Отмена</string>
-
-    <string-array name="ancientOneArray">
-        <item>Абхот</item>
-        <item>Азатот</item>
-        <item>Йиг</item>
-        <item>Йог-сотот</item>
-        <item>Ктулху</item>
-        <item>Нефрен-Ка</item>
-        <item>Шуб-ниггурат</item>
-    </string-array>
-
-    <string-array name="playersCountArray">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-    </string-array>
 </resources>
