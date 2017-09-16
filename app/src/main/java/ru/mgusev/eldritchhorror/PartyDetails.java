@@ -80,7 +80,7 @@ public class PartyDetails extends AppCompatActivity implements View.OnClickListe
         toolbar = (Toolbar) findViewById(R.id.toolbarDetails);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(R.string.activity_party_details_header);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +156,7 @@ public class PartyDetails extends AppCompatActivity implements View.OnClickListe
         database.delete(DBHelper.TABLE_GAMES, DBHelper.KEY_ID + "=?", new String[] { String.valueOf(party.id) });
         Intent intentDelete = new Intent(this, MainActivity.class);
         intentDelete.putExtra("refreshPartyList", true);
+        intentDelete.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intentDelete);
     }
 }

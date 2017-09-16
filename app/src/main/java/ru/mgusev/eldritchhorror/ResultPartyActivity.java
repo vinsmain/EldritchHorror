@@ -74,7 +74,7 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(R.string.activity_result_party_header);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +109,7 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("refreshPartyList", true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
