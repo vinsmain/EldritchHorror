@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<Party> partyList;
     FloatingActionButton addPartyButton;
     DBHelper dbHelper;
+    String bestScoreValue = "";
+    String worstScoreValue = "";
+
+    TextView gamesCount;
+    TextView bestScore;
+    TextView worstScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +34,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         addPartyButton = (FloatingActionButton) findViewById(R.id.addPartyButton);
         addPartyButton.setOnClickListener(this);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.partyList);
+        gamesCount = (TextView) findViewById(R.id.gamesCount);
+        bestScore = (TextView) findViewById(R.id.bestScore);
+        worstScore = (TextView) findViewById(R.id.worstScore);
 
-        //TextView partyCount = (TextView) findViewById(R.id.partyCount);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.partyList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -47,9 +55,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(adapter);
         adapter.setOnClick(this);
 
-        if ((Boolean) getIntent().getBooleanExtra("refreshPArtyList", false)) initPartyList();
+        setScoreValues();
 
-        //partyCount.setText("Всего выигранных партий: " + adapter.getItemCount());
+        gamesCount.setText(String.valueOf(adapter.getItemCount()));
+        bestScore.setText(bestScoreValue);
+        worstScore.setText(worstScoreValue);
+
+        if ((Boolean) getIntent().getBooleanExtra("refreshPArtyList", false)) initPartyList();
     }
 
     public void initPartyList() {
@@ -118,5 +130,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intentPartyDetails = new Intent(this, PartyDetails.class);
         intentPartyDetails.putExtra("party", partyList.get(position));
         startActivity(intentPartyDetails);
+    }
+
+    private void setScoreValues() {
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        Cursor cursor = database.query(DBHelper.TABLE_GAMES, null, null, null, null, null, DBHelper.KEY_SCORE);
+
+        if (cursor.moveToFirst()) {
+            bestScoreValue = String.valueOf(cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_SCORE)));
+        }
+        if (cursor.moveToLast()) {
+            worstScoreValue = String.valueOf(cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_SCORE)));
+        }
+        cursor.close();
     }
 }
