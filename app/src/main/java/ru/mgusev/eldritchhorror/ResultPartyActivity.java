@@ -3,6 +3,7 @@ package ru.mgusev.eldritchhorror;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +25,7 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
     EditText blessedCount;
     EditText doomCount;
     TextView score;
-    Button savePartyButton;
+    FloatingActionButton savePartyButton;
 
     int gatesCountResult;
     int monstersCountResult;
@@ -52,7 +53,7 @@ public class ResultPartyActivity extends AppCompatActivity implements View.OnCli
         blessedCount = (EditText) findViewById(R.id.blessedCount);
         doomCount = (EditText) findViewById(R.id.doomCount);
         score = (TextView) findViewById(R.id.totalScore);
-        savePartyButton = (Button) findViewById(R.id.savePartyButton);
+        savePartyButton = (FloatingActionButton) findViewById(R.id.savePartyButton);
 
         savePartyButton.setOnClickListener(this);
         gatesCount.addTextChangedListener(this);

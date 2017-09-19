@@ -267,11 +267,22 @@
                         tools:layout_editor_absoluteY="0dp"
                         android:layout_marginRight="8dp"
                         app:layout_constraintRight_toRightOf="parent" />
+
                 </android.support.constraint.ConstraintLayout>
 
             </TableRow>
         </TableLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/investigators"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Сыщики"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"

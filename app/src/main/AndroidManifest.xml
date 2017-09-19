@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".AddPartyActivity" />
         <activity android:name=".ResultPartyActivity" />
-        <activity android:name=".PartyDetails"></activity>
+        <activity android:name=".PartyDetails" />
+        <activity android:name=".InvestigatorsChangeAvtivity"></activity>
     </application>
 
 </manifest>

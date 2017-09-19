@@ -29,4 +29,5 @@
     <string name="activity_party_details_header">Детали игры</string>
     <string name="activity_add_party_header">Начальные данные</string>
     <string name="activity_result_party_header">Результаты игры</string>
+    <string name="zero">0</string>
 </resources>

@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     tools:context="ru.mgusev.eldritchhorror.ResultPartyActivity">
 
     <android.support.v7.widget.Toolbar
@@ -24,11 +26,12 @@
         android:padding="@dimen/small_margin"
         android:clipToPadding="false"
         android:scrollbarStyle="outsideOverlay"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/footer">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -56,10 +59,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:hint="@string/zero"
+                    android:textColorHint="@drawable/text_hint_selector"
                     android:inputType="number"
+                    android:maxLength="2"
                     android:selectAllOnFocus="false"
-                    android:textAlignment="center"
-                    android:maxLength="2" />
+                    android:textAlignment="center" />
             </TableRow>
 
             <TableRow
@@ -81,6 +86,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:hint="@string/zero"
+                    android:textColorHint="@drawable/text_hint_selector"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:maxLength="2" />
@@ -105,6 +112,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:hint="@string/zero"
+                    android:textColorHint="@drawable/text_hint_selector"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:maxLength="2" />
@@ -130,6 +139,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:hint="@string/zero"
+                    android:textColorHint="@drawable/text_hint_selector"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:maxLength="2" />
@@ -154,6 +165,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:hint="@string/zero"
+                    android:textColorHint="@drawable/text_hint_selector"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:maxLength="2" />
@@ -178,6 +191,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:hint="@string/zero"
+                    android:textColorHint="@drawable/text_hint_selector"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:maxLength="2" />
@@ -202,22 +217,27 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:hint="@string/zero"
+                    android:textColorHint="@drawable/text_hint_selector"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:maxLength="2" />
+
             </TableRow>
 
         </TableLayout>
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/footer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="0.3"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:background="#d6d7d7"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -227,23 +247,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="left"
+            android:paddingEnd="22dp"
             android:text="@string/totalScore"
-            android:textAlignment="center"
+            android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/totalScore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:textSize="24sp" />
-
-        <Button
-            android:id="@+id/savePartyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/saveResult" />
+            android:gravity="center_horizontal"
+            android:maxWidth="100dp"
+            android:minWidth="100dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/savePartyButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:layout_constraintRight_toRightOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_save" />
+
 </android.support.constraint.ConstraintLayout>

@@ -32,6 +32,7 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
     CheckBox isHardMyths;
     CheckBox isStartingRumor;
     Button nextButton;
+    Button investigatorsChange;
     String[] ancientOneArray;
     String[] playersCountArray;
 
@@ -52,6 +53,9 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
 
         nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(this);
+
+        investigatorsChange = (Button) findViewById(R.id.investigators);
+        investigatorsChange.setOnClickListener(this);
 
         ancientOneArray = getResources().getStringArray(R.array.ancientOneArray);
         playersCountArray = getResources().getStringArray(R.array.playersCountArray);
@@ -96,6 +100,10 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
                 }
                 intent.putExtra("party", party);
                 startActivity(intent);
+                break;
+            case R.id.investigators:
+                Intent intentInvestigators = new Intent(this, InvestigatorsChangeAvtivity.class);
+                startActivity(intentInvestigators);
                 break;
             default:
                 break;
