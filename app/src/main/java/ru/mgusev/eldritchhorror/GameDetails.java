@@ -2,7 +2,6 @@ package ru.mgusev.eldritchhorror;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +11,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class PartyDetails extends AppCompatActivity implements View.OnClickListener {
+import java.sql.SQLException;
 
-    Party party;
-    DBHelper dbHelper;
+public class GameDetails extends AppCompatActivity implements View.OnClickListener {
+
+    Game game;
 
     Toolbar toolbar;
     TextView dateField;
@@ -42,7 +42,7 @@ public class PartyDetails extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_details);
 
-        party = (Party) getIntent().getParcelableExtra("party");
+        game = (Game) getIntent().getParcelableExtra("game");
 
         initToolbar();
 
@@ -72,8 +72,6 @@ public class PartyDetails extends AppCompatActivity implements View.OnClickListe
         isStartingRumor.setEnabled(false);
 
         initPartyDetails();
-
-        dbHelper = new DBHelper(this);
     }
 
     private void initToolbar() {
@@ -95,29 +93,29 @@ public class PartyDetails extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initPartyDetails() {
-        dateField.setText(party.date);
-        ancientOne.setText(party.ancientOne);
-        playersCount.setText(String.valueOf(party.playersCount));
-        isSimpleMyths.setChecked(party.isSimpleMyths);
-        isNormalMyths.setChecked(party.isNormalMyths);
-        isHardMyths.setChecked(party.isHardMyths);
-        isStartingRumor.setChecked(party.isStartingRumor);
-        gatesCount.setText(String.valueOf(party.gatesCount));
-        monstersCount.setText(String.valueOf(party.monstersCount));
-        curseCount.setText(String.valueOf(party.curseCount));
-        rumorsCount.setText(String.valueOf(party.rumorsCount));
-        cluesCount.setText(String.valueOf(party.cluesCount));
-        blessedCount.setText(String.valueOf(party.blessedCount));
-        doomCount.setText(String.valueOf(party.doomCount));
-        score.setText(String.valueOf(party.score));
+        dateField.setText(game.date);
+        ancientOne.setText(game.ancientOne);
+        playersCount.setText(String.valueOf(game.playersCount));
+        isSimpleMyths.setChecked(game.isSimpleMyths);
+        isNormalMyths.setChecked(game.isNormalMyths);
+        isHardMyths.setChecked(game.isHardMyths);
+        isStartingRumor.setChecked(game.isStartingRumor);
+        gatesCount.setText(String.valueOf(game.gatesCount));
+        monstersCount.setText(String.valueOf(game.monstersCount));
+        curseCount.setText(String.valueOf(game.curseCount));
+        rumorsCount.setText(String.valueOf(game.rumorsCount));
+        cluesCount.setText(String.valueOf(game.cluesCount));
+        blessedCount.setText(String.valueOf(game.blessedCount));
+        doomCount.setText(String.valueOf(game.doomCount));
+        score.setText(String.valueOf(game.score));
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.editButton:
-                Intent intentEdit = new Intent(this, AddPartyActivity.class);
-                intentEdit.putExtra("editParty", party);
+                Intent intentEdit = new Intent(this, AddGameActivity.class);
+                intentEdit.putExtra("editParty", game);
                 startActivity(intentEdit);
                 break;
             case R.id.deleteButton:
@@ -152,8 +150,12 @@ public class PartyDetails extends AppCompatActivity implements View.OnClickListe
     }
 
     private void deleteParty() {
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-        database.delete(DBHelper.TABLE_GAMES, DBHelper.KEY_ID + "=?", new String[] { String.valueOf(party.id) });
+        try {
+            HelperFactory.getHelper().getGameDAO().delete(game);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         Intent intentDelete = new Intent(this, MainActivity.class);
         intentDelete.putExtra("refreshPartyList", true);
         intentDelete.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

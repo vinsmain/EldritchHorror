@@ -18,9 +18,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddPartyActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddGameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Party party;
+    Game game;
     boolean isEdit;
     Toolbar toolbar;
     ImageView dateButton;
@@ -64,8 +64,8 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
         initPlayersCountSpinner();
         initToolbar();
 
-        party = (Party) getIntent().getParcelableExtra("editParty");
-        if (party != null) {
+        game = (Game) getIntent().getParcelableExtra("editParty");
+        if (game != null) {
             setPartyForEdit();
             isEdit = true;
         }
@@ -92,13 +92,13 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
                 dateDialog.show(getFragmentManager(), "datePicker");
                 break;
             case R.id.nextButton:
-                Intent intent = new Intent(this, ResultPartyActivity.class);
+                Intent intent = new Intent(this, ResultGameActivity.class);
                 if (isEdit) addValuesToParty();
                 else {
-                    party = new Party();
+                    game = new Game();
                     addValuesToParty();
                 }
-                intent.putExtra("party", party);
+                intent.putExtra("game", game);
                 startActivity(intent);
                 break;
             case R.id.investigators:
@@ -111,23 +111,23 @@ public class AddPartyActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void addValuesToParty() {
-        party.date = dateField.getText().toString();
-        party.ancientOne = ancientOneArray[ancientOneSpinner.getSelectedItemPosition()];
-        party.playersCount = Integer.parseInt(playersCountArray[playersCountSpinner.getSelectedItemPosition()]);
-        party.isSimpleMyths = isSimpleMyths.isChecked();
-        party.isNormalMyths = isNormalMyths.isChecked();
-        party.isHardMyths = isHardMyths.isChecked();
-        party.isStartingRumor = isStartingRumor.isChecked();
+        game.date = dateField.getText().toString();
+        game.ancientOne = ancientOneArray[ancientOneSpinner.getSelectedItemPosition()];
+        game.playersCount = Integer.parseInt(playersCountArray[playersCountSpinner.getSelectedItemPosition()]);
+        game.isSimpleMyths = isSimpleMyths.isChecked();
+        game.isNormalMyths = isNormalMyths.isChecked();
+        game.isHardMyths = isHardMyths.isChecked();
+        game.isStartingRumor = isStartingRumor.isChecked();
     }
 
     private void setPartyForEdit() {
-        dateField.setText(party.date);
-        ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, party.ancientOne));
-        playersCountSpinner.setSelection(getItemIndexInArray(playersCountArray, String.valueOf(party.playersCount)));
-        isSimpleMyths.setChecked(party.isSimpleMyths);
-        isNormalMyths.setChecked(party.isNormalMyths);
-        isHardMyths.setChecked(party.isHardMyths);
-        isStartingRumor.setChecked(party.isStartingRumor);
+        dateField.setText(game.date);
+        ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, game.ancientOne));
+        playersCountSpinner.setSelection(getItemIndexInArray(playersCountArray, String.valueOf(game.playersCount)));
+        isSimpleMyths.setChecked(game.isSimpleMyths);
+        isNormalMyths.setChecked(game.isNormalMyths);
+        isHardMyths.setChecked(game.isHardMyths);
+        isStartingRumor.setChecked(game.isStartingRumor);
     }
 
     private int getItemIndexInArray(String[] array, String value) {

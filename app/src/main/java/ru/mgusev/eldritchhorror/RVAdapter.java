@@ -34,7 +34,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
 
     //declare interface
     private OnItemClicked onClick;
-    private List<Party> partyList;
+    private List<Game> gameList;
     private String[] ancientOneArray = {"Абхот", "Азатот", "Йиг", "Йог-сотот", "Ктулху", "Нефрен-Ка", "Шуб-ниггурат"};
 
     //make interface like this
@@ -42,8 +42,8 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
         void onItemClick(int position);
     }
 
-    RVAdapter(List<Party> partyList) {
-        this.partyList = partyList;
+    RVAdapter(List<Game> gameList) {
+        this.gameList = gameList;
     }
 
     @Override
@@ -54,11 +54,11 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
 
     @Override
     public void onBindViewHolder(RVAdapter.PartyViewHolder holder, final int position) {
-        holder.background.setImageResource(getBackground(partyList.get(position).ancientOne));
-        holder.date.setText(partyList.get(position).date);
-        holder.ancientOne.setText(partyList.get(position).ancientOne);
-        holder.playersCount.setText(String.valueOf(partyList.get(position).playersCount));
-        holder.score.setText(String.valueOf(partyList.get(position).score));
+        holder.background.setImageResource(getBackground(gameList.get(position).ancientOne));
+        holder.date.setText(gameList.get(position).date);
+        holder.ancientOne.setText(gameList.get(position).ancientOne);
+        holder.playersCount.setText(String.valueOf(gameList.get(position).playersCount));
+        holder.score.setText(String.valueOf(gameList.get(position).score));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +70,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return partyList.size();
+        return gameList.size();
     }
 
     @Override

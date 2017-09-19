@@ -7,8 +7,8 @@ android {
         applicationId "ru.mgusev.eldritchhorror"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 2
-        versionName "0.7.9"
+        versionCode 3
+        versionName "0.8.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -30,4 +30,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:26.0.0-alpha1'
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
+
+    // https://mvnrepository.com/artifact/com.j256.ormlite/ormlite-android
+    compile group: 'com.j256.ormlite', name: 'ormlite-android', version: '5.0'
 }

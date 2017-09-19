@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context="ru.mgusev.eldritchhorror.ResultPartyActivity">
+    tools:context="ru.mgusev.eldritchhorror.ResultGameActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
