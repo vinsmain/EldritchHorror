@@ -3,13 +3,13 @@ package ru.mgusev.eldritchhorror;
 import android.content.Context;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.support.constraint.solver.Goal;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
@@ -18,17 +18,20 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     //имя файла базы данных который будет храниться в /data/data/APPNAME/DATABASE_NAME.db
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
+    private static final String LOCALE_DATABASE_NAME ="EHLocaleDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
     private InvestigatorDAO investigatorDAO = null;
 
+    private Context context;
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     //Выполняется, когда файл с БД не найден на устройстве
@@ -38,6 +41,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             System.out.println("Creating DB");
             TableUtils.createTable(connectionSource, Game.class);
             TableUtils.createTable(connectionSource, Investigator.class);
+            copyLocalDB();
         } catch (SQLException e){
             Log.e(TAG, "Error creating DB " + DATABASE_NAME);
             throw new RuntimeException(e);
@@ -51,10 +55,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             //TableUtils.dropTable(connectionSource, Game.class, true);
             //onCreate(database, connectionSource);
             TableUtils.createTable(connectionSource, Investigator.class);
+            copyLocalDB();
         } catch (SQLException e){
             Log.e(TAG, "Error upgrading db " + DATABASE_NAME + " from ver "+oldVersion);
             throw new RuntimeException(e);
         }
+    }
+
+    private void copyLocalDB() {
+        SQLiteDatabase localDB = SQLiteDatabase.openDatabase(context.getAssets() + LOCALE_DATABASE_NAME, null, SQLiteDatabase.OPEN_READONLY);
+        
+        //HelperFactory.getHelper().getInvestigatorDAO().getAllInvestigators();
     }
 
     //синглтон для GameDAO
