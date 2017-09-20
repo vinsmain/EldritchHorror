@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
+class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
 
-    static class PartyViewHolder extends RecyclerView.ViewHolder {
+    static class GameViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
         ImageView background;
@@ -21,7 +21,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
         TextView playersCount;
         TextView score;
 
-        PartyViewHolder(View itemView) {
+        GameViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.itemCV);
             background = itemView.findViewById(R.id.background);
@@ -47,13 +47,13 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.PartyViewHolder> {
     }
 
     @Override
-    public RVAdapter.PartyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-        return new PartyViewHolder(view);
+    public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_game, parent, false);
+        return new GameViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RVAdapter.PartyViewHolder holder, final int position) {
+    public void onBindViewHolder(GameViewHolder holder, final int position) {
         holder.background.setImageResource(getBackground(gameList.get(position).ancientOne));
         holder.date.setText(gameList.get(position).date);
         holder.ancientOne.setText(gameList.get(position).ancientOne);

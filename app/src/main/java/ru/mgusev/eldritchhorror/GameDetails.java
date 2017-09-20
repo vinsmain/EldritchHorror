@@ -40,7 +40,7 @@ public class GameDetails extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_party_details);
+        setContentView(R.layout.activity_game_details);
 
         game = (Game) getIntent().getParcelableExtra("game");
 

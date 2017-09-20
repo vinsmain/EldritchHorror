@@ -20,10 +20,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
+    private InvestigatorDAO investigatorDAO = null;
 
 
     public DatabaseHelper(Context context){
@@ -34,7 +35,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
+            System.out.println("Creating DB");
             TableUtils.createTable(connectionSource, Game.class);
+            TableUtils.createTable(connectionSource, Investigator.class);
         } catch (SQLException e){
             Log.e(TAG, "Error creating DB " + DATABASE_NAME);
             throw new RuntimeException(e);
@@ -45,8 +48,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, Game.class, true);
-            onCreate(database, connectionSource);
+            //TableUtils.dropTable(connectionSource, Game.class, true);
+            //onCreate(database, connectionSource);
+            TableUtils.createTable(connectionSource, Investigator.class);
         } catch (SQLException e){
             Log.e(TAG, "Error upgrading db " + DATABASE_NAME + " from ver "+oldVersion);
             throw new RuntimeException(e);
@@ -59,6 +63,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             gameDAO = new GameDAO(getConnectionSource(), Game.class);
         }
         return gameDAO;
+    }
+
+    //синглтон для InvestigatorDAO
+    public InvestigatorDAO getInvestigatorDAO() throws SQLException{
+        if(investigatorDAO == null){
+            investigatorDAO = new InvestigatorDAO(getConnectionSource(), Investigator.class);
+        }
+        return investigatorDAO;
     }
 
     //выполняется при закрытии приложения

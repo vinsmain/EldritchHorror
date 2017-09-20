@@ -39,7 +39,7 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_party);
+        setContentView(R.layout.activity_add_game);
         dateButton = (ImageView) findViewById(R.id.dateButtonIV);
         dateButton.setOnClickListener(this);
 
