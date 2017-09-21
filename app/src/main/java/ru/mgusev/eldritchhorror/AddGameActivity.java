@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -57,7 +58,11 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
         investigatorsChange = (Button) findViewById(R.id.investigators);
         investigatorsChange.setOnClickListener(this);
 
-        ancientOneArray = getResources().getStringArray(R.array.ancientOneArray);
+        try {
+            ancientOneArray = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneArray();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         playersCountArray = getResources().getStringArray(R.array.playersCountArray);
 
         initAncientOneSpinner();
@@ -112,7 +117,11 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
 
     private void addValuesToParty() {
         game.date = dateField.getText().toString();
-        game.ancientOne = ancientOneArray[ancientOneSpinner.getSelectedItemPosition()];
+        try {
+            game.ancientOneID = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneArray[ancientOneSpinner.getSelectedItemPosition()]);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         game.playersCount = Integer.parseInt(playersCountArray[playersCountSpinner.getSelectedItemPosition()]);
         game.isSimpleMyths = isSimpleMyths.isChecked();
         game.isNormalMyths = isNormalMyths.isChecked();
@@ -122,7 +131,11 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
 
     private void setPartyForEdit() {
         dateField.setText(game.date);
-        ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, game.ancientOne));
+        try {
+            ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(game.ancientOneID)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         playersCountSpinner.setSelection(getItemIndexInArray(playersCountArray, String.valueOf(game.playersCount)));
         isSimpleMyths.setChecked(game.isSimpleMyths);
         isNormalMyths.setChecked(game.isNormalMyths);
@@ -140,7 +153,7 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initAncientOneSpinner() {
-        ArrayAdapter<String> ancientOneAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.ancientOneArray));
+        ArrayAdapter<String> ancientOneAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ancientOneArray);
         ancientOneAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ancientOneSpinner = (Spinner) findViewById(R.id.ancientOneSpinner);

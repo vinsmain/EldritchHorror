@@ -12,7 +12,7 @@ public class Game implements Parcelable {
 
     public static final String GAME_FIELD_ID = "_id";
     public static final String GAME_FIELD_DATE = "date";
-    public static final String GAME_FIELD_ANCIENT_ONE = "ancient_one";
+    public static final String GAME_FIELD_ANCIENT_ONE_ID = "ancient_one_id";
     public static final String GAME_FIELD_PLAYERS_COUNT = "players_count";
     public static final String GAME_FIELD_SIMPLE_MYTHS = "simple_myths";
     public static final String GAME_FIELD_NORMAL_MYTHS = "normal_myths";
@@ -33,8 +33,8 @@ public class Game implements Parcelable {
     @DatabaseField(dataType = DataType.STRING, columnName = GAME_FIELD_DATE)
     public String date;
 
-    @DatabaseField(dataType = DataType.STRING, columnName = GAME_FIELD_ANCIENT_ONE)
-    public String ancientOne;
+    @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_ANCIENT_ONE_ID)
+    public int ancientOneID;
 
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_PLAYERS_COUNT)
     public int playersCount;
@@ -82,7 +82,7 @@ public class Game implements Parcelable {
     protected Game(Parcel in) {
         id = in.readInt();
         date = in.readString();
-        ancientOne = in.readString();
+        ancientOneID = in.readInt();
         playersCount = in.readInt();
         isSimpleMyths = in.readByte() != 0;
         isNormalMyths = in.readByte() != 0;
@@ -119,7 +119,7 @@ public class Game implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
         parcel.writeString(date);
-        parcel.writeString(ancientOne);
+        parcel.writeInt(ancientOneID);
         parcel.writeInt(playersCount);
         parcel.writeByte((byte) (isSimpleMyths ? 1 : 0));
         parcel.writeByte((byte) (isNormalMyths ? 1 : 0));

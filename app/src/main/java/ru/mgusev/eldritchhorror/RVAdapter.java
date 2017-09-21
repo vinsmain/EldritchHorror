@@ -1,5 +1,7 @@
 package ru.mgusev.eldritchhorror;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import static android.R.attr.resource;
+import static android.R.attr.theme;
 
 class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
 
@@ -35,6 +41,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
     //declare interface
     private OnItemClicked onClick;
     private List<Game> gameList;
+    private Context context;
     private String[] ancientOneArray = {"Абхот", "Азатот", "Йиг", "Йог-сотот", "Ктулху", "Нефрен-Ка", "Шуб-ниггурат"};
 
     //make interface like this
@@ -42,7 +49,8 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
         void onItemClick(int position);
     }
 
-    RVAdapter(List<Game> gameList) {
+    RVAdapter(Context context, List<Game> gameList) {
+        this.context = context;
         this.gameList = gameList;
     }
 
@@ -54,9 +62,16 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
 
     @Override
     public void onBindViewHolder(GameViewHolder holder, final int position) {
-        holder.background.setImageResource(getBackground(gameList.get(position).ancientOne));
+        // TODO holder.background.setImageResource(getBackground(gameList.get(position).ancientOne));
         holder.date.setText(gameList.get(position).date);
-        holder.ancientOne.setText(gameList.get(position).ancientOne);
+        try {
+            Resources resources = context.getResources();
+            final int resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(gameList.get(position).ancientOneID), "drawable", context.getPackageName());
+            holder.background.setImageResource(resourceId);
+            holder.ancientOne.setText(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(gameList.get(position).ancientOneID));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         holder.playersCount.setText(String.valueOf(gameList.get(position).playersCount));
         holder.score.setText(String.valueOf(gameList.get(position).score));
 

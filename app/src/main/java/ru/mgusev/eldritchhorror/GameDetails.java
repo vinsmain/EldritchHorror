@@ -94,7 +94,11 @@ public class GameDetails extends AppCompatActivity implements View.OnClickListen
 
     private void initPartyDetails() {
         dateField.setText(game.date);
-        ancientOne.setText(game.ancientOne);
+        try {
+            ancientOne.setText(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(game.ancientOneID));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         playersCount.setText(String.valueOf(game.playersCount));
         isSimpleMyths.setChecked(game.isSimpleMyths);
         isNormalMyths.setChecked(game.isNormalMyths);

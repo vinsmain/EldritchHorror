@@ -8,6 +8,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Investigator {
 
     public static final String INVESTIGATOR_FIELD_ID = "_id";
+    public static final String INVESTIGATOR_FIELD_GAME_ID = "game_id";
     public static final String INVESTIGATOR_FIELD_IMAGE_RESOURCE = "image_resource";
     public static final String INVESTIGATOR_FIELD_NAME = "name";
     public static final String INVESTIGATOR_FIELD_OCCUPATION = "occupation";
@@ -17,6 +18,9 @@ public class Investigator {
 
     @DatabaseField(generatedId = true, columnName = INVESTIGATOR_FIELD_ID)
     public int id;
+
+    @DatabaseField(dataType = DataType.INTEGER, columnName = INVESTIGATOR_FIELD_GAME_ID)
+    public int gameId;
 
     @DatabaseField(dataType = DataType.STRING, columnName = INVESTIGATOR_FIELD_IMAGE_RESOURCE)
     public String imageResource;

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initGameList();
 
-        RVAdapter adapter = new RVAdapter(gameList);
+        RVAdapter adapter = new RVAdapter(this.getApplicationContext(), gameList);
         recyclerView.setAdapter(adapter);
         adapter.setOnClick(this);
 
