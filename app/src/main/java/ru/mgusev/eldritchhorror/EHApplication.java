@@ -7,6 +7,8 @@ public class EHApplication extends Application {
     public void onCreate() {
         super.onCreate();
         HelperFactory.setHelper(getApplicationContext());
+
+        HelperFactory.setStaticHelper(getApplicationContext());
     }
     @Override
     public void onTerminate() {

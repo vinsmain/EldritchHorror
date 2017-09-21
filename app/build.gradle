@@ -33,4 +33,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.j256.ormlite/ormlite-android
     compile group: 'com.j256.ormlite', name: 'ormlite-android', version: '5.0'
+
+    // https://github.com/jgilfelt/android-sqlite-asset-helper
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
 }

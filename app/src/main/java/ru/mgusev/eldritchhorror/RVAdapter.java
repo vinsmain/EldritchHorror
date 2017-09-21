@@ -85,7 +85,6 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
 
     private int getBackground(String name) {
         if (name.equals(ancientOneArray[0])) return R.drawable.abhoth;
-        else if (name.equals(ancientOneArray[0])) return R.drawable.abhoth;
         else if (name.equals(ancientOneArray[1])) return R.drawable.azathoth;
         else if (name.equals(ancientOneArray[2])) return R.drawable.yig;
         else if (name.equals(ancientOneArray[3])) return R.drawable.yogsothoth;
