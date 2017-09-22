@@ -16,12 +16,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
     private InvestigatorDAO investigatorDAO = null;
-    private AncientOneDAO ancientOneDAO = null;
     private static DatabaseHelper helper = null;
     private Context context;
 
@@ -34,7 +33,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         if (helper == null) {
             helper = new DatabaseHelper(context);
         }
-        //usageCounter.incrementAndGet();
         return helper;
     }
 
@@ -44,7 +42,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource, Game.class);
             TableUtils.createTable(connectionSource, Investigator.class);
-            TableUtils.createTable(connectionSource, AncientOne.class);
+            System.out.println("Create DB");
         } catch (SQLException e){
             Log.e(TAG, "Error creating DB " + DATABASE_NAME);
             throw new RuntimeException(e);
@@ -56,11 +54,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             TableUtils.dropTable(connectionSource, Investigator.class, true);
-            TableUtils.dropTable(connectionSource, AncientOne.class, true);
-            TableUtils.createTable(connectionSource, Investigator.class);
-            TableUtils.createTable(connectionSource, AncientOne.class);
+            TableUtils.dropTable(connectionSource, Game.class, true);
+            onCreate(database, connectionSource);
+            System.out.println("Update DB");
         } catch (SQLException e){
-            Log.e(TAG, "Error upgrading db " + DATABASE_NAME + " from ver "+oldVersion);
+            Log.e(TAG, "Error upgrading db " + DATABASE_NAME + " from ver " + oldVersion);
             throw new RuntimeException(e);
         }
     }
@@ -81,20 +79,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return investigatorDAO;
     }
 
-    //синглтон для AncientOneDAO
-    public AncientOneDAO getAncientOneDAO() throws SQLException{
-        if(ancientOneDAO == null){
-            ancientOneDAO = new AncientOneDAO(getConnectionSource(), AncientOne.class);
-        }
-        return ancientOneDAO;
-    }
-
     //выполняется при закрытии приложения
     @Override
     public void close(){
         super.close();
         gameDAO = null;
         investigatorDAO = null;
-        ancientOneDAO = null;
     }
 }

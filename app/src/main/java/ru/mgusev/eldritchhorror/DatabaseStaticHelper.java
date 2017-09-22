@@ -18,10 +18,10 @@ public class DatabaseStaticHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="EHLocalDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
-    private InvestigatorDAO investigatorDAO = null;
+    private InvestigatorLocalDAO investigatorLocalDAO = null;
     private AncientOneDAO ancientOneDAO = null;
     private static DatabaseStaticHelper helper = null;
     private Context context;
@@ -29,45 +29,36 @@ public class DatabaseStaticHelper extends OrmLiteSqliteOpenHelper {
     public DatabaseStaticHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
-        new LocalDBAssetHelper(context).getReadableDatabase();
     }
 
     public static synchronized DatabaseStaticHelper getHelper(Context context) {
         if (helper == null) {
             helper = new DatabaseStaticHelper(context);
         }
-        //usageCounter.incrementAndGet();
         return helper;
     }
 
     //Выполняется, когда файл с БД не найден на устройстве
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-        System.out.println("Start copy localDB");
-        //new LocalDBAssetHelper(context).getReadableDatabase();
-        System.out.println("Finish copy localDB");
-        //TableUtils.createTable(connectionSource, Game.class);
-        //TableUtils.createTable(connectionSource, Investigator.class);
+        new LocalDBAssetHelper(context).getReadableDatabase();
     }
 
     //Выполняется, когда БД имеет версию отличную от текущей
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-        /*try {
-            TableUtils.dropTable(connectionSource, Game.class, true);
-            onCreate(database, connectionSource);
-        } catch (SQLException e){
-            Log.e(TAG, "Error upgrading db " + DATABASE_NAME + " from ver "+oldVersion);
-            throw new RuntimeException(e);
-        }*/
+        new LocalDBAssetHelper(context).getReadableDatabase();
+        System.out.println("Update DB finish ");
+
+
     }
 
     //синглтон для InvestigatorDAO
-    public InvestigatorDAO getInvestigatorDAO() throws SQLException{
-        if(investigatorDAO == null){
-            investigatorDAO = new InvestigatorDAO(getConnectionSource(), Investigator.class);
+    public InvestigatorLocalDAO getInvestigatorLocalDAO() throws SQLException{
+        if(investigatorLocalDAO == null){
+            investigatorLocalDAO = new InvestigatorLocalDAO(getConnectionSource(), InvestigatorLocal.class);
         }
-        return investigatorDAO;
+        return investigatorLocalDAO;
     }
 
     //синглтон для AncientOneDAO
@@ -82,7 +73,7 @@ public class DatabaseStaticHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close(){
         super.close();
-        investigatorDAO = null;
+        investigatorLocalDAO = null;
         ancientOneDAO = null;
     }
 }

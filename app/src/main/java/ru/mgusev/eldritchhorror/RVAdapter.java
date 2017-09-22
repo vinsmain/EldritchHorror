@@ -9,12 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.sql.SQLException;
 import java.util.List;
-
-import static android.R.attr.resource;
-import static android.R.attr.theme;
 
 class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
 
@@ -42,7 +38,6 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
     private OnItemClicked onClick;
     private List<Game> gameList;
     private Context context;
-    private String[] ancientOneArray = {"Абхот", "Азатот", "Йиг", "Йог-сотот", "Ктулху", "Нефрен-Ка", "Шуб-ниггурат"};
 
     //make interface like this
     interface OnItemClicked {
@@ -62,7 +57,6 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
 
     @Override
     public void onBindViewHolder(GameViewHolder holder, final int position) {
-        // TODO holder.background.setImageResource(getBackground(gameList.get(position).ancientOne));
         holder.date.setText(gameList.get(position).date);
         try {
             Resources resources = context.getResources();
@@ -96,16 +90,5 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
     void setOnClick(OnItemClicked onClick)
     {
         this.onClick=onClick;
-    }
-
-    private int getBackground(String name) {
-        if (name.equals(ancientOneArray[0])) return R.drawable.abhoth;
-        else if (name.equals(ancientOneArray[1])) return R.drawable.azathoth;
-        else if (name.equals(ancientOneArray[2])) return R.drawable.yig;
-        else if (name.equals(ancientOneArray[3])) return R.drawable.yogsothoth;
-        else if (name.equals(ancientOneArray[4])) return R.drawable.cthulhu;
-        else if (name.equals(ancientOneArray[5])) return R.drawable.nephren_ka;
-        else if (name.equals(ancientOneArray[6])) return R.drawable.shub_niggurath;
-        return 0;
     }
 }

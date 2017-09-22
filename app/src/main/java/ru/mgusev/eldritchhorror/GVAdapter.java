@@ -1,6 +1,7 @@
 package ru.mgusev.eldritchhorror;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,21 @@ import java.util.List;
 public class GVAdapter extends BaseAdapter {
 
     static class InvestigatorViewHolder {
-        ImageView imageInListView;
-        TextView textInListView;
+        ImageView invPhoto;
+        TextView invName;
+        TextView invOccupation;
+
+        public InvestigatorViewHolder(View view) {
+            invPhoto = (ImageView) view.findViewById(R.id.invPhoto);
+            invName = (TextView) view.findViewById(R.id.invName);
+            invOccupation = (TextView) view.findViewById(R.id.invOccupation);
+        }
     }
 
     private LayoutInflater layoutinflater;
     private List<Investigator> listStorage;
     private Context context;
+    InvestigatorViewHolder viewHolder;
 
     public GVAdapter(Context context, List<Investigator> listStorage) {
         this.context = context;
@@ -43,12 +52,12 @@ public class GVAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        InvestigatorViewHolder viewHolder;
         if(view == null) {
-            viewHolder = new InvestigatorViewHolder();
-            //view = layoutinflater.inflate(R.layout.item_investigator, viewGroup, false);
+            Resources resources = context.getResources();
+            // TODO final int resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getInvestigatorLocalDAO().getAncientOneImageResourceByID(gameList.get(position).ancientOneID), "drawable", context.getPackageName());
             view = LayoutInflater.from(context).inflate(R.layout.item_investigator, viewGroup, false);
-            view.setTag(viewHolder);
+            viewHolder = new InvestigatorViewHolder(view);
+            // TODO viewHolder.invPhoto.setImageResource(resourceId);
         } else viewHolder = (InvestigatorViewHolder) view.getTag();
         return view;
     }
