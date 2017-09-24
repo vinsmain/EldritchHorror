@@ -11,7 +11,7 @@ public class AncientOne {
     public static final String ANCIENT_ONE_FIELD_IMAGE_RESOURCE = "image_resource";
     public static final String ANCIENT_ONE_FIELD_NAME = "name";
 
-    @DatabaseField(generatedId = true, columnName = ANCIENT_ONE_FIELD_ID)
+    @DatabaseField(dataType = DataType.INTEGER, columnName = ANCIENT_ONE_FIELD_ID)
     public int id;
 
     @DatabaseField(dataType = DataType.STRING, columnName = ANCIENT_ONE_FIELD_IMAGE_RESOURCE)

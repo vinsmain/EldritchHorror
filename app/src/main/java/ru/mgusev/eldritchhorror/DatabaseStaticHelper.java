@@ -18,7 +18,7 @@ public class DatabaseStaticHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="EHLocalDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private InvestigatorLocalDAO investigatorLocalDAO = null;
@@ -29,6 +29,7 @@ public class DatabaseStaticHelper extends OrmLiteSqliteOpenHelper {
     public DatabaseStaticHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
+        new LocalDBAssetHelper(context).getWritableDatabase();
     }
 
     public static synchronized DatabaseStaticHelper getHelper(Context context) {
@@ -41,13 +42,13 @@ public class DatabaseStaticHelper extends OrmLiteSqliteOpenHelper {
     //Выполняется, когда файл с БД не найден на устройстве
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-        new LocalDBAssetHelper(context).getReadableDatabase();
+//        new LocalDBAssetHelper(context).getReadableDatabase();
     }
 
     //Выполняется, когда БД имеет версию отличную от текущей
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-        new LocalDBAssetHelper(context).getReadableDatabase();
+
         System.out.println("Update DB finish ");
 
 

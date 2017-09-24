@@ -16,7 +16,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
@@ -53,9 +53,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, Investigator.class, true);
-            TableUtils.dropTable(connectionSource, Game.class, true);
-            onCreate(database, connectionSource);
+            TableUtils.dropTable(connectionSource, AncientOne.class, true);
             System.out.println("Update DB");
         } catch (SQLException e){
             Log.e(TAG, "Error upgrading db " + DATABASE_NAME + " from ver " + oldVersion);

@@ -11,7 +11,7 @@ public class InvestigatorLocalDAO   extends BaseDaoImpl {
         super(connectionSource, dataClass);
     }
 
-    public List<InvestigatorLocalDAO> getAllInvestigatorsLocal() throws SQLException{
+    public List<InvestigatorLocal> getAllInvestigatorsLocal() throws SQLException{
         return this.queryForAll();
     }
 }
