@@ -22,7 +22,7 @@
         <activity android:name=".GameDetails" />
         <activity android:name=".InvestigatorsChangeAvtivity" />
         <activity android:name=".InvestigatorActivity"
-            android:theme="@android:style/Theme.Dialog" />
+            android:theme="@style/Theme.AppCompat.Dialog" />
     </application>
 
 </manifest>
