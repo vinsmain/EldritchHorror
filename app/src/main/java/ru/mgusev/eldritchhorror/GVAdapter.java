@@ -2,38 +2,40 @@ package ru.mgusev.eldritchhorror;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
 
-public class GVAdapter extends BaseAdapter {
+public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHolder> {
 
-    static class InvestigatorViewHolder {
+    static class InvestigatorViewHolder extends RecyclerView.ViewHolder {
+        CardView invCardView;
         ImageView invPhoto;
         TextView invName;
         TextView invOccupation;
 
-        public InvestigatorViewHolder(ImageView invPhoto, TextView invName, TextView invOccupation) {
-            this.invPhoto = invPhoto;
-            this.invName = invName;
-            this.invOccupation = invOccupation;
+        public InvestigatorViewHolder(View itemView) {
+            super(itemView);
+            invCardView = itemView.findViewById(R.id.invCardView);
+            invPhoto = itemView.findViewById(R.id.invPhoto);
+            invName = itemView.findViewById(R.id.invName);
+            invOccupation = itemView.findViewById(R.id.invOccupation);
         }
-
-        /*public InvestigatorViewHolder(View view) {
-            invPhoto = (ImageView) view.findViewById(R.id.invPhoto);
-            invName = (TextView) view.findViewById(R.id.invName);
-            invOccupation = (TextView) view.findViewById(R.id.invOccupation);
-        }*/
     }
 
+    private GVAdapter.OnItemClicked onClick;
     private List<InvestigatorLocal> listStorage;
     private Context context;
     private InvestigatorViewHolder viewHolder;
+
+    interface OnItemClicked {
+        void onItemClick(int position);
+    }
 
     public GVAdapter(Context context, List<InvestigatorLocal> listStorage) {
         this.context = context;
@@ -41,42 +43,39 @@ public class GVAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public InvestigatorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_investigator, parent, false);
+        return new InvestigatorViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final InvestigatorViewHolder holder, int position) {
+        Resources resources = context.getResources();
+        final int resourceId = resources.getIdentifier(listStorage.get(position).imageResource, "drawable", context.getPackageName());
+        holder.invPhoto.setImageResource(resourceId);
+        holder.invName.setText(listStorage.get(position).name);
+        holder.invOccupation.setText(listStorage.get(position).occupation);
+
+        holder.invCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick.onItemClick(holder.getAdapterPosition());
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
         return listStorage.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return listStorage.get(i);
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-
-        final InvestigatorLocal investigatorLocal = listStorage.get(i);
-        if(view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_investigator, viewGroup, false);
-            final ImageView invPhoto = (ImageView) view.findViewById(R.id.invPhoto);
-            final TextView invName = (TextView) view.findViewById(R.id.invName);
-            final TextView invOccupation = (TextView) view.findViewById(R.id.invOccupation);
-
-            final InvestigatorViewHolder viewHolder = new InvestigatorViewHolder(invPhoto, invName, invOccupation);
-            view.setTag(viewHolder);
-        }
-
-        final InvestigatorViewHolder viewHolder = (InvestigatorViewHolder) view.getTag();
-
-        Resources resources = context.getResources();
-        final int resourceId = resources.getIdentifier(listStorage.get(i).imageResource, "drawable", context.getPackageName());
-        viewHolder.invPhoto.setImageResource(resourceId);
-        viewHolder.invName.setText(investigatorLocal.name);
-        System.out.println(investigatorLocal.name);
-        viewHolder.invOccupation.setText(investigatorLocal.occupation);
-        return view;
+    void setOnClick(OnItemClicked onClick)
+    {
+        this.onClick=onClick;
     }
 }

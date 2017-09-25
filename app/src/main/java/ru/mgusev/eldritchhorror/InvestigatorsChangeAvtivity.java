@@ -1,7 +1,10 @@
 package ru.mgusev.eldritchhorror;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvestigatorsChangeAvtivity extends AppCompatActivity {
+public class InvestigatorsChangeAvtivity extends AppCompatActivity implements GVAdapter.OnItemClicked {
 
     List<InvestigatorLocal> investigatorList;
 
@@ -20,23 +23,16 @@ public class InvestigatorsChangeAvtivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_investigators_change);
 
-        GridView gridView = (GridView) findViewById(R.id.investigatorsGridView);
-        /*gridView.setOnTouchListener(new View.OnTouchListener(){
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_MOVE){
-                    return true;
-                }
-                return false;
-            }
-
-        });*/
+        RecyclerView invRecycleView = (RecyclerView) findViewById(R.id.invRecycleView);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        invRecycleView.setLayoutManager(gridLayoutManager);
+        invRecycleView.setHasFixedSize(true);
 
         initInvestigatorList();
 
         GVAdapter adapter = new GVAdapter(this, investigatorList);
-        gridView.setAdapter(adapter);
+        invRecycleView.setAdapter(adapter);
+        adapter.setOnClick(this);
     }
 
     private void initInvestigatorList() {
@@ -45,5 +41,12 @@ public class InvestigatorsChangeAvtivity extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intentInvestigator = new Intent(this, InvestigatorActivity.class);
+        intentInvestigator.putExtra("investigator", investigatorList.get(position));
+        startActivity(intentInvestigator);
     }
 }

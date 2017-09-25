@@ -1,11 +1,14 @@
 package ru.mgusev.eldritchhorror;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "investigators")
-public class InvestigatorLocal {
+public class InvestigatorLocal implements Parcelable {
 
     public static final String INVESTIGATOR_LOCAL_FIELD_ID = "_id";
     public static final String INVESTIGATOR_LOCAL_FIELD_IMAGE_RESOURCE = "image_resource";
@@ -31,5 +34,37 @@ public class InvestigatorLocal {
         this.imageResource = imageResource;
         this.name = name;
         this.occupation = occupation;
+    }
+
+    protected InvestigatorLocal(Parcel in) {
+        id = in.readInt();
+        imageResource = in.readString();
+        name = in.readString();
+        occupation = in.readString();
+    }
+
+    public static final Creator<InvestigatorLocal> CREATOR = new Creator<InvestigatorLocal>() {
+        @Override
+        public InvestigatorLocal createFromParcel(Parcel in) {
+            return new InvestigatorLocal(in);
+        }
+
+        @Override
+        public InvestigatorLocal[] newArray(int size) {
+            return new InvestigatorLocal[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(imageResource);
+        parcel.writeString(name);
+        parcel.writeString(occupation);
     }
 }
