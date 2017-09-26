@@ -29,7 +29,7 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
     }
 
     private GVAdapter.OnItemClicked onClick;
-    private List<InvestigatorLocal> listStorage;
+    private List<Investigator> listStorage;
     private Context context;
     private InvestigatorViewHolder viewHolder;
 
@@ -37,7 +37,7 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
         void onItemClick(int position);
     }
 
-    public GVAdapter(Context context, List<InvestigatorLocal> listStorage) {
+    public GVAdapter(Context context, List<Investigator> listStorage) {
         this.context = context;
         this.listStorage = listStorage;
     }

@@ -20,7 +20,7 @@
         <activity android:name=".AddGameActivity" />
         <activity android:name=".ResultGameActivity" />
         <activity android:name=".GameDetails" />
-        <activity android:name=".InvestigatorsChangeAvtivity" />
+        <activity android:name=".InvestigatorsChoiceAvtivity" />
         <activity android:name=".InvestigatorActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
     </application>

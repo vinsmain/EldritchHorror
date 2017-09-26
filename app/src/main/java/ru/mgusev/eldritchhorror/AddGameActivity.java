@@ -107,7 +107,7 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(intent);
                 break;
             case R.id.investigators:
-                Intent intentInvestigators = new Intent(this, InvestigatorsChangeAvtivity.class);
+                Intent intentInvestigators = new Intent(this, InvestigatorsChoiceAvtivity.class);
                 startActivity(intentInvestigators);
                 break;
             default:

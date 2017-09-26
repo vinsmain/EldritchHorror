@@ -30,4 +30,10 @@
     <string name="activity_add_party_header">Начальные данные</string>
     <string name="activity_result_party_header">Результаты игры</string>
     <string name="zero">0</string>
+    <string name="starting_game">Вышел с начала</string>
+    <string name="replacement">Вышел на замену</string>
+    <string name="dead">Погиб в бою</string>
+    <string name="starting_game_female">Вышла с начала</string>
+    <string name="replacement_female">Вышла на замену</string>
+    <string name="dead_female">Погибла в бою</string>
 </resources>

@@ -5,18 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.GridView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class InvestigatorsChangeAvtivity extends AppCompatActivity implements GVAdapter.OnItemClicked {
+public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GVAdapter.OnItemClicked {
 
-    List<InvestigatorLocal> investigatorList;
+    List<Investigator> investigatorList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +32,7 @@ public class InvestigatorsChangeAvtivity extends AppCompatActivity implements GV
 
     private void initInvestigatorList() {
         try {
-            investigatorList = HelperFactory.getStaticHelper().getInvestigatorLocalDAO().getAllInvestigatorsLocal();
+            investigatorList = HelperFactory.getStaticHelper().getInvestigatorDAO().getAllInvestigatorsLocal();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,6 +42,14 @@ public class InvestigatorsChangeAvtivity extends AppCompatActivity implements GV
     public void onItemClick(int position) {
         Intent intentInvestigator = new Intent(this, InvestigatorActivity.class);
         intentInvestigator.putExtra("investigator", investigatorList.get(position));
-        startActivity(intentInvestigator);
+        startActivityForResult(intentInvestigator, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+
+        }
     }
 }

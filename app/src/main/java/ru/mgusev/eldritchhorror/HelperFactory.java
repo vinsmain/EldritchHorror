@@ -5,14 +5,14 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 public class HelperFactory {
     private static DatabaseHelper databaseHelper;
-    private static DatabaseStaticHelper databaseStaticHelper;
+    private static DatabaseLocalHelper databaseLocalHelper;
 
     public static DatabaseHelper getHelper(){
         return databaseHelper;
     }
 
-    public static DatabaseStaticHelper getStaticHelper(){
-        return databaseStaticHelper;
+    public static DatabaseLocalHelper getStaticHelper(){
+        return databaseLocalHelper;
     }
 
     public static void setHelper(Context context){
@@ -20,12 +20,12 @@ public class HelperFactory {
     }
 
     public static void setStaticHelper(Context context){
-        databaseStaticHelper = DatabaseStaticHelper.getHelper(context);
+        databaseLocalHelper = DatabaseLocalHelper.getHelper(context);
     }
 
     public static void releaseHelper(){
         OpenHelperManager.releaseHelper();
         databaseHelper = null;
-        databaseStaticHelper = null;
+        databaseLocalHelper = null;
     }
 }
