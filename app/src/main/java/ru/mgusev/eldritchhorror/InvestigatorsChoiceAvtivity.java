@@ -11,7 +11,10 @@ import java.util.List;
 
 public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GVAdapter.OnItemClicked {
 
+    final static int REQUEST_CODE_INVESTIGATOR = 1;
+
     List<Investigator> investigatorList;
+    GVAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +28,7 @@ public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GV
 
         initInvestigatorList();
 
-        GVAdapter adapter = new GVAdapter(this, investigatorList);
+        adapter = new GVAdapter(this, investigatorList);
         invRecycleView.setAdapter(adapter);
         adapter.setOnClick(this);
     }
@@ -42,14 +45,21 @@ public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GV
     public void onItemClick(int position) {
         Intent intentInvestigator = new Intent(this, InvestigatorActivity.class);
         intentInvestigator.putExtra("investigator", investigatorList.get(position));
-        startActivityForResult(intentInvestigator, 1);
+        startActivityForResult(intentInvestigator, REQUEST_CODE_INVESTIGATOR);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-
+        if (resultCode == RESULT_OK) {
+            Investigator investigatorUpdate = data.getParcelableExtra("investigator");
+            for (int i = 0; i < investigatorList.size(); i++) {
+                if (investigatorList.get(i).id == investigatorUpdate.id) {
+                    investigatorList.set(i, investigatorUpdate);
+                    adapter.notifyDataSetChanged();
+                    break;
+                }
+            }
         }
     }
 }

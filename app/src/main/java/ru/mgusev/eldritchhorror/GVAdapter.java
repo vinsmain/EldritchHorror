@@ -2,6 +2,8 @@ package ru.mgusev.eldritchhorror;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,6 +57,12 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
         holder.invPhoto.setImageResource(resourceId);
         holder.invName.setText(listStorage.get(position).name);
         holder.invOccupation.setText(listStorage.get(position).occupation);
+
+        if (listStorage.get(position).isStarting || listStorage.get(position).isReplacement) {
+            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+            holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        }
 
         holder.invCardView.setOnClickListener(new View.OnClickListener() {
             @Override

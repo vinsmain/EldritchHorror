@@ -1,13 +1,15 @@
 package ru.mgusev.eldritchhorror;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-public class InvestigatorActivity extends Activity {
+public class InvestigatorActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
 
     Investigator investigator;
     ImageView invPhotoDialog;
@@ -31,7 +33,14 @@ public class InvestigatorActivity extends Activity {
         switchReplacement = (Switch) findViewById(R.id.switchReplacement);
         switchDead = (Switch) findViewById(R.id.switchDead);
 
+        setListeners();
         initInvestigator();
+    }
+
+    private void setListeners() {
+        switchStartingGame.setOnCheckedChangeListener(this);
+        switchReplacement.setOnCheckedChangeListener(this);
+        switchDead.setOnCheckedChangeListener(this);
     }
 
     private void initInvestigator() {
@@ -40,10 +49,37 @@ public class InvestigatorActivity extends Activity {
         invPhotoDialog.setImageResource(resourceId);
         invNameDialog.setText(investigator.name);
         invOccupationDialog.setText(investigator.occupation);
+
         if (!investigator.isMale) {
             switchStartingGame.setText(R.string.starting_game_female);
             switchReplacement.setText(R.string.replacement_female);
             switchDead.setText(R.string.dead_female);
         }
+
+        switchStartingGame.setChecked(investigator.isStarting);
+        switchReplacement.setChecked(investigator.isReplacement);
+        switchDead.setChecked(investigator.isDead);
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        switch (compoundButton.getId()) {
+            case R.id.switchStartingGame:
+                if (b && switchReplacement.isChecked()) switchReplacement.setChecked(false);
+                investigator.isStarting = b;
+                break;
+            case R.id.switchReplacement:
+                if (b && switchStartingGame.isChecked()) switchStartingGame.setChecked(false);
+                investigator.isReplacement = b;
+                break;
+            case R.id.switchDead:
+                investigator.isDead = b;
+                break;
+            default:
+                break;
+        }
+        Intent intent = new Intent();
+        intent.putExtra("investigator", investigator);
+        setResult(RESULT_OK, intent);
     }
 }
