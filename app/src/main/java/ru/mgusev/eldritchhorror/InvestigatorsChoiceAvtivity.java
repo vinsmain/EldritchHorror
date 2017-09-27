@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -56,6 +55,8 @@ public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GV
             for (int i = 0; i < investigatorList.size(); i++) {
                 if (investigatorList.get(i).id == investigatorUpdate.id) {
                     investigatorList.set(i, investigatorUpdate);
+                    //investigatorList.get(i).isReplacement = investigatorUpdate.isReplacement;
+                    //investigatorList.get(i).isDead = investigatorUpdate.isDead;
                     adapter.notifyDataSetChanged();
                     break;
                 }

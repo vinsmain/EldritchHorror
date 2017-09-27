@@ -62,6 +62,11 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
             holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
             holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
             holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+            System.out.println(listStorage.get(position).name);
+        } else {
+            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
+            holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
+            holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
         }
 
         holder.invCardView.setOnClickListener(new View.OnClickListener() {

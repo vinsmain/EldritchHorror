@@ -66,20 +66,28 @@ public class InvestigatorActivity extends Activity implements CompoundButton.OnC
         switch (compoundButton.getId()) {
             case R.id.switchStartingGame:
                 if (b && switchReplacement.isChecked()) switchReplacement.setChecked(false);
-                investigator.isStarting = b;
                 break;
             case R.id.switchReplacement:
                 if (b && switchStartingGame.isChecked()) switchStartingGame.setChecked(false);
-                investigator.isReplacement = b;
-                break;
-            case R.id.switchDead:
-                investigator.isDead = b;
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void finish() {
+        if (!switchStartingGame.isChecked() && !switchReplacement.isChecked()) {
+            switchDead.setChecked(false);
+        }
+        investigator.isStarting = switchStartingGame.isChecked();
+        investigator.isReplacement = switchReplacement.isChecked();
+        investigator.isDead = switchDead.isChecked();
+
         Intent intent = new Intent();
         intent.putExtra("investigator", investigator);
         setResult(RESULT_OK, intent);
+
+        super.finish();
     }
 }
