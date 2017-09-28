@@ -9,7 +9,7 @@
     tools:context="ru.mgusev.eldritchhorror.ResultGameActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarInvChoice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -29,7 +29,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarInvChoice"
         android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/footer">
 
@@ -274,7 +274,7 @@
         android:layout_weight="1"
         android:clickable="true"
         app:fabSize="mini"
-        app:layout_constraintRight_toRightOf="@+id/toolbar"
+        app:layout_constraintRight_toRightOf="@+id/toolbarInvChoice"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_save" />
 

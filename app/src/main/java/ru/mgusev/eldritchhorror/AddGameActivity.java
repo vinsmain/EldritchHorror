@@ -2,6 +2,7 @@ package ru.mgusev.eldritchhorror;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,10 +17,13 @@ import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 public class AddGameActivity extends AppCompatActivity implements View.OnClickListener {
+
+    final static int REQUEST_CODE_INVESTIGATORS_LIST = 1;
 
     Game game;
     boolean isEdit;
@@ -36,6 +40,7 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
     Button investigatorsChange;
     String[] ancientOneArray;
     String[] playersCountArray;
+    ArrayList<Investigator> invChoicedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +82,7 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbarInvChoice);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.activity_add_party_header);
@@ -108,7 +113,8 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.investigators:
                 Intent intentInvestigators = new Intent(this, InvestigatorsChoiceAvtivity.class);
-                startActivity(intentInvestigators);
+                if (invChoicedList != null) intentInvestigators.putParcelableArrayListExtra("invSavedList", invChoicedList);
+                startActivityForResult(intentInvestigators, REQUEST_CODE_INVESTIGATORS_LIST);
                 break;
             default:
                 break;
@@ -127,6 +133,7 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
         game.isNormalMyths = isNormalMyths.isChecked();
         game.isHardMyths = isHardMyths.isChecked();
         game.isStartingRumor = isStartingRumor.isChecked();
+        game.invList = invChoicedList;
     }
 
     private void setPartyForEdit() {
@@ -190,5 +197,13 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            invChoicedList = data.getParcelableArrayListExtra("invUsedList");
+        }
     }
 }

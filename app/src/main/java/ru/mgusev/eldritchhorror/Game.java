@@ -7,6 +7,9 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @DatabaseTable(tableName = "games")
 public class Game implements Parcelable {
 
@@ -75,8 +78,11 @@ public class Game implements Parcelable {
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_SCORE)
     public int score = 0;
 
+    public List<Investigator> invList;
+
     public Game() {
         id = -1;
+        invList = new ArrayList<>();
     }
 
     protected Game(Parcel in) {
@@ -96,6 +102,7 @@ public class Game implements Parcelable {
         blessedCount = in.readInt();
         doomCount = in.readInt();
         score = in.readInt();
+        invList = in.createTypedArrayList(Investigator.CREATOR);
     }
 
     public static final Creator<Game> CREATOR = new Creator<Game>() {
@@ -133,5 +140,6 @@ public class Game implements Parcelable {
         parcel.writeInt(blessedCount);
         parcel.writeInt(doomCount);
         parcel.writeInt(score);
+        parcel.writeTypedList(invList);
     }
 }

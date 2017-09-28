@@ -29,6 +29,7 @@
     <string name="activity_party_details_header">Детали игры</string>
     <string name="activity_add_party_header">Начальные данные</string>
     <string name="activity_result_party_header">Результаты игры</string>
+    <string name="activity_investigators_choice_header">Выберите сыщиков</string>
     <string name="zero">0</string>
     <string name="starting_game">Вышел с начала</string>
     <string name="replacement">Вышел на замену</string>
