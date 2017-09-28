@@ -1,7 +1,6 @@
 package ru.mgusev.eldritchhorror;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +64,10 @@ public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GV
             if (invSavedList != null) {
                 for (int i = 0; i < invSavedList.size(); i++) {
                     for (int j = 0; j < investigatorList.size(); j++) {
-                        if (investigatorList.get(j).id == invSavedList.get(i).id)
+                        if (investigatorList.get(j).name.equals(invSavedList.get(i).name)) {
                             investigatorList.set(j, invSavedList.get(i));
+                            break;
+                        }
                     }
                 }
             }
@@ -89,7 +89,7 @@ public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GV
         if (resultCode == RESULT_OK) {
             Investigator investigatorUpdate = data.getParcelableExtra("investigator");
             for (int i = 0; i < investigatorList.size(); i++) {
-                if (investigatorList.get(i).id == investigatorUpdate.id) {
+                if (investigatorList.get(i).name.equals(investigatorUpdate.name)) {
                     investigatorList.set(i, investigatorUpdate);
                     adapter.notifyDataSetChanged();
                     break;

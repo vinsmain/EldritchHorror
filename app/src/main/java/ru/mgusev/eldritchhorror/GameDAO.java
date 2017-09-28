@@ -20,4 +20,9 @@ public class GameDAO extends BaseDaoImpl {
         qb.orderBy(Game.GAME_FIELD_SCORE, sort);
         return qb.queryForFirst();
     }
+
+    public long writeGameToDB(Game game) throws SQLException {
+        this.createOrUpdate(game);
+        return this.queryRawValue("SELECT MAX(" + Game.GAME_FIELD_ID + ") from games");
+    }
 }

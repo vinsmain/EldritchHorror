@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         try {
             gameList = HelperFactory.getHelper().getGameDAO().getAllGames();
+            for (int i = 0; i < gameList.size(); i ++) {
+                gameList.get(i).invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(gameList.get(i).id);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

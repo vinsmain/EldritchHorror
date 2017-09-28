@@ -148,6 +148,7 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
         isNormalMyths.setChecked(game.isNormalMyths);
         isHardMyths.setChecked(game.isHardMyths);
         isStartingRumor.setChecked(game.isStartingRumor);
+        invChoicedList = (ArrayList<Investigator>) game.invList;
     }
 
     private int getItemIndexInArray(String[] array, String value) {

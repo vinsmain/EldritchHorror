@@ -86,7 +86,13 @@ public class ResultGameActivity extends AppCompatActivity implements View.OnClic
             game.blessedCount = getResultToField(blessedCount);
             game.doomCount = getResultToField(doomCount);
             game.score = getScore();
-            HelperFactory.getHelper().getGameDAO().createOrUpdate(game);
+            int id = (int) HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
+            if (game.id != -1) id = game.id;
+            for (int i = 0; i < game.invList.size(); i++) {
+                game.invList.get(i).gameId = id;
+                HelperFactory.getHelper().getInvestigatorDAO().createOrUpdate(game.invList.get(i));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
