@@ -1,6 +1,7 @@
 package ru.mgusev.eldritchhorror;
 
 import com.j256.ormlite.dao.BaseDaoImpl;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
@@ -21,5 +22,11 @@ public class InvestigatorDAO extends BaseDaoImpl {
         QueryBuilder<Investigator, Integer> qb = this.queryBuilder();
         qb.where().eq(Investigator.INVESTIGATOR_FIELD_GAME_ID, gameID);
         return qb.query();
+    }
+
+    public void deleteInvestigatorsByGameID(int id) throws SQLException {
+        DeleteBuilder<Investigator, Integer> db = this.deleteBuilder();
+        db.where().eq(Investigator.INVESTIGATOR_FIELD_GAME_ID, id);
+        db.delete();
     }
 }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.sql.SQLException;
 
-public class GameDetails extends AppCompatActivity implements View.OnClickListener {
+public class GameDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     Game game;
 
@@ -156,6 +156,7 @@ public class GameDetails extends AppCompatActivity implements View.OnClickListen
     private void deleteParty() {
         try {
             HelperFactory.getHelper().getGameDAO().delete(game);
+            HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(game.id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

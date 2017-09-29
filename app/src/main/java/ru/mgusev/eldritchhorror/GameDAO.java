@@ -21,8 +21,9 @@ public class GameDAO extends BaseDaoImpl {
         return qb.queryForFirst();
     }
 
-    public long writeGameToDB(Game game) throws SQLException {
+    public int writeGameToDB(Game game) throws SQLException {
         this.createOrUpdate(game);
-        return this.queryRawValue("SELECT MAX(" + Game.GAME_FIELD_ID + ") from games");
+        if (game.id == -1) game.id = (int) this.queryRawValue("SELECT MAX(" + Game.GAME_FIELD_ID + ") from games");
+        return game.id;
     }
 }

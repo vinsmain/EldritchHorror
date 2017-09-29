@@ -57,12 +57,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bestScore.setText(bestScoreValue);
         worstScore.setText(worstScoreValue);
 
-        if ((Boolean) getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
+        if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
     }
 
     public void initGameList() {
         gameList = new ArrayList<>();
-
         try {
             gameList = HelperFactory.getHelper().getGameDAO().getAllGames();
             for (int i = 0; i < gameList.size(); i ++) {
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemClick(int position) {
-        Intent intentGameDetails = new Intent(this, GameDetails.class);
+        Intent intentGameDetails = new Intent(this, GameDetailsActivity.class);
         intentGameDetails.putExtra("game", gameList.get(position));
         startActivity(intentGameDetails);
     }

@@ -78,11 +78,10 @@ public class Game implements Parcelable {
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_SCORE)
     public int score = 0;
 
-    public List<Investigator> invList;
+    public List<Investigator> invList  = new ArrayList<>();
 
     public Game() {
         id = -1;
-        invList = new ArrayList<>();
     }
 
     protected Game(Parcel in) {
