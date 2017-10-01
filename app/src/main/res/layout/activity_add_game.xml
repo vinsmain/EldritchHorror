@@ -21,286 +21,316 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="@dimen/small_margin"
-        android:clipToPadding="false"
-        android:scrollbarStyle="outsideOverlay"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarInvChoice"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarInvChoice"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0">
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:shrinkColumns="*"
-            android:stretchColumns="*">
+            android:orientation="vertical">
 
-            <TableRow
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="8dp">
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@color/cardview_dark_background"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/date"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/dateField"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:textAlignment="textStart"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/dateButtonIV"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="end"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/date"
-                    android:paddingEnd="8dp"
-                    app:srcCompat="@drawable/ic_calendar" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/textView3"
+                <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/ancientOne"
-                    android:textSize="14sp"
-                    tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="79dp" />
+                    android:layout_margin="8dp"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*">
 
-                <Spinner
-                    android:id="@+id/ancientOneSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:layout_weight="1"
-                    android:dropDownWidth="match_parent"
-                    android:gravity="end" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
 
-            </TableRow>
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/date"
+                            android:textColor="@color/textColorWhite"
+                            android:textSize="14sp" />
 
-            <TableRow
+                        <TextView
+                            android:id="@+id/dateField"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/textColorWhite"
+                            android:textSize="16sp" />
+
+                        <ImageButton
+                            android:id="@+id/dateImgBtn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorTransparent"
+                            app:srcCompat="@drawable/calendar" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ancientOne"
+                            android:textColor="@color/textColorWhite"
+                            android:textSize="14sp"
+                            tools:layout_editor_absoluteX="16dp"
+                            tools:layout_editor_absoluteY="79dp" />
+
+                        <Spinner
+                            android:id="@+id/ancientOneSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_span="2"
+                            android:layout_weight="1"
+                            android:dropDownWidth="match_parent"
+                            android:gravity="end" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/playersCount"
+                            android:textColor="@color/textColorWhite"
+                            android:textSize="14sp" />
+
+                        <Spinner
+                            android:id="@+id/playersCountSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_span="2"
+                            android:layout_weight="1"
+                            android:dropDownWidth="match_parent"
+                            android:gravity="end" />
+
+                    </TableRow>
+                </TableLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="8dp">
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@color/cardview_dark_background"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="0dp">
 
-                <TextView
-                    android:id="@+id/textView2"
+                <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/playersCount"
-                    android:textSize="14sp" />
+                    android:layout_margin="8dp"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*">
 
-                <Spinner
-                    android:id="@+id/playersCountSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:layout_weight="1"
-                    android:dropDownWidth="match_parent"
-                    android:gravity="end" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
 
-            </TableRow>
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_span="3"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/additionalRules"
+                            android:textColor="@color/textColorWhite"
+                            android:textSize="16sp" />
+                    </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_span="3"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/additionalRules"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:layout_weight="1"
-                    android:text="@string/simpleMyths" />
-
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <CheckBox
-                        android:id="@+id/isSimpleMyths"
-                        android:layout_width="wrap_content"
+                    <TableRow
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        tools:layout_editor_absoluteY="0dp"
-                        android:layout_marginRight="8dp"
-                        app:layout_constraintRight_toRightOf="parent" />
-                </android.support.constraint.ConstraintLayout>
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
 
-            </TableRow>
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_span="2"
+                            android:layout_weight="1"
+                            android:text="@string/simpleMyths"
+                            android:textColor="@color/textColorWhite" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:padding="8dp">
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:layout_weight="1"
-                    android:text="@string/normalMyths" />
+                            <CheckBox
+                                android:id="@+id/isSimpleMyths"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_weight="1"
+                                app:layout_constraintRight_toRightOf="parent"
+                                tools:layout_editor_absoluteY="81dp" />
+                                <!--android:background="@drawable/checkbox_background"-->
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                        </android.support.constraint.ConstraintLayout>
 
-                    <CheckBox
-                        android:id="@+id/isNormalMyths"
-                        android:layout_width="wrap_content"
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        tools:layout_editor_absoluteY="0dp"
-                        android:layout_marginRight="8dp"
-                        app:layout_constraintRight_toRightOf="parent" />
-                </android.support.constraint.ConstraintLayout>
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
 
-            </TableRow>
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_span="2"
+                            android:layout_weight="1"
+                            android:text="@string/normalMyths"
+                            android:textColor="@color/textColorWhite" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:padding="8dp">
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:layout_weight="1"
-                    android:text="@string/hardMyths" />
+                            <CheckBox
+                                android:id="@+id/isNormalMyths"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_weight="1"
+                                app:layout_constraintRight_toRightOf="parent"
+                                tools:layout_editor_absoluteY="81dp" />
+                        </android.support.constraint.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    </TableRow>
 
-                    <CheckBox
-                        android:id="@+id/isHardMyths"
-                        android:layout_width="wrap_content"
+                    <TableRow
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        tools:layout_editor_absoluteY="-1dp"
-                        android:layout_marginRight="8dp"
-                        app:layout_constraintRight_toRightOf="parent" />
-                </android.support.constraint.ConstraintLayout>
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
 
-            </TableRow>
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_span="2"
+                            android:layout_weight="1"
+                            android:text="@string/hardMyths"
+                            android:textColor="@color/textColorWhite" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:padding="8dp">
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:layout_weight="1"
-                    android:text="@string/startingRumor" />
+                            <CheckBox
+                                android:id="@+id/isHardMyths"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_weight="1"
+                                app:layout_constraintRight_toRightOf="parent"
+                                tools:layout_editor_absoluteY="81dp" />
+                        </android.support.constraint.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    </TableRow>
 
-                    <CheckBox
-                        android:id="@+id/isStartingMyth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        tools:layout_editor_absoluteY="0dp"
-                        android:layout_marginRight="8dp"
-                        app:layout_constraintRight_toRightOf="parent" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
 
-                </android.support.constraint.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_span="2"
+                            android:layout_weight="1"
+                            android:text="@string/startingRumor"
+                            android:textColor="@color/textColorWhite" />
 
-            </TableRow>
-        </TableLayout>
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <CheckBox
+                                android:id="@+id/isStartingMyth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_weight="1"
+                                app:layout_constraintRight_toRightOf="parent"
+                                tools:layout_editor_absoluteY="81dp" />
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </TableRow>
+                </TableLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/investigators"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="Сыщики"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:clickable="true"
+        app:backgroundTint="@color/colorBlack"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-        <Button
-            android:id="@+id/nextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next" />
-    </LinearLayout>
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/next" />
 
 </android.support.constraint.ConstraintLayout>

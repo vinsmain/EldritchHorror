@@ -23,213 +23,261 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="@dimen/small_margin"
         android:clipToPadding="false"
         android:scrollbarStyle="outsideOverlay"
+        app:layout_constraintBottom_toTopOf="@+id/top"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarInvChoice"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/footer">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarInvChoice">
 
-        <TableLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:shrinkColumns="*"
-            android:stretchColumns="*">
+            app:cardBackgroundColor="@color/cardview_dark_background">
 
-            <TableRow
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:shrinkColumns="*"
+                android:stretchColumns="*"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="0dp">
 
-                <TextView
-                    android:id="@+id/gatesCountHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@string/gatesCount" />
+                    android:padding="8dp">
 
-                <EditText
-                    android:id="@+id/gatesCount"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/zero"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:selectAllOnFocus="false"
-                    android:textAlignment="center"
-                    android:textColorHint="@drawable/text_hint_selector" />
-            </TableRow>
+                    <TextView
+                        android:id="@+id/activityResultHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_span="3"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/activity_result_party_header"
+                        android:textColor="@color/textColorWhite"
+                        android:textSize="16sp" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/monstersCountHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@string/monstersCount" />
+                    android:padding="8dp">
 
-                <EditText
-                    android:id="@+id/monstersCount"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/zero"
-                    android:textColorHint="@drawable/text_hint_selector"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    android:maxLength="2" />
-            </TableRow>
+                    <TextView
+                        android:id="@+id/gatesCountHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/gatesCount"
+                        android:textColor="@color/textColorWhite" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                    <EditText
+                        android:id="@+id/gatesCount"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/zero"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:selectAllOnFocus="false"
+                        android:textAlignment="center"
+                        android:textColor="@color/textColorWhite"
+                        android:textColorHint="@drawable/text_hint_selector"
+                        android:textColorLink="@color/textColorWhite" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/curseCountHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@string/curseCount" />
+                    android:padding="8dp">
 
-                <EditText
-                    android:id="@+id/curseCount"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/zero"
-                    android:textColorHint="@drawable/text_hint_selector"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    android:maxLength="2" />
+                    <TextView
+                        android:id="@+id/monstersCountHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/monstersCount"
+                        android:textColor="@color/textColorWhite" />
 
-            </TableRow>
+                    <EditText
+                        android:id="@+id/monstersCount"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/zero"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textAlignment="center"
+                        android:textColor="@color/textColorWhite"
+                        android:textColorHint="@drawable/text_hint_selector" />
+                </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/rumorsCountHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@string/rumorsCount" />
+                    android:padding="8dp">
 
-                <EditText
-                    android:id="@+id/rumorsCount"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/zero"
-                    android:textColorHint="@drawable/text_hint_selector"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    android:maxLength="2" />
-            </TableRow>
+                    <TextView
+                        android:id="@+id/curseCountHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/curseCount"
+                        android:textColor="@color/textColorWhite" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                    <EditText
+                        android:id="@+id/curseCount"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/zero"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textAlignment="center"
+                        android:textColor="@color/textColorWhite"
+                        android:textColorHint="@drawable/text_hint_selector" />
 
-                <TextView
-                    android:id="@+id/cluesCountHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@string/cluesCount" />
+                    android:padding="8dp">
 
-                <EditText
-                    android:id="@+id/cluesCount"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/zero"
-                    android:textColorHint="@drawable/text_hint_selector"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    android:maxLength="2" />
-            </TableRow>
+                    <TextView
+                        android:id="@+id/rumorsCountHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/rumorsCount"
+                        android:textColor="@color/textColorWhite" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                    <EditText
+                        android:id="@+id/rumorsCount"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/zero"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textAlignment="center"
+                        android:textColor="@color/textColorWhite"
+                        android:textColorHint="@drawable/text_hint_selector" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/blessedCountHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@string/blessedCount" />
+                    android:padding="8dp">
 
-                <EditText
-                    android:id="@+id/blessedCount"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/zero"
-                    android:textColorHint="@drawable/text_hint_selector"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    android:maxLength="2" />
-            </TableRow>
+                    <TextView
+                        android:id="@+id/cluesCountHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/cluesCount"
+                        android:textColor="@color/textColorWhite" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                    <EditText
+                        android:id="@+id/cluesCount"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/zero"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textAlignment="center"
+                        android:textColor="@color/textColorWhite"
+                        android:textColorHint="@drawable/text_hint_selector" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/doomCountHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@string/doomCount" />
+                    android:padding="8dp">
 
-                <EditText
-                    android:id="@+id/doomCount"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/zero"
-                    android:textColorHint="@drawable/text_hint_selector"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    android:maxLength="2" />
+                    <TextView
+                        android:id="@+id/blessedCountHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/blessedCount"
+                        android:textColor="@color/textColorWhite" />
 
-            </TableRow>
+                    <EditText
+                        android:id="@+id/blessedCount"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/zero"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textAlignment="center"
+                        android:textColor="@color/textColorWhite"
+                        android:textColorHint="@drawable/text_hint_selector" />
+                </TableRow>
 
-        </TableLayout>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/doomCountHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/doomCount"
+                        android:textColor="@color/textColorWhite" />
+
+                    <EditText
+                        android:id="@+id/doomCount"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/zero"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textAlignment="center"
+                        android:textColor="@color/textColorWhite"
+                        android:textColorHint="@drawable/text_hint_selector" />
+
+                </TableRow>
+
+            </TableLayout>
+        </android.support.v7.widget.CardView>
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/footer"
+        android:id="@+id/top"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#d6d7d7"
@@ -269,13 +317,14 @@
         android:id="@+id/savePartyButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:clickable="true"
-        app:fabSize="mini"
-        app:layout_constraintRight_toRightOf="@+id/toolbarInvChoice"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/checkmark"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>

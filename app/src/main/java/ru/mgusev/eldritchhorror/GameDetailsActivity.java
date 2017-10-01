@@ -2,13 +2,21 @@ package ru.mgusev.eldritchhorror;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -34,7 +42,9 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
     TextView doomCount;
     TextView score;
     FloatingActionButton editButton;
-    FloatingActionButton deleteButton;
+    ImageView backgroundTop;
+    RecyclerView invRecyclerView;
+    TextView invNoneTV;
 
 
     @Override
@@ -61,6 +71,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         blessedCount = (TextView) findViewById(R.id.blessedCountDetail);
         doomCount = (TextView) findViewById(R.id.doomCountDetail);
         score = (TextView) findViewById(R.id.totalScoreDetail);
+        backgroundTop = (ImageView) findViewById(R.id.backgroundDetail);
 
         isSimpleMyths.setClickable(false);
         isNormalMyths.setClickable(false);
@@ -72,6 +83,13 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         isStartingRumor.setEnabled(false);
 
         initPartyDetails();
+        initInvRecycleView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail_activity, menu);
+        return true;
     }
 
     private void initToolbar() {
@@ -87,15 +105,33 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         });
 
         editButton = (FloatingActionButton) findViewById(R.id.editButton);
-        deleteButton = (FloatingActionButton) findViewById(R.id.deleteButton);
         editButton.setOnClickListener(this);
-        deleteButton.setOnClickListener(this);
+    }
+
+    private void initInvRecycleView() {
+        invNoneTV = (TextView) findViewById(R.id.invNoneTV);
+        invRecyclerView = (RecyclerView) findViewById(R.id.invRecycleView);
+
+        if (game.invList.size() != 0) {
+            invNoneTV.setVisibility(View.GONE);
+
+            LinearLayoutManager leanerLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            invRecyclerView.setLayoutManager(leanerLayoutManager);
+            invRecyclerView.setHasFixedSize(true);
+
+            InvRVAdapter adapter = new InvRVAdapter(this.getApplicationContext(), game.invList);
+            invRecyclerView.setAdapter(adapter);
+        }
     }
 
     private void initPartyDetails() {
         dateField.setText(game.date);
         try {
             ancientOne.setText(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(game.ancientOneID));
+            final int resourceId;
+            Resources resources = this.getResources();
+            resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(game.ancientOneID), "drawable", this.getPackageName());
+            backgroundTop.setImageResource(resourceId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -122,11 +158,19 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
                 intentEdit.putExtra("editParty", game);
                 startActivity(intentEdit);
                 break;
-            case R.id.deleteButton:
-                deleteDialog();
-                break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+                deleteDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

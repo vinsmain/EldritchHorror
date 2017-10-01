@@ -1,12 +1,16 @@
 package ru.mgusev.eldritchhorror;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +22,7 @@ public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GV
 
     List<Investigator> investigatorList;
     List<Investigator> invSavedList;
+    Game game;
     GVAdapter adapter;
     Toolbar toolbar;
     FloatingActionButton saveButton;
@@ -25,13 +30,15 @@ public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_investigators_change);
+        setContentView(R.layout.activity_investigators_choice);
 
         initToolbar();
         saveButton = (FloatingActionButton) findViewById(R.id.saveInvButton);
         saveButton.setOnClickListener(this);
 
-        invSavedList = getIntent().getParcelableArrayListExtra("invSavedList");
+        game = getIntent().getParcelableExtra("game");
+
+        invSavedList = game.invList;
 
         RecyclerView invRecycleView = (RecyclerView) findViewById(R.id.invRecycleView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
@@ -56,6 +63,55 @@ public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GV
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_investigator_choice_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_clean:
+                cleanDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void cleanInvList() {
+        for (int i = 0; i < investigatorList.size(); i++) {
+            investigatorList.get(i).isStarting = false;
+            investigatorList.get(i).isReplacement = false;
+            investigatorList.get(i).isDead = false;
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void cleanDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //builder.setTitle(getResources().getString(R.string.deleteDialogAlert))
+        builder.setMessage(getResources().getString(R.string.cleanDialogMessage))
+                .setIcon(android.R.drawable.ic_notification_clear_all)
+                .setCancelable(false)
+                .setPositiveButton(getResources().getString(R.string.messageOK),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                cleanInvList();
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton(getResources().getString(R.string.messageCancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void initInvestigatorList() {
@@ -104,9 +160,9 @@ public class InvestigatorsChoiceAvtivity extends AppCompatActivity implements GV
         for (int i = 0; i < investigatorList.size(); i++) {
             if (investigatorList.get(i).isStarting || investigatorList.get(i).isReplacement) invUsedList.add(investigatorList.get(i));
         }
-        Intent intent = new Intent();
-        intent.putParcelableArrayListExtra("invUsedList", invUsedList);
-        setResult(RESULT_OK, intent);
-        finish();
+        game.invList = invUsedList;
+        Intent intent = new Intent(this, ResultGameActivity.class);
+        intent.putExtra("game", game);
+        startActivity(intent);
     }
 }

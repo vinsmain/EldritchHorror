@@ -1,6 +1,7 @@
 package ru.mgusev.eldritchhorror;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -90,7 +91,7 @@ public class ResultGameActivity extends AppCompatActivity implements View.OnClic
             HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(id);
             for (int i = 0; i < game.invList.size(); i++) {
                 game.invList.get(i).gameId = id;
-                HelperFactory.getHelper().getInvestigatorDAO().createOrUpdate(game.invList.get(i));
+                HelperFactory.getHelper().getInvestigatorDAO().create(game.invList.get(i));
             }
 
         } catch (SQLException e) {

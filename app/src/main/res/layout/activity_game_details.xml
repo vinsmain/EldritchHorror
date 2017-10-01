@@ -18,39 +18,68 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/backgroundDetail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0.3"
+        android:layout_height="100dp"
+        android:alpha="0.5"
         android:background="@color/colorWhite"
         android:scaleType="centerCrop"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/azathoth"
         app:layout_constraintTop_toTopOf="@+id/toolbarDetails"
-        android:layout_marginTop="0dp" />
+        app:srcCompat="@drawable/azathoth" />
+
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@color/colorTransparent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundDetail"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp">
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/cup" />
+
+        <TextView
+            android:id="@+id/totalScoreDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:text="@string/zero"
+            android:textColor="@android:color/black"
+            android:textSize="30sp" />
+    </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/footer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView10"
-        android:id="@+id/scrollView2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/backgroundDetail">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_shadow_start_color"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@color/cardview_dark_background">
 
                 <TableLayout
                     android:id="@+id/tableLayout"
@@ -72,9 +101,9 @@
                             android:layout_span="2"
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
-                            android:text="@string/partyDetails"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
+                            android:text="@string/initial_conditions"
+                            android:textColor="@color/textColorWhite"
+                            android:textSize="16sp" />
                     </TableRow>
 
                     <TableRow
@@ -87,7 +116,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/date" />
+                            android:text="@string/date"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/dataDetail"
@@ -95,7 +125,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp" />
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
 
                     <TableRow
@@ -108,7 +139,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/ancientOne" />
+                            android:text="@string/ancientOne"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/ancientOneDetail"
@@ -116,7 +148,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp" />
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
 
                     <TableRow
@@ -129,7 +162,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/playersCount" />
+                            android:text="@string/playersCount"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/playersCountDetail"
@@ -137,29 +171,89 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp" />
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
                 </TableLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/invCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@color/cardview_dark_background">
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/investigators"
+                        android:textColor="@color/textColorWhite"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/invNoneTV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/investigators_none"
+                        android:textColor="@color/textColorWhite"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="16dp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/invRecycleView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10"
+                        app:layout_constraintVertical_bias="0.0" />
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@color/cardview_dark_background">
 
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:paddingBottom="10dp"
+                    android:layout_margin="8dp"
                     android:shrinkColumns="*"
-                    android:stretchColumns="*"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tableLayout">
+                    android:stretchColumns="*">
 
                     <TableRow
                         android:layout_width="wrap_content"
@@ -174,7 +268,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/additionalRules"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/textColorWhite"
                             android:textSize="16sp" />
 
                     </TableRow>
@@ -191,7 +285,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/simpleMyths" />
+                            android:text="@string/simpleMyths"
+                            android:textColor="@color/textColorWhite" />
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="match_parent"
@@ -204,8 +299,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColorLink="@color/cardview_dark_background"
                                 app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="3124dp" />
+                                tools:layout_editor_absoluteY="7798dp" />
                         </android.support.constraint.ConstraintLayout>
 
                     </TableRow>
@@ -220,7 +316,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/normalMyths" />
+                            android:text="@string/normalMyths"
+                            android:textColor="@color/textColorWhite" />
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -233,7 +330,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="4295dp" />
+                                tools:layout_editor_absoluteY="9230dp" />
                         </android.support.constraint.ConstraintLayout>
 
                     </TableRow>
@@ -248,7 +345,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/hardMyths" />
+                            android:text="@string/hardMyths"
+                            android:textColor="@color/textColorWhite" />
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -261,7 +359,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="5314dp" />
+                                tools:layout_editor_absoluteY="10508dp" />
                         </android.support.constraint.ConstraintLayout>
 
                     </TableRow>
@@ -276,7 +374,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/startingRumor" />
+                            android:text="@string/startingRumor"
+                            android:textColor="@color/textColorWhite" />
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -289,7 +388,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="6334dp" />
+                                tools:layout_editor_absoluteY="11789dp" />
                         </android.support.constraint.ConstraintLayout>
 
                     </TableRow>
@@ -300,21 +399,15 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp">
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@color/cardview_dark_background">
 
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:paddingBottom="10dp"
+                    android:layout_margin="8dp"
                     android:shrinkColumns="*"
-                    android:stretchColumns="*"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tableLayout">
+                    android:stretchColumns="*">
 
                     <TableRow
                         android:layout_width="wrap_content"
@@ -322,14 +415,14 @@
                         android:padding="8dp">
 
                         <TextView
-                            android:id="@+id/additionalRulesDetailHeader"
+                            android:id="@+id/gameResultDetailHeader"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_span="2"
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/gameResult"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/textColorWhite"
                             android:textSize="16sp" />
 
                     </TableRow>
@@ -344,7 +437,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/gatesCount" />
+                            android:text="@string/gatesCount"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/gatesCountDetail"
@@ -352,7 +446,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp" />
+                            android:minWidth="100dp"
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
 
                     <TableRow
@@ -365,7 +461,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/monstersCount" />
+                            android:text="@string/monstersCount"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/monstersCountDetail"
@@ -373,7 +470,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp" />
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
 
                     <TableRow
@@ -386,7 +484,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/curseCount" />
+                            android:text="@string/curseCount"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/curseCountDetail"
@@ -394,7 +493,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|end"
-                            android:paddingEnd="8dp" />
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
 
                     <TableRow
@@ -407,7 +507,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/rumorsCount" />
+                            android:text="@string/rumorsCount"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/rumorsCountDetail"
@@ -415,7 +516,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp" />
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
 
                     <TableRow
@@ -428,7 +530,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/cluesCount" />
+                            android:text="@string/cluesCount"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/cluesCountDetail"
@@ -436,7 +539,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|end"
-                            android:paddingEnd="8dp" />
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
 
                     <TableRow
@@ -449,7 +553,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/blessedCount" />
+                            android:text="@string/blessedCount"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/blessedCountDetail"
@@ -457,7 +562,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|end"
-                            android:paddingEnd="8dp" />
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
 
                     <TableRow
@@ -470,7 +576,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/doomCount" />
+                            android:text="@string/doomCount"
+                            android:textColor="@color/textColorWhite" />
 
                         <TextView
                             android:id="@+id/doomCountDetail"
@@ -478,7 +585,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp" />
+                            android:paddingEnd="8dp"
+                            android:textColor="@color/textColorWhite" />
                     </TableRow>
 
                 </TableLayout>
@@ -486,42 +594,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/footer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#d6d7d7"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
-        android:paddingLeft="24dp"
-        android:paddingTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-        <TextView
-            android:id="@+id/totalScoreDetailHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:paddingEnd="22dp"
-            android:text="@string/totalScore"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/totalScoreDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/editButton"
@@ -531,22 +603,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:clickable="true"
+        app:backgroundTint="@color/colorBlack"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@android:drawable/ic_menu_edit" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        app:backgroundTint="@color/colorTransparent"
-        app:fabSize="mini"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbarDetails"
-        app:rippleColor="@color/colorTransparent"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
 
 </android.support.constraint.ConstraintLayout>

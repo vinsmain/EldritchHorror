@@ -2,7 +2,7 @@ package ru.mgusev.eldritchhorror;
 
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,12 +24,10 @@ import java.util.Locale;
 
 public class AddGameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    final static int REQUEST_CODE_INVESTIGATORS_LIST = 1;
-
     Game game;
     boolean isEdit;
     Toolbar toolbar;
-    ImageView dateButton;
+    ImageButton dateButton;
     TextView dateField;
     Spinner ancientOneSpinner;
     Spinner playersCountSpinner;
@@ -36,17 +35,15 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
     CheckBox isNormalMyths;
     CheckBox isHardMyths;
     CheckBox isStartingRumor;
-    Button nextButton;
-    Button investigatorsChange;
+    FloatingActionButton nextButton;
     String[] ancientOneArray;
     String[] playersCountArray;
-    ArrayList<Investigator> invChoicedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
-        dateButton = (ImageView) findViewById(R.id.dateButtonIV);
+        dateButton = (ImageButton) findViewById(R.id.dateImgBtn);
         dateButton.setOnClickListener(this);
 
         dateField = (TextView) findViewById(R.id.dateField);
@@ -57,11 +54,8 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
         isHardMyths = (CheckBox) findViewById(R.id.isHardMyths);
         isStartingRumor = (CheckBox) findViewById(R.id.isStartingMyth);
 
-        nextButton = (Button) findViewById(R.id.nextButton);
+        nextButton = (FloatingActionButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(this);
-
-        investigatorsChange = (Button) findViewById(R.id.investigators);
-        investigatorsChange.setOnClickListener(this);
 
         try {
             ancientOneArray = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneArray();
@@ -97,12 +91,12 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.dateButtonIV:
+            case R.id.dateImgBtn:
                 DialogFragment dateDialog = new DatePicker();
                 dateDialog.show(getFragmentManager(), "datePicker");
                 break;
             case R.id.nextButton:
-                Intent intent = new Intent(this, ResultGameActivity.class);
+                Intent intent = new Intent(this, InvestigatorsChoiceAvtivity.class);
                 if (isEdit) addValuesToParty();
                 else {
                     game = new Game();
@@ -110,11 +104,6 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 intent.putExtra("game", game);
                 startActivity(intent);
-                break;
-            case R.id.investigators:
-                Intent intentInvestigators = new Intent(this, InvestigatorsChoiceAvtivity.class);
-                if (invChoicedList != null) intentInvestigators.putParcelableArrayListExtra("invSavedList", invChoicedList);
-                startActivityForResult(intentInvestigators, REQUEST_CODE_INVESTIGATORS_LIST);
                 break;
             default:
                 break;
@@ -133,7 +122,6 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
         game.isNormalMyths = isNormalMyths.isChecked();
         game.isHardMyths = isHardMyths.isChecked();
         game.isStartingRumor = isStartingRumor.isChecked();
-        game.invList = invChoicedList;
     }
 
     private void setPartyForEdit() {
@@ -148,7 +136,6 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
         isNormalMyths.setChecked(game.isNormalMyths);
         isHardMyths.setChecked(game.isHardMyths);
         isStartingRumor.setChecked(game.isStartingRumor);
-        invChoicedList = (ArrayList<Investigator>) game.invList;
     }
 
     private int getItemIndexInArray(String[] array, String value) {
@@ -161,7 +148,7 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initAncientOneSpinner() {
-        ArrayAdapter<String> ancientOneAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ancientOneArray);
+        ArrayAdapter<String> ancientOneAdapter = new ArrayAdapter<String>(this, R.layout.spinner, ancientOneArray);
         ancientOneAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ancientOneSpinner = (Spinner) findViewById(R.id.ancientOneSpinner);
@@ -181,7 +168,7 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initPlayersCountSpinner() {
-        ArrayAdapter<String> playersCountAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, playersCountArray);
+        ArrayAdapter<String> playersCountAdapter = new ArrayAdapter<>(this, R.layout.spinner, playersCountArray);
         playersCountAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         playersCountSpinner = (Spinner) findViewById(R.id.playersCountSpinner);
@@ -198,13 +185,5 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            invChoicedList = data.getParcelableArrayListExtra("invUsedList");
-        }
     }
 }

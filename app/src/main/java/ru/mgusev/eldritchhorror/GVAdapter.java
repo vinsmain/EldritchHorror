@@ -33,7 +33,6 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
     private GVAdapter.OnItemClicked onClick;
     private List<Investigator> listStorage;
     private Context context;
-    private InvestigatorViewHolder viewHolder;
 
     interface OnItemClicked {
         void onItemClick(int position);
@@ -59,7 +58,7 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
         holder.invOccupation.setText(listStorage.get(position).occupation);
 
         if (listStorage.get(position).isStarting || listStorage.get(position).isReplacement) {
-            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.cardview_dark_background));
             holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
             holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
             System.out.println(listStorage.get(position).name);
