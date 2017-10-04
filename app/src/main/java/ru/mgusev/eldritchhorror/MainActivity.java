@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setTitle(R.string.app_name);
         }
 
-
-
         addPartyButton = (FloatingActionButton) findViewById(R.id.addPartyButton);
         addPartyButton.setOnClickListener(this);
 

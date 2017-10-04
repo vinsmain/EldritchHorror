@@ -9,10 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+
 import java.sql.SQLException;
 import java.util.List;
 
-class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
+class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
 
     static class GameViewHolder extends RecyclerView.ViewHolder {
 
@@ -22,6 +28,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
         TextView ancientOne;
         TextView playersCount;
         TextView score;
+        SwipeLayout swipeLayout;
 
         GameViewHolder(View itemView) {
             super(itemView);
@@ -31,13 +38,21 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
             ancientOne = itemView.findViewById(R.id.ancientOne);
             playersCount = itemView.findViewById(R.id.playersCount);
             score = itemView.findViewById(R.id.score);
+            swipeLayout =  itemView.findViewById(R.id.swipeLayout);
+            swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         }
+    }
+
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipeLayout;
     }
 
     //declare interface
     private OnItemClicked onClick;
     private List<Game> gameList;
     private Context context;
+    private SwipeLayout currentSwipeLayout;
 
     //make interface like this
     interface OnItemClicked {
@@ -56,7 +71,39 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.GameViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(GameViewHolder holder, final int position) {
+    public void onBindViewHolder(final GameViewHolder holder, final int position) {
+
+        holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+
+        holder.swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                if (currentSwipeLayout != null && currentSwipeLayout != layout) currentSwipeLayout.close(true);
+                currentSwipeLayout = layout;
+            }
+        });
+
+        holder.swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
+            @Override
+            public void onDoubleClick(SwipeLayout layout, boolean surface) {
+                Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
+            }
+        });
+        /*holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mItemManger.removeShownLayouts(holder.swipeLayout);
+                mDataset.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mDataset.size());
+                mItemManger.closeAllItems();
+                Toast.makeText(view.getContext(), "Deleted " + holder.textViewData.getText().toString() + "!", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+
+
+
         holder.date.setText(gameList.get(position).date);
         try {
             Resources resources = context.getResources();

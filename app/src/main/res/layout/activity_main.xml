@@ -30,13 +30,14 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                app:srcCompat="@drawable/eldritch_horror" />
+                app:srcCompat="@drawable/eh_main" />
 
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
-                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_collapseMode="pin">
 
@@ -47,8 +48,8 @@
 
                     <ImageView
                         android:id="@+id/imageView"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:padding="8dp"
                         app:srcCompat="@drawable/cubes" />
 
@@ -59,7 +60,8 @@
                         android:gravity="end"
                         android:padding="8dp"
                         android:textColor="@android:color/white"
-                        tools:text="10" />
+                        android:textSize="18sp"
+                        tools:text="99" />
                 </TableRow>
 
                 <TableRow
@@ -69,8 +71,8 @@
 
                     <ImageView
                         android:id="@+id/imageView6"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:padding="8dp"
                         app:srcCompat="@drawable/arrow_up" />
 
@@ -81,7 +83,8 @@
                         android:gravity="end"
                         android:padding="8dp"
                         android:textColor="@android:color/white"
-                        tools:text="-8" />
+                        android:textSize="18sp"
+                        tools:text="99" />
                 </TableRow>
 
                 <TableRow
@@ -91,8 +94,8 @@
 
                     <ImageView
                         android:id="@+id/imageView7"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:padding="8dp"
                         app:srcCompat="@drawable/arrow_down" />
 
@@ -103,7 +106,8 @@
                         android:gravity="end"
                         android:padding="8dp"
                         android:textColor="@android:color/white"
-                        tools:text="14" />
+                        android:textSize="18sp"
+                        tools:text="99" />
                 </TableRow>
 
             </TableLayout>
@@ -113,8 +117,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin">
-                <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-
 
             </android.support.v7.widget.Toolbar>
 
