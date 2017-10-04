@@ -2,7 +2,6 @@ package ru.mgusev.eldritchhorror;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -58,14 +57,14 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
         holder.invOccupation.setText(listStorage.get(position).occupation);
 
         if (listStorage.get(position).isStarting || listStorage.get(position).isReplacement) {
-            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.cardview_dark_background));
-            holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-            holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorText));
+            holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryText));
             System.out.println(listStorage.get(position).name);
         } else {
-            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
-            holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
-            holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
+            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorText));
+            holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryText));
+            holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryText));
         }
 
         holder.invCardView.setOnClickListener(new View.OnClickListener() {

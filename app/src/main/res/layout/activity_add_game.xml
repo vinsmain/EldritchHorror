@@ -21,10 +21,6 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -41,7 +37,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                app:cardBackgroundColor="@color/cardview_dark_background"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="8dp">
 
@@ -64,7 +59,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/date"
-                            android:textColor="@color/textColorWhite"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="14sp" />
 
                         <TextView
@@ -73,7 +68,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="left"
                             android:textAlignment="textStart"
-                            android:textColor="@color/textColorWhite"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="16sp" />
 
                         <ImageButton
@@ -97,7 +92,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/ancientOne"
-                            android:textColor="@color/textColorWhite"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="14sp"
                             tools:layout_editor_absoluteX="16dp"
                             tools:layout_editor_absoluteY="79dp" />
@@ -125,7 +120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/playersCount"
-                            android:textColor="@color/textColorWhite"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="14sp" />
 
                         <Spinner
@@ -145,7 +140,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                app:cardBackgroundColor="@color/cardview_dark_background"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="0dp">
 
@@ -170,7 +164,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/additionalRules"
-                            android:textColor="@color/textColorWhite"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -188,7 +182,7 @@
                             android:layout_span="2"
                             android:layout_weight="1"
                             android:text="@string/simpleMyths"
-                            android:textColor="@color/textColorWhite" />
+                            android:textColor="@color/colorSecondaryText" />
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -224,7 +218,7 @@
                             android:layout_span="2"
                             android:layout_weight="1"
                             android:text="@string/normalMyths"
-                            android:textColor="@color/textColorWhite" />
+                            android:textColor="@color/colorSecondaryText" />
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -258,7 +252,7 @@
                             android:layout_span="2"
                             android:layout_weight="1"
                             android:text="@string/hardMyths"
-                            android:textColor="@color/textColorWhite" />
+                            android:textColor="@color/colorSecondaryText" />
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -292,7 +286,7 @@
                             android:layout_span="2"
                             android:layout_weight="1"
                             android:text="@string/startingRumor"
-                            android:textColor="@color/textColorWhite" />
+                            android:textColor="@color/colorSecondaryText" />
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -324,13 +318,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:clickable="true"
-        app:backgroundTint="@color/colorBlack"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/next" />
+        app:srcCompat="@drawable/next"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

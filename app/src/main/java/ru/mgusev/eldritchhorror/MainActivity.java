@@ -1,6 +1,7 @@
 package ru.mgusev.eldritchhorror;
 
 import android.content.Intent;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,8 +31,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarInvChoice);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            setTitle(R.string.app_name);
+        }
+
+
 
         addPartyButton = (FloatingActionButton) findViewById(R.id.addPartyButton);
         addPartyButton.setOnClickListener(this);
