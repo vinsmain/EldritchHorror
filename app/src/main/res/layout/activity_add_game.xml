@@ -139,9 +139,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="0dp">
+                android:layout_margin="8dp" >
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -160,8 +158,6 @@
                             android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_span="3"
-                            android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/additionalRules"
                             android:textColor="@color/colorPrimaryText"
@@ -175,33 +171,15 @@
                         android:gravity="center_vertical"
                         android:padding="8dp">
 
-                        <TextView
-                            android:id="@+id/textView5"
+                        <Switch
+                            android:id="@+id/isSimpleMyths"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_span="2"
-                            android:layout_weight="1"
+                            android:layout_marginEnd="16dp"
+                            android:maxLines="1"
                             android:text="@string/simpleMyths"
                             android:textColor="@color/colorSecondaryText" />
 
-                        <android.support.constraint.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <CheckBox
-                                android:id="@+id/isSimpleMyths"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_weight="1"
-                                app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="81dp" />
-                                <!--android:background="@drawable/checkbox_background"-->
-
-                        </android.support.constraint.ConstraintLayout>
-
                     </TableRow>
 
                     <TableRow
@@ -211,31 +189,15 @@
                         android:gravity="center_vertical"
                         android:padding="8dp">
 
-                        <TextView
-                            android:id="@+id/textView6"
+                        <Switch
+                            android:id="@+id/isNormalMyths"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_span="2"
-                            android:layout_weight="1"
+                            android:layout_marginEnd="16dp"
+                            android:maxLines="1"
                             android:text="@string/normalMyths"
                             android:textColor="@color/colorSecondaryText" />
 
-                        <android.support.constraint.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <CheckBox
-                                android:id="@+id/isNormalMyths"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_weight="1"
-                                app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="81dp" />
-                        </android.support.constraint.ConstraintLayout>
-
                     </TableRow>
 
                     <TableRow
@@ -245,30 +207,14 @@
                         android:gravity="center_vertical"
                         android:padding="8dp">
 
-                        <TextView
-                            android:id="@+id/textView7"
+                        <Switch
+                            android:id="@+id/isHardMyths"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_span="2"
-                            android:layout_weight="1"
+                            android:layout_marginEnd="16dp"
+                            android:maxLines="1"
                             android:text="@string/hardMyths"
                             android:textColor="@color/colorSecondaryText" />
-
-                        <android.support.constraint.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <CheckBox
-                                android:id="@+id/isHardMyths"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_weight="1"
-                                app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="81dp" />
-                        </android.support.constraint.ConstraintLayout>
 
                     </TableRow>
 
@@ -279,31 +225,14 @@
                         android:gravity="center_vertical"
                         android:padding="8dp">
 
-                        <TextView
-                            android:id="@+id/textView8"
+                        <Switch
+                            android:id="@+id/isStartingMyth"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_span="2"
-                            android:layout_weight="1"
+                            android:layout_marginEnd="16dp"
+                            android:maxLines="1"
                             android:text="@string/startingRumor"
                             android:textColor="@color/colorSecondaryText" />
-
-                        <android.support.constraint.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <CheckBox
-                                android:id="@+id/isStartingMyth"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_weight="1"
-                                app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="81dp" />
-
-                        </android.support.constraint.ConstraintLayout>
 
                     </TableRow>
                 </TableLayout>

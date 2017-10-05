@@ -17,7 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 
@@ -29,10 +31,10 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
     TextView dateField;
     TextView ancientOne;
     TextView playersCount;
-    CheckBox isSimpleMyths;
-    CheckBox isNormalMyths;
-    CheckBox isHardMyths;
-    CheckBox isStartingRumor;
+    Switch isSimpleMyths;
+    Switch isNormalMyths;
+    Switch isHardMyths;
+    Switch isStartingRumor;
     TextView gatesCount;
     TextView monstersCount;
     TextView curseCount;
@@ -59,10 +61,10 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         dateField = (TextView) findViewById(R.id.dataDetail);
         ancientOne = (TextView) findViewById(R.id.ancientOneDetail);
         playersCount = (TextView) findViewById(R.id.playersCountDetail);
-        isSimpleMyths = (CheckBox) findViewById(R.id.simpleMythsDetail);
-        isNormalMyths = (CheckBox) findViewById(R.id.normalMythsDetail);
-        isHardMyths = (CheckBox) findViewById(R.id.hardMythsDetail);
-        isStartingRumor = (CheckBox) findViewById(R.id.startingRumorDetail);
+        isSimpleMyths = (Switch) findViewById(R.id.simpleMythsDetail);
+        isNormalMyths = (Switch) findViewById(R.id.normalMythsDetail);
+        isHardMyths = (Switch) findViewById(R.id.hardMythsDetail);
+        isStartingRumor = (Switch) findViewById(R.id.startingRumorDetail);
         gatesCount = (TextView) findViewById(R.id.gatesCountDetail);
         monstersCount = (TextView) findViewById(R.id.monstersCountDetail);
         curseCount = (TextView) findViewById(R.id.curseCountDetail);
@@ -209,5 +211,6 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         intentDelete.putExtra("refreshPartyList", true);
         intentDelete.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intentDelete);
+        Toast.makeText(this, R.string.success_deleting_message, Toast.LENGTH_SHORT).show();
     }
 }

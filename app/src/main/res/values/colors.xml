@@ -11,4 +11,9 @@
     <color name="colorDivider">#BDBDBD</color>
     <color name="colorText">#ffffff</color>
     <color name="colorTransparent">#00000000</color>
+
+    <!--Disable Switch Colors-->
+    <color name="disable_forground_grey">#ff6d00</color>
+    <color name="disable_thumb_grey">#ff9100</color>
+    <color name="enable_thrumb_green">#bdbdbd</color>
 </resources>

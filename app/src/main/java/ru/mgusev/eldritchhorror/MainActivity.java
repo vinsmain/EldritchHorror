@@ -1,8 +1,10 @@
 package ru.mgusev.eldritchhorror;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, RVAdapter.OnItemClicked {
 
     private List<Game> gameList;
+    RVAdapter adapter;
+    Game deletingGame;
     FloatingActionButton addPartyButton;
     String bestScoreValue = "";
     String worstScoreValue = "";
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initGameList();
 
-        RVAdapter adapter = new RVAdapter(this.getApplicationContext(), gameList);
+        adapter = new RVAdapter(this.getApplicationContext(), gameList);
         recyclerView.setAdapter(adapter);
         adapter.setOnClick(this);
 
@@ -95,6 +101,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intentGameDetails = new Intent(this, GameDetailsActivity.class);
         intentGameDetails.putExtra("game", gameList.get(position));
         startActivity(intentGameDetails);
+    }
+
+    @Override
+    public void onEditClick(int position) {
+        Intent intentEdit = new Intent(this, AddGameActivity.class);
+        intentEdit.putExtra("editParty", gameList.get(position));
+        startActivity(intentEdit);
+    }
+
+    @Override
+    public void onDeleteClick(int position) {
+        deletingGame = gameList.get(position);
+        deleteDialog();
+    }
+
+    private void deleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.deleteDialogAlert))
+                .setMessage(getResources().getString(R.string.deleteDialogMessage))
+                .setIcon(android.R.drawable.ic_menu_delete)
+                .setCancelable(false)
+                .setPositiveButton(getResources().getString(R.string.messageOK),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                deleteParty();
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton(getResources().getString(R.string.messageCancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void deleteParty() {
+        try {
+            HelperFactory.getHelper().getGameDAO().delete(deletingGame);
+            HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(deletingGame.id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        initGameList();
+        adapter.setGameList(gameList);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(this, R.string.success_deleting_message, Toast.LENGTH_SHORT).show();
     }
 
     private void setScoreValues() {

@@ -35,7 +35,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
         android:background="@color/colorTransparent"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -125,7 +124,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
 
@@ -148,7 +146,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
 
@@ -171,7 +168,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
                 </TableLayout>
@@ -194,8 +190,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:gravity="center_horizontal"
@@ -213,7 +207,6 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:layout_marginBottom="16dp"
-                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:text="@string/investigators_none"
                         android:textColor="@color/colorSecondaryText"
@@ -226,12 +219,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -246,25 +233,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:padding="8dp"
                 app:cardCornerRadius="0dp">
 
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:padding="8dp"
                     android:shrinkColumns="*"
                     android:stretchColumns="*">
 
                     <TableRow
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp">
 
                         <TextView
                             android:id="@+id/additionalRulesDetailHeader"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_span="2"
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/additionalRules"
@@ -276,119 +263,68 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
-                        tools:layout_editor_absoluteX="-16dp"
-                        tools:layout_editor_absoluteY="8dp">
+                        android:padding="8dp">
 
-                        <TextView
-                            android:id="@+id/simpleMythsDetailHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/simpleMyths"
-                            android:textColor="@color/colorSecondaryText" />
-
-                        <android.support.constraint.ConstraintLayout
+                        <Switch
+                            android:id="@+id/simpleMythsDetail"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:minWidth="100dp">
-
-                            <CheckBox
-                                android:id="@+id/simpleMythsDetail"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="8371dp" />
-                        </android.support.constraint.ConstraintLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:maxLines="1"
+                            android:text="@string/simpleMyths"
+                            android:theme="@style/DisableSwitch"
+                            android:textColor="@color/colorSecondaryText" />
 
                     </TableRow>
 
                     <TableRow
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp">
 
-                        <TextView
-                            android:id="@+id/normalMythsDetailHeader"
-                            android:layout_width="wrap_content"
+                        <Switch
+                            android:id="@+id/normalMythsDetail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginEnd="16dp"
+                            android:maxLines="1"
                             android:text="@string/normalMyths"
+                            android:theme="@style/DisableSwitch"
                             android:textColor="@color/colorSecondaryText" />
-
-                        <android.support.constraint.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <CheckBox
-                                android:id="@+id/normalMythsDetail"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="9835dp" />
-                        </android.support.constraint.ConstraintLayout>
 
                     </TableRow>
 
                     <TableRow
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp">
 
-                        <TextView
-                            android:id="@+id/hardMythsDetailHeader"
-                            android:layout_width="wrap_content"
+                        <Switch
+                            android:id="@+id/hardMythsDetail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginEnd="16dp"
+                            android:maxLines="1"
                             android:text="@string/hardMyths"
+                            android:theme="@style/DisableSwitch"
                             android:textColor="@color/colorSecondaryText" />
-
-                        <android.support.constraint.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <CheckBox
-                                android:id="@+id/hardMythsDetail"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="11146dp" />
-                        </android.support.constraint.ConstraintLayout>
 
                     </TableRow>
 
                     <TableRow
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp">
 
-                        <TextView
-                            android:id="@+id/startingRumorDetailHeader"
-                            android:layout_width="wrap_content"
+                        <Switch
+                            android:id="@+id/startingRumorDetail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginEnd="16dp"
+                            android:maxLines="1"
                             android:text="@string/startingRumor"
+                            android:theme="@style/DisableSwitch"
                             android:textColor="@color/colorSecondaryText" />
-
-                        <android.support.constraint.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <CheckBox
-                                android:id="@+id/startingRumorDetail"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:layout_constraintRight_toRightOf="parent"
-                                tools:layout_editor_absoluteY="12459dp" />
-                        </android.support.constraint.ConstraintLayout>
 
                     </TableRow>
 
@@ -446,7 +382,6 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:minWidth="100dp"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
 
@@ -469,7 +404,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
 
@@ -492,7 +426,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|end"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
 
@@ -515,7 +448,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
 
@@ -538,7 +470,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|end"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
 
@@ -561,7 +492,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|end"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
 
@@ -584,7 +514,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:paddingEnd="8dp"
                             android:textColor="@color/colorSecondaryText" />
                     </TableRow>
 

@@ -1,6 +1,7 @@
 package ru.mgusev.eldritchhorror;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,8 @@ class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
         TextView playersCount;
         TextView score;
         SwipeLayout swipeLayout;
+        ImageView editImgSwipe;
+        ImageView deleteImgSwipe;
 
         GameViewHolder(View itemView) {
             super(itemView);
@@ -38,6 +41,8 @@ class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
             ancientOne = itemView.findViewById(R.id.ancientOne);
             playersCount = itemView.findViewById(R.id.playersCount);
             score = itemView.findViewById(R.id.score);
+            editImgSwipe = itemView.findViewById(R.id.editImgSwipe);
+            deleteImgSwipe = itemView.findViewById(R.id.deleteImgSwipe);
             swipeLayout =  itemView.findViewById(R.id.swipeLayout);
             swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         }
@@ -54,9 +59,15 @@ class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
     private Context context;
     private SwipeLayout currentSwipeLayout;
 
+    public void setGameList(List<Game> gameList) {
+        this.gameList = gameList;
+    }
+
     //make interface like this
     interface OnItemClicked {
         void onItemClick(int position);
+        void onEditClick(int position);
+        void onDeleteClick(int position);
     }
 
     RVAdapter(Context context, List<Game> gameList) {
@@ -89,6 +100,10 @@ class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
                 Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+
         /*holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +135,20 @@ class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
             @Override
             public void onClick(View v) {
                 onClick.onItemClick(position);
+            }
+        });
+
+        holder.editImgSwipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick.onEditClick(position);
+            }
+        });
+
+        holder.deleteImgSwipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick.onDeleteClick(position);
             }
         });
     }

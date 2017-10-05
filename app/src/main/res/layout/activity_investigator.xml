@@ -10,7 +10,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorText">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -46,12 +47,12 @@
                 android:gravity="center_horizontal"
                 android:paddingBottom="4dp"
                 android:paddingTop="4dp"
-                android:text="Чарли Кейн"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/invPhotoDialog" />
+                app:layout_constraintTop_toBottomOf="@+id/invPhotoDialog"
+                tools:text="Чарли Кейн" />
 
             <TextView
                 android:id="@+id/invOccupationDialog"
@@ -60,12 +61,12 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:paddingBottom="4dp"
-                android:text="Политик"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/invNameDialog" />
+                app:layout_constraintTop_toBottomOf="@+id/invNameDialog"
+                tools:text="Политик" />
 
             <Switch
                 android:id="@+id/switchStartingGame"
@@ -75,9 +76,7 @@
                 android:maxLines="1"
                 android:text="@string/starting_game"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/invOccupationDialog"
-                tools:layout_editor_absoluteX="0dp" />
+                android:textSize="14sp" />
 
             <Switch
                 android:id="@+id/switchReplacement"

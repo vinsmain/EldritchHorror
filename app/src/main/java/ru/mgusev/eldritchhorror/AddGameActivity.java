@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -31,10 +32,10 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
     TextView dateField;
     Spinner ancientOneSpinner;
     Spinner playersCountSpinner;
-    CheckBox isSimpleMyths;
-    CheckBox isNormalMyths;
-    CheckBox isHardMyths;
-    CheckBox isStartingRumor;
+    Switch isSimpleMyths;
+    Switch isNormalMyths;
+    Switch isHardMyths;
+    Switch isStartingRumor;
     FloatingActionButton nextButton;
     String[] ancientOneArray;
     String[] playersCountArray;
@@ -49,10 +50,10 @@ public class AddGameActivity extends AppCompatActivity implements View.OnClickLi
         dateField = (TextView) findViewById(R.id.dateField);
         dateField.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date()));
 
-        isSimpleMyths = (CheckBox) findViewById(R.id.isSimpleMyths);
-        isNormalMyths = (CheckBox) findViewById(R.id.isNormalMyths);
-        isHardMyths = (CheckBox) findViewById(R.id.isHardMyths);
-        isStartingRumor = (CheckBox) findViewById(R.id.isStartingMyth);
+        isSimpleMyths = (Switch) findViewById(R.id.isSimpleMyths);
+        isNormalMyths = (Switch) findViewById(R.id.isNormalMyths);
+        isHardMyths = (Switch) findViewById(R.id.isHardMyths);
+        isStartingRumor = (Switch) findViewById(R.id.isStartingMyth);
 
         nextButton = (FloatingActionButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(this);

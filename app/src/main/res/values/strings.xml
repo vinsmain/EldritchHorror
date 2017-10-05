@@ -24,7 +24,7 @@
     <string name="gameResult">Результаты игры</string>
     <string name="deleteDialogAlert">Удаление!</string>
     <string name="deleteDialogMessage">Удалить результат игры?</string>
-    <string name="cleanDialogAlert">Удаление!</string>
+    <string name="cleanDialogAlert">Очистка списка!</string>
     <string name="cleanDialogMessage">Очистить список выбранных сыщиков?</string>
     <string name="messageOK">Да</string>
     <string name="messageCancel">Нет</string>
@@ -42,4 +42,5 @@
     <string name="initial_conditions">Начальные условия</string>
     <string name="investigators">Сыщики</string>
     <string name="investigators_none">Сыщики не выбраны</string>
+    <string name="success_deleting_message">Результат игры успешно удален!</string>
 </resources>
