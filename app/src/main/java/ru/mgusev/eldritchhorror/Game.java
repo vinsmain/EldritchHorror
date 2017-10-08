@@ -37,19 +37,19 @@ public class Game implements Parcelable {
     public String date;
 
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_ANCIENT_ONE_ID)
-    public int ancientOneID;
+    public int ancientOneID = 1;
 
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_PLAYERS_COUNT)
-    public int playersCount;
+    public int playersCount = 1;
 
     @DatabaseField(dataType = DataType.BOOLEAN, columnName = GAME_FIELD_SIMPLE_MYTHS)
-    public boolean isSimpleMyths;
+    public boolean isSimpleMyths = true;
 
     @DatabaseField(dataType = DataType.BOOLEAN, columnName = GAME_FIELD_NORMAL_MYTHS)
-    public boolean isNormalMyths;
+    public boolean isNormalMyths = true;
 
     @DatabaseField(dataType = DataType.BOOLEAN, columnName = GAME_FIELD_HARD_MYTHS)
-    public boolean isHardMyths;
+    public boolean isHardMyths = true;
 
     @DatabaseField(dataType = DataType.BOOLEAN, columnName = GAME_FIELD_STARTING_RUMOR)
     public boolean isStartingRumor;

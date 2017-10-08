@@ -1,135 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryLight">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical"
-        android:layout_marginTop="1dp">
+        android:layout_margin="8dp">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/starting_data_header"
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="8dp"
-            cardCornerRadius="0dp"
-            cardBackgroundColor="@color/colorAccentLight">
+            android:layout_margin="8dp"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
 
-            <TextView
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/activity_add_party_header" />
-        </android.support.v7.widget.CardView>
+                android:gravity="center_vertical"
+                android:padding="8dp">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/starting_data_content"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="3"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="@string/activity_add_party_header" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/dateField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/dateImgBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorTransparent"
+                    android:src="@drawable/clean" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/ancientOne"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/ancientOneSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:layout_weight="1"
+                    android:dropDownWidth="match_parent"
+                    android:gravity="end" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/playersCount"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/playersCountSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:layout_weight="1"
+                    android:dropDownWidth="match_parent"
+                    android:gravity="end" />
+
+            </TableRow>
+        </TableLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:elevation="2dp"
-            cardCornerRadius="0dp"
-            cardBackgroundColor="@color/colorText" >
+            android:layout_margin="8dp"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
 
-            <TableLayout
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/additionalRules"
+                    android:textColor="@color/colorPrimaryText" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:shrinkColumns="*"
-                android:stretchColumns="*">
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:padding="8dp">
 
-                <TableRow
+                <Switch
+                    android:id="@+id/isSimpleMyths"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:maxLines="1"
+                    android:text="@string/simpleMyths"
+                    android:textColor="@color/colorSecondaryText" />
 
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/date"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="14sp" />
+            </TableRow>
 
-                    <TextView
-                        android:id="@+id/dateField"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="16sp" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:padding="8dp">
 
-                    <ImageButton
-                        android:id="@+id/dateImgBtn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorTransparent"
-                        app:srcCompat="@drawable/calendar" />
-
-                </TableRow>
-
-                <TableRow
+                <Switch
+                    android:id="@+id/isNormalMyths"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:maxLines="1"
+                    android:text="@string/normalMyths"
+                    android:textColor="@color/colorSecondaryText" />
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/ancientOne"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="14sp" />
+            </TableRow>
 
-                    <Spinner
-                        android:id="@+id/ancientOneSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_span="2"
-                        android:layout_weight="1"
-                        android:dropDownWidth="match_parent"
-                        android:gravity="end" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:padding="8dp">
 
-                </TableRow>
-
-                <TableRow
+                <Switch
+                    android:id="@+id/isHardMyths"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:maxLines="1"
+                    android:text="@string/hardMyths"
+                    android:textColor="@color/colorSecondaryText" />
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/playersCount"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="14sp" />
+            </TableRow>
 
-                    <Spinner
-                        android:id="@+id/playersCountSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_span="2"
-                        android:layout_weight="1"
-                        android:dropDownWidth="match_parent"
-                        android:gravity="end" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:padding="8dp">
 
-                </TableRow>
-            </TableLayout>
+                <Switch
+                    android:id="@+id/isStartingMyth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:maxLines="1"
+                    android:text="@string/startingRumor"
+                    android:textColor="@color/colorSecondaryText" />
 
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+            </TableRow>
+        </TableLayout>
 
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

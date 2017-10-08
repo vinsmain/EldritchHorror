@@ -31,7 +31,7 @@
     <string name="activity_party_details_header">Детали игры</string>
     <string name="activity_add_party_header">Начальные данные</string>
     <string name="activity_result_party_header">Результаты игры</string>
-    <string name="activity_investigators_choice_header">Выберите сыщиков</string>
+    <string name="activity_investigators_choice_header">Сыщики</string>
     <string name="zero">0</string>
     <string name="starting_game">Стартовый состав</string>
     <string name="replacement">Вышел на замену</string>
@@ -43,6 +43,7 @@
     <string name="investigators">Сыщики</string>
     <string name="investigators_none">Сыщики не выбраны</string>
     <string name="success_deleting_message">Результат игры успешно удален!</string>
+    <string name="add_game_header">Результат игры</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

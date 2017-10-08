@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onEditClick(int position) {
-        Intent intentEdit = new Intent(this, AddGameActivity.class);
+        Intent intentEdit = new Intent(this, GamesPagerActivity.class);
         intentEdit.putExtra("editParty", gameList.get(position));
         startActivity(intentEdit);
     }

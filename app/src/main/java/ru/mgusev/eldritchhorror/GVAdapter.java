@@ -56,6 +56,8 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
         holder.invName.setText(listStorage.get(position).name);
         holder.invOccupation.setText(listStorage.get(position).occupation);
 
+        System.out.println(listStorage.get(position).name);
+
         if (listStorage.get(position).isStarting || listStorage.get(position).isReplacement) {
             holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
             holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorText));
@@ -85,8 +87,7 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    void setOnClick(OnItemClicked onClick)
-    {
+    void setOnClick(OnItemClicked onClick) {
         this.onClick=onClick;
     }
 }
