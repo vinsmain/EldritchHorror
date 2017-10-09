@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
-    tools:context="ru.mgusev.eldritchhorror.GameActivity">
+    tools:context="ru.mgusev.eldritchhorror.activity.GameActivity">
 
     <ScrollView
         android:layout_width="match_parent"
