@@ -6,4 +6,10 @@
         android:title="@android:string/search_go"
         android:icon="@drawable/delete"
         app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/action_edit"
+        android:title="@android:string/search_go"
+        android:icon="@drawable/pencil"
+        app:showAsAction="always|collapseActionView" />
 </menu>

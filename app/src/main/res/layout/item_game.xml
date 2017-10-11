@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:elevation="2dp"
             android:padding="8dp"
-            app:srcCompat="@drawable/edit_black" />
+            app:srcCompat="@drawable/pencil" />
     </LinearLayout>
 
     <android.support.v7.widget.CardView

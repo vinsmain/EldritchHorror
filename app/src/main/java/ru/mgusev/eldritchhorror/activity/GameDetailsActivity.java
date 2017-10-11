@@ -25,7 +25,7 @@ import ru.mgusev.eldritchhorror.adapter.InvRVAdapter;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Game;
 
-public class GameDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameDetailsActivity extends AppCompatActivity {
 
     Game game;
 
@@ -45,7 +45,6 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
     TextView blessedCount;
     TextView doomCount;
     TextView score;
-    FloatingActionButton editButton;
     ImageView backgroundTop;
     RecyclerView invRecyclerView;
     TextView invNoneTV;
@@ -107,9 +106,6 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
                 finish();
             }
         });
-
-        editButton = (FloatingActionButton) findViewById(R.id.editButton);
-        editButton.setOnClickListener(this);
     }
 
     private void initInvRecycleView() {
@@ -155,23 +151,15 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.editButton:
-                Intent intentEdit = new Intent(this, GamesPagerActivity.class);
-                intentEdit.putExtra("editParty", game);
-                startActivity(intentEdit);
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete:
                 deleteDialog();
+                return true;
+            case R.id.action_edit:
+                Intent intentEdit = new Intent(this, GamesPagerActivity.class);
+                intentEdit.putExtra("editParty", game);
+                startActivity(intentEdit);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

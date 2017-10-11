@@ -7,6 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.sql.SQLException;
@@ -20,7 +22,9 @@ import ru.mgusev.eldritchhorror.fragment.ResultGameFragment;
 import ru.mgusev.eldritchhorror.fragment.StartingDataFragment;
 import ru.mgusev.eldritchhorror.model.Game;
 
-public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkOnObject, View.OnClickListener {
+import static java.security.AccessController.getContext;
+
+public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkOnObject {
 
     static final String TAG = "myLogs";
     public static final int PAGE_COUNT = 3;
@@ -30,7 +34,6 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     ViewPager pager;
     EHFragmentPagerAdapter pagerAdapter;
     Toolbar toolbar;
-    FloatingActionButton saveGameButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +42,6 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
         initToolbar();
 
-        saveGameButton = (FloatingActionButton) findViewById(R.id.saveGameButton);
-        saveGameButton.setOnClickListener(this);
         pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new EHFragmentPagerAdapter(this, getSupportFragmentManager(), this);
         pager.setAdapter(pagerAdapter);
@@ -79,14 +80,26 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     }
 
     @Override
-    public Game getGame() {
-        return game;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_games_pager_activity, menu);
+        return true;
     }
 
     @Override
-    public void onClick(View view) {
-        addDataToGame();
-        writeGameToDB(view);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                addDataToGame();
+                writeGameToDB();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public Game getGame() {
+        return game;
     }
 
     private void addDataToGame() {
@@ -95,7 +108,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         ((ResultGameFragment)pagerAdapter.getItem(2)).addDataToGame();
     }
 
-    private void writeGameToDB(View view) {
+    private void writeGameToDB() {
         try {
             int id = HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
             HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(id);
@@ -108,7 +121,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
             e.printStackTrace();
         }
 
-        Intent intent = new Intent(view.getContext(), MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("refreshGameList", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
