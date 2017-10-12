@@ -19,11 +19,11 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        // определяем текущую дату
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
+        String[] date = ((String) getArguments().get("date")).split("\\.");
+
+        int day = Integer.parseInt(date[0]);
+        int month = Integer.parseInt(date[1]) - 1;
+        int year = Integer.parseInt(date[2]);
 
         // создаем DatePickerDialog и возвращаем его
         Dialog picker = new DatePickerDialog(getActivity(), this, year, month, day);
@@ -47,4 +47,6 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
         calendar.set(i, i1, i2);
         textView.setText(String.format(Locale.getDefault(), "%td.%tm.%tY", calendar, calendar, calendar));
     }
+
+
 }

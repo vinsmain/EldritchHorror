@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.sql.SQLException;
 
@@ -34,6 +35,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     ViewPager pager;
     EHFragmentPagerAdapter pagerAdapter;
     Toolbar toolbar;
+    TextView score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +48,11 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         pagerAdapter = new EHFragmentPagerAdapter(this, getSupportFragmentManager(), this);
         pager.setAdapter(pagerAdapter);
 
+        score = (TextView) findViewById(R.id.score_pager);
+
         game = (Game) getIntent().getParcelableExtra("editParty");
         if (game == null) game = new Game();
+        score.setText(String.valueOf(game.score));
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 

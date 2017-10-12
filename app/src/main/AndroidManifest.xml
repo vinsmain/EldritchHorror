@@ -30,7 +30,6 @@
         <activity
             android:name=".activity.InvestigatorActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".activity.GameActivity" />
         <activity android:name=".activity.GamesPagerActivity"></activity>
     </application>
 

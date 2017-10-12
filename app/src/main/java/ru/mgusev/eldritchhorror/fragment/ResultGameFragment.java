@@ -1,6 +1,5 @@
 package ru.mgusev.eldritchhorror.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -42,7 +41,6 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         fragment.setActivity(activity);
         fragment.setArguments(arguments);
-        System.out.println("123");
         return fragment;
     }
 
@@ -56,15 +54,10 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_result_game, null);
 
-        System.out.println("123456");
         initActivityElements();
         setListeners();
 
         addGameValuesToFields();
-
-        /*game = (Game) getIntent().getParcelableExtra("game");
-        if (game.id != -1) addGameValuesToFields();
-        else refreshScore();*/
 
         return view;
     }
@@ -87,21 +80,8 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
         cluesCount = (EditText) view.findViewById(R.id.cluesCount);
         blessedCount = (EditText) view.findViewById(R.id.blessedCount);
         doomCount = (EditText) view.findViewById(R.id.doomCount);
-        //score = (TextView) view.findViewById(R.id.totalScore); TODO Добавить вывод результата игры
+        score = (TextView) getActivity().findViewById(R.id.score_pager);
     }
-
-    /*private void initToolbar() {
-        toolbar = (Toolbar) view.findViewById(R.id.toolbarInvChoice);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.activity_result_party_header);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }*/
 
     public void addDataToGame() {
         if (view != null) {
@@ -152,6 +132,6 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
     }
 
     private void refreshScore() {
-        //score.setText(String.valueOf(getScore()));
+        score.setText(String.valueOf(getScore()));
     }
 }

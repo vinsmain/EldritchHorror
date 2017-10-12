@@ -1,6 +1,7 @@
 package ru.mgusev.eldritchhorror.fragment;
 
 import android.app.DialogFragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,14 +10,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
@@ -91,24 +90,14 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
-    /*private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbarInvChoice);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.activity_add_party_header);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }*/
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.dateImgBtn:
+                Bundle args=new Bundle();
+                args.putString("date", (String) dateField.getText());
                 DialogFragment dateDialog = new DatePicker();
+                dateDialog.setArguments(args);
                 dateDialog.show(getActivity().getFragmentManager(), "datePicker");
                 break;
             default:
@@ -165,7 +154,14 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         ancientOneSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                final int resourceId;
+                Resources resources = getResources();
+                try {
+                    resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(i + 1), "drawable", getActivity().getPackageName());
+                    ((ImageView)getActivity().findViewById(R.id.background_pager)).setImageResource(resourceId);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

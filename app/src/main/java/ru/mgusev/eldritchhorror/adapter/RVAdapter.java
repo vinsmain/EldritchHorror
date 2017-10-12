@@ -86,35 +86,10 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
         holder.swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
-                if (currentSwipeLayout != null && currentSwipeLayout != layout) currentSwipeLayout.close(true);
+                if (currentSwipeLayout != layout) closeSwipeLayout();
                 currentSwipeLayout = layout;
             }
         });
-
-        holder.swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
-            @Override
-            public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-
-
-        /*holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mItemManger.removeShownLayouts(holder.swipeLayout);
-                mDataset.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mDataset.size());
-                mItemManger.closeAllItems();
-                Toast.makeText(view.getContext(), "Deleted " + holder.textViewData.getText().toString() + "!", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-
-
 
         holder.date.setText(gameList.get(position).date);
         try {
@@ -148,6 +123,10 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
                 onClick.onDeleteClick(position);
             }
         });
+    }
+
+    public void closeSwipeLayout() {
+        if (currentSwipeLayout != null) currentSwipeLayout.close(true);
     }
 
     @Override

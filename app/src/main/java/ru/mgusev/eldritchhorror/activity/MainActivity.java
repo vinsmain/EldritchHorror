@@ -26,6 +26,8 @@ import ru.mgusev.eldritchhorror.model.Game;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
 
     private List<Game> gameList;
+    RecyclerView recyclerView;
+    RecyclerView.OnScrollListener onScrollListener;
     RVAdapter adapter;
     Game deletingGame;
     FloatingActionButton addPartyButton;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bestScore = (TextView) findViewById(R.id.bestScore);
         worstScore = (TextView) findViewById(R.id.worstScore);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.gameList);
+        recyclerView = (RecyclerView) findViewById(R.id.gameList);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         //LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new RVAdapter(this.getApplicationContext(), gameList);
         recyclerView.setAdapter(adapter);
         adapter.setOnClick(this);
+
+        initRVListener();
+        recyclerView.addOnScrollListener(onScrollListener);
 
         setScoreValues();
 
@@ -86,6 +91,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initRVListener() {
+        onScrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(final RecyclerView recyclerView, final int newState) {
+                adapter.closeSwipeLayout();
+            }
+
+            @Override
+            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
+                adapter.closeSwipeLayout();
+            }
+        };
     }
 
     @Override

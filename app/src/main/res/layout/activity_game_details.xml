@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/backgroundDetail"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:alpha="0.5"
         android:scaleType="centerCrop"
         app:layout_constraintHorizontal_bias="0.0"
@@ -29,42 +29,42 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <LinearLayout
-        android:id="@+id/top"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorTransparent"
-        android:gravity="center_vertical"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/backgroundDetail"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp">
-
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/cup" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/totalScoreDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:text="@string/zero"
+            android:layout_weight="1"
+            android:text="12"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="30sp" />
+            android:textSize="36sp" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintLeft_toRightOf="@+id/textView6"
+            app:srcCompat="@drawable/stars" />
     </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="0dp"
         android:background="@color/colorPrimaryLight"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backgroundDetail">
@@ -272,8 +272,8 @@
                             android:layout_marginEnd="16dp"
                             android:maxLines="1"
                             android:text="@string/simpleMyths"
-                            android:theme="@style/DisableSwitch"
-                            android:textColor="@color/colorSecondaryText" />
+                            android:textColor="@color/colorSecondaryText"
+                            android:theme="@style/DisableSwitch" />
 
                     </TableRow>
 
@@ -289,8 +289,8 @@
                             android:layout_marginEnd="16dp"
                             android:maxLines="1"
                             android:text="@string/normalMyths"
-                            android:theme="@style/DisableSwitch"
-                            android:textColor="@color/colorSecondaryText" />
+                            android:textColor="@color/colorSecondaryText"
+                            android:theme="@style/DisableSwitch" />
 
                     </TableRow>
 
@@ -306,8 +306,8 @@
                             android:layout_marginEnd="16dp"
                             android:maxLines="1"
                             android:text="@string/hardMyths"
-                            android:theme="@style/DisableSwitch"
-                            android:textColor="@color/colorSecondaryText" />
+                            android:textColor="@color/colorSecondaryText"
+                            android:theme="@style/DisableSwitch" />
 
                     </TableRow>
 
@@ -323,8 +323,8 @@
                             android:layout_marginEnd="16dp"
                             android:maxLines="1"
                             android:text="@string/startingRumor"
-                            android:theme="@style/DisableSwitch"
-                            android:textColor="@color/colorSecondaryText" />
+                            android:textColor="@color/colorSecondaryText"
+                            android:theme="@style/DisableSwitch" />
 
                     </TableRow>
 

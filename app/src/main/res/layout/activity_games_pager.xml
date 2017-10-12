@@ -7,7 +7,7 @@
     tools:context="ru.mgusev.eldritchhorror.activity.GamesPagerActivity">
 
     <ImageView
-        android:id="@+id/backgroundDetail"
+        android:id="@+id/background_pager"
         android:layout_width="0dp"
         android:layout_height="120dp"
         android:alpha="0.5"
@@ -22,22 +22,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/backgroundDetail"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/pager">
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/score_pager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="12"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="40sp"
+            android:textSize="36sp"
             tools:layout_editor_absoluteX="348dp"
             tools:layout_editor_absoluteY="92dp" />
 
@@ -45,8 +43,6 @@
             android:id="@+id/imageView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
             android:layout_weight="1"
             app:layout_constraintLeft_toRightOf="@+id/textView6"
             app:srcCompat="@drawable/stars"
@@ -68,11 +64,12 @@
         android:id="@+id/pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/backgroundDetail">
+        app:layout_constraintTop_toBottomOf="@+id/background_pager">
 
         <android.support.v4.view.PagerTabStrip
             android:layout_width="match_parent"
