@@ -14,7 +14,9 @@ public class GameDAO extends BaseDaoImpl {
     }
 
     public List<Game> getAllGames() throws SQLException{
-        return this.queryForAll();
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.orderBy(Game.GAME_FIELD_DATE, false);
+        return qb.query();
     }
 
     public Game getTopGameToSort(boolean sort) throws SQLException {

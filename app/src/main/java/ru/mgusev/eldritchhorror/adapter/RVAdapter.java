@@ -18,6 +18,7 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import java.sql.SQLException;
 import java.util.List;
 
+import ru.mgusev.eldritchhorror.activity.MainActivity;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
@@ -91,7 +92,7 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
             }
         });
 
-        holder.date.setText(gameList.get(position).date);
+        holder.date.setText(MainActivity.formatter.format(gameList.get(position).date));
         try {
             Resources resources = context.getResources();
             final int resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(gameList.get(position).ancientOneID), "drawable", context.getPackageName());

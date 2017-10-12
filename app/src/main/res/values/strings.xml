@@ -19,12 +19,12 @@
     <string name="blessedCount">Общее число состояний \"Благословение\" на руках у сыщиков</string>
     <string name="doomCount">Текущий уровень безысходности</string>
     <string name="totalScore">Победный счет</string>
-    <string name="saveResult">Сохранить результат</string>
+    <string name="saveResult">Сохранить результат игры</string>
+    <string name="edit_result">Редактировать результат игры</string>
     <string name="partyDetails">Детали игры</string>
     <string name="gameResult">Результаты игры</string>
-    <string name="deleteDialogAlert">Удаление!</string>
+    <string name="dialogAlert">Подтвердите действие</string>
     <string name="deleteDialogMessage">Удалить результат игры?</string>
-    <string name="cleanDialogAlert">Очистка списка!</string>
     <string name="cleanDialogMessage">Очистить список выбранных сыщиков?</string>
     <string name="messageOK">Да</string>
     <string name="messageCancel">Нет</string>
@@ -44,7 +44,4 @@
     <string name="investigators_none">Сыщики не выбраны</string>
     <string name="success_deleting_message">Результат игры успешно удален!</string>
     <string name="add_game_header">Результат игры</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

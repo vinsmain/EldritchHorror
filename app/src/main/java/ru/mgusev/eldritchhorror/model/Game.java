@@ -38,8 +38,9 @@ public class Game implements Parcelable {
     @DatabaseField(generatedId = true, columnName = GAME_FIELD_ID)
     public int id;
 
-    @DatabaseField(dataType = DataType.STRING, columnName = GAME_FIELD_DATE)
-    public String date = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
+    @DatabaseField(dataType = DataType.DATE_STRING, columnName = GAME_FIELD_DATE)
+    public Date date = new Date();
+    //public String date = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
 
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_ANCIENT_ONE_ID)
     public int ancientOneID = 1;
@@ -89,9 +90,10 @@ public class Game implements Parcelable {
         id = -1;
     }
 
+
     protected Game(Parcel in) {
         id = in.readInt();
-        date = in.readString();
+        date = (java.util.Date)in.readSerializable();
         ancientOneID = in.readInt();
         playersCount = in.readInt();
         isSimpleMyths = in.readByte() != 0;
@@ -109,6 +111,32 @@ public class Game implements Parcelable {
         invList = in.createTypedArrayList(Investigator.CREATOR);
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeSerializable(date);
+        dest.writeInt(ancientOneID);
+        dest.writeInt(playersCount);
+        dest.writeByte((byte) (isSimpleMyths ? 1 : 0));
+        dest.writeByte((byte) (isNormalMyths ? 1 : 0));
+        dest.writeByte((byte) (isHardMyths ? 1 : 0));
+        dest.writeByte((byte) (isStartingRumor ? 1 : 0));
+        dest.writeInt(gatesCount);
+        dest.writeInt(monstersCount);
+        dest.writeInt(curseCount);
+        dest.writeInt(rumorsCount);
+        dest.writeInt(cluesCount);
+        dest.writeInt(blessedCount);
+        dest.writeInt(doomCount);
+        dest.writeInt(score);
+        dest.writeTypedList(invList);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<Game> CREATOR = new Creator<Game>() {
         @Override
         public Game createFromParcel(Parcel in) {
@@ -120,30 +148,4 @@ public class Game implements Parcelable {
             return new Game[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(date);
-        parcel.writeInt(ancientOneID);
-        parcel.writeInt(playersCount);
-        parcel.writeByte((byte) (isSimpleMyths ? 1 : 0));
-        parcel.writeByte((byte) (isNormalMyths ? 1 : 0));
-        parcel.writeByte((byte) (isHardMyths ? 1 : 0));
-        parcel.writeByte((byte) (isStartingRumor ? 1 : 0));
-        parcel.writeInt(gatesCount);
-        parcel.writeInt(monstersCount);
-        parcel.writeInt(curseCount);
-        parcel.writeInt(rumorsCount);
-        parcel.writeInt(cluesCount);
-        parcel.writeInt(blessedCount);
-        parcel.writeInt(doomCount);
-        parcel.writeInt(score);
-        parcel.writeTypedList(invList);
-    }
 }

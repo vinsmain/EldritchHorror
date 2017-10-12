@@ -14,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.RVAdapter;
@@ -24,6 +26,8 @@ import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
 import ru.mgusev.eldritchhorror.model.Game;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
+
+    public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
     private List<Game> gameList;
     RecyclerView recyclerView;
@@ -142,9 +146,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void deleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.deleteDialogAlert))
+        builder.setTitle(getResources().getString(R.string.dialogAlert))
                 .setMessage(getResources().getString(R.string.deleteDialogMessage))
-                .setIcon(android.R.drawable.ic_menu_delete)
+                .setIcon(R.drawable.delete)
                 .setCancelable(false)
                 .setPositiveButton(getResources().getString(R.string.messageOK),
                         new DialogInterface.OnClickListener() {

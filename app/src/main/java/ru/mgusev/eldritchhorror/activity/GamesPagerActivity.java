@@ -32,6 +32,8 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
     public Game game;
 
+    private MenuItem clearItem;
+
     ViewPager pager;
     EHFragmentPagerAdapter pagerAdapter;
     Toolbar toolbar;
@@ -59,6 +61,9 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
             @Override
             public void onPageSelected(int position) {
                 Log.d(TAG, "onPageSelected, position = " + position);
+
+                if (position == 1) clearItem.setVisible(true);
+                else clearItem.setVisible(false);
             }
 
             @Override
@@ -87,6 +92,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_games_pager_activity, menu);
+        clearItem = menu.findItem(R.id.action_clear);
         return true;
     }
 
@@ -96,6 +102,9 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
             case R.id.action_save:
                 addDataToGame();
                 writeGameToDB();
+                return true;
+            case R.id.action_clear:
+                ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).cleanDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -79,23 +79,6 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         return view;
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_investigator_choice_activity, menu);
-        return true;
-    }*/
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_clean:
-                cleanDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     private void cleanInvList() {
         for (int i = 0; i < investigatorList.size(); i++) {
             investigatorList.get(i).isStarting = false;
@@ -105,11 +88,11 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         adapter.notifyDataSetChanged();
     }
 
-    private void cleanDialog() {
+    public void cleanDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        //builder.setTitle(getResources().getString(R.string.deleteDialogAlert))
-        builder.setMessage(getResources().getString(R.string.cleanDialogMessage))
-                .setIcon(android.R.drawable.ic_notification_clear_all)
+        builder.setTitle(getResources().getString(R.string.dialogAlert))
+                .setMessage(getResources().getString(R.string.cleanDialogMessage))
+                .setIcon(R.drawable.clear)
                 .setCancelable(false)
                 .setPositiveButton(getResources().getString(R.string.messageOK),
                         new DialogInterface.OnClickListener() {

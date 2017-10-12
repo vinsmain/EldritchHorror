@@ -16,7 +16,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
+import ru.mgusev.eldritchhorror.activity.MainActivity;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
@@ -107,7 +111,12 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
     public void addDataToGame() {
         if (view != null) {
-            activity.getGame().date = dateField.getText().toString();
+            try {
+                activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString());
+                System.out.println(activity.getGame().date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             try {
                 activity.getGame().ancientOneID = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneArray[ancientOneSpinner.getSelectedItemPosition()]);
             } catch (SQLException e) {
@@ -122,7 +131,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     }
 
     private void setDataToFields() {
-        dateField.setText(activity.getGame().date);
+        dateField.setText(MainActivity.formatter.format(activity.getGame().date));
         try {
             ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID)));
         } catch (SQLException e) {

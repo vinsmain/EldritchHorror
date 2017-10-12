@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.InvRVAdapter;
@@ -125,7 +127,7 @@ public class GameDetailsActivity extends AppCompatActivity {
     }
 
     private void initPartyDetails() {
-        dateField.setText(game.date);
+        dateField.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(game.date));
         try {
             ancientOne.setText(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(game.ancientOneID));
             final int resourceId;
@@ -168,9 +170,9 @@ public class GameDetailsActivity extends AppCompatActivity {
 
     private void deleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.deleteDialogAlert))
+        builder.setTitle(getResources().getString(R.string.dialogAlert))
                 .setMessage(getResources().getString(R.string.deleteDialogMessage))
-                .setIcon(android.R.drawable.ic_menu_delete)
+                .setIcon(R.drawable.delete)
                 .setCancelable(false)
                 .setPositiveButton(getResources().getString(R.string.messageOK),
                         new DialogInterface.OnClickListener() {
