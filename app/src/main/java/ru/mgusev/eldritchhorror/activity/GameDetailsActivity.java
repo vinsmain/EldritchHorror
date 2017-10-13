@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +35,10 @@ public class GameDetailsActivity extends AppCompatActivity {
     TextView dateField;
     TextView ancientOne;
     TextView playersCount;
-    Switch isSimpleMyths;
-    Switch isNormalMyths;
-    Switch isHardMyths;
-    Switch isStartingRumor;
+    TableRow isSimpleMyths;
+    TableRow isNormalMyths;
+    TableRow isHardMyths;
+    TableRow isStartingRumor;
     TextView gatesCount;
     TextView monstersCount;
     TextView curseCount;
@@ -63,10 +64,10 @@ public class GameDetailsActivity extends AppCompatActivity {
         dateField = (TextView) findViewById(R.id.dataDetail);
         ancientOne = (TextView) findViewById(R.id.ancientOneDetail);
         playersCount = (TextView) findViewById(R.id.playersCountDetail);
-        isSimpleMyths = (Switch) findViewById(R.id.simpleMythsDetail);
-        isNormalMyths = (Switch) findViewById(R.id.normalMythsDetail);
-        isHardMyths = (Switch) findViewById(R.id.hardMythsDetail);
-        isStartingRumor = (Switch) findViewById(R.id.startingRumorDetail);
+        isSimpleMyths = (TableRow) findViewById(R.id.simpleMythsDetail);
+        isNormalMyths = (TableRow) findViewById(R.id.normalMythsDetail);
+        isHardMyths = (TableRow) findViewById(R.id.hardMythsDetail);
+        isStartingRumor = (TableRow) findViewById(R.id.startingRumorDetail);
         gatesCount = (TextView) findViewById(R.id.gatesCountDetail);
         monstersCount = (TextView) findViewById(R.id.monstersCountDetail);
         curseCount = (TextView) findViewById(R.id.curseCountDetail);
@@ -76,15 +77,6 @@ public class GameDetailsActivity extends AppCompatActivity {
         doomCount = (TextView) findViewById(R.id.doomCountDetail);
         score = (TextView) findViewById(R.id.totalScoreDetail);
         backgroundTop = (ImageView) findViewById(R.id.backgroundDetail);
-
-        isSimpleMyths.setClickable(false);
-        isNormalMyths.setClickable(false);
-        isHardMyths.setClickable(false);
-        isStartingRumor.setClickable(false);
-        isSimpleMyths.setEnabled(false);
-        isNormalMyths.setEnabled(false);
-        isHardMyths.setEnabled(false);
-        isStartingRumor.setEnabled(false);
 
         initPartyDetails();
         initInvRecycleView();
@@ -137,10 +129,10 @@ public class GameDetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         playersCount.setText(String.valueOf(game.playersCount));
-        isSimpleMyths.setChecked(game.isSimpleMyths);
-        isNormalMyths.setChecked(game.isNormalMyths);
-        isHardMyths.setChecked(game.isHardMyths);
-        isStartingRumor.setChecked(game.isStartingRumor);
+        if (!game.isSimpleMyths) isSimpleMyths.setVisibility(View.GONE);
+        if (!game.isNormalMyths) isNormalMyths.setVisibility(View.GONE);
+        if (!game.isHardMyths) isHardMyths.setVisibility(View.GONE);
+        if (!game.isStartingRumor) isStartingRumor.setVisibility(View.GONE);
         gatesCount.setText(String.valueOf(game.gatesCount));
         monstersCount.setText(String.valueOf(game.monstersCount));
         curseCount.setText(String.valueOf(game.curseCount));

@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:layout_constraintLeft_toRightOf="@+id/textView6"
+            app:layout_constraintLeft_toRightOf="@+id/normalMythsDetail"
             app:srcCompat="@drawable/stars"
             tools:layout_editor_absoluteY="40dp" />
     </LinearLayout>

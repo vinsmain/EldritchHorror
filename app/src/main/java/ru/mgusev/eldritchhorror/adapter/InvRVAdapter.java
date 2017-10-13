@@ -55,11 +55,10 @@ public class InvRVAdapter extends RecyclerView.Adapter<InvRVAdapter.InvDetailVie
         if (listStorage.get(position).isReplacement) colorID = R.color.color_replacement_investigator;
         holder.invCardViewDetail.setCardBackgroundColor(ContextCompat.getColor(context, colorID));
 
-        /*if (listStorage.get(position).isDead) {
-            holder.invDeadDetail.setVisibility(View.VISIBLE);
-            System.out.println(listStorage.get(position).name);
+        if (listStorage.get(position).isDead) {
+            final int deadImgId = resources.getIdentifier("dead", "drawable", context.getPackageName());
+            holder.invDeadDetail.setImageResource(deadImgId);
         }
-        else holder.invDeadDetail.setVisibility(View.INVISIBLE);*/
     }
 
     @Override

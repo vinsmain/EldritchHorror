@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -23,7 +24,7 @@ import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
 
-public class StartingDataFragment extends Fragment implements View.OnClickListener {
+public class StartingDataFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
@@ -74,6 +75,10 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         isNormalMyths = (Switch) view.findViewById(R.id.isNormalMyths);
         isHardMyths = (Switch) view.findViewById(R.id.isHardMyths);
         isStartingRumor = (Switch) view.findViewById(R.id.isStartingMyth);
+
+        isSimpleMyths.setOnCheckedChangeListener(this);
+        isNormalMyths.setOnCheckedChangeListener(this);
+        isHardMyths.setOnCheckedChangeListener(this);
 
         try {
             ancientOneArray = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneArray();
@@ -206,5 +211,22 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
             }
         });
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        switch (view.getId()) {
+            case R.id.isSimpleMyths:
+                if (!b && !isNormalMyths.isChecked() && !isHardMyths.isChecked()) isNormalMyths.setChecked(true);
+                break;
+            case R.id.isNormalMyths:
+                if (!b && !isSimpleMyths.isChecked() && !isHardMyths.isChecked()) isSimpleMyths.setChecked(true);
+                break;
+            case R.id.isHardMyths:
+                if (!b && !isSimpleMyths.isChecked() && !isNormalMyths.isChecked()) isSimpleMyths.setChecked(true);
+                break;
+            default:
+                break;
+        }
     }
 }

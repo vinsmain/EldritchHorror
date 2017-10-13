@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:layout_constraintLeft_toRightOf="@+id/textView6"
+            app:layout_constraintLeft_toRightOf="@+id/normalMythsDetail"
             app:srcCompat="@drawable/stars" />
     </LinearLayout>
 
@@ -261,70 +261,54 @@
                     </TableRow>
 
                     <TableRow
+                        android:id="@+id/simpleMythsDetail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp">
 
-                        <Switch
-                            android:id="@+id/simpleMythsDetail"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:maxLines="1"
-                            android:text="@string/simpleMyths"
-                            android:textColor="@color/colorSecondaryText"
-                            android:theme="@style/DisableSwitch" />
+                            android:text="@string/simpleMyths" />
 
                     </TableRow>
 
                     <TableRow
+                        android:id="@+id/normalMythsDetail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp">
 
-                        <Switch
-                            android:id="@+id/normalMythsDetail"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:maxLines="1"
-                            android:text="@string/normalMyths"
-                            android:textColor="@color/colorSecondaryText"
-                            android:theme="@style/DisableSwitch" />
+                            android:text="@string/normalMyths" />
 
                     </TableRow>
 
                     <TableRow
+                        android:id="@+id/hardMythsDetail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp">
 
-                        <Switch
-                            android:id="@+id/hardMythsDetail"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:maxLines="1"
-                            android:text="@string/hardMyths"
-                            android:textColor="@color/colorSecondaryText"
-                            android:theme="@style/DisableSwitch" />
+                            android:text="@string/hardMyths" />
 
                     </TableRow>
 
                     <TableRow
+                        android:id="@+id/startingRumorDetail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp">
 
-                        <Switch
-                            android:id="@+id/startingRumorDetail"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:maxLines="1"
-                            android:text="@string/startingRumor"
-                            android:textColor="@color/colorSecondaryText"
-                            android:theme="@style/DisableSwitch" />
+                            android:text="@string/startingRumor" />
 
                     </TableRow>
 
