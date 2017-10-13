@@ -17,8 +17,6 @@ import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.activity.MainActivity;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
@@ -71,7 +69,6 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         dateButton = (ImageButton) view.findViewById(R.id.dateImgBtn);
         dateButton.setOnClickListener(this);
         dateField = (TextView) view.findViewById(R.id.dateFieldq);
-        //dateField.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date()));
 
         isSimpleMyths = (Switch) view.findViewById(R.id.isSimpleMyths);
         isNormalMyths = (Switch) view.findViewById(R.id.isNormalMyths);
@@ -92,6 +89,16 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        try {
+            activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        super.onPause();
     }
 
     @Override
@@ -132,6 +139,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
     private void setDataToFields() {
         dateField.setText(MainActivity.formatter.format(activity.getGame().date));
+        System.out.println(dateField.getText());
         try {
             ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID)));
         } catch (SQLException e) {

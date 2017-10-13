@@ -46,6 +46,7 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
         Calendar calendar = Calendar.getInstance();
         calendar.set(i, i1, i2);
         textView.setText(String.format(Locale.getDefault(), "%td.%tm.%tY", calendar, calendar, calendar));
+        System.out.println(i1 + " " + i1 + " " + i2);
     }
 
 

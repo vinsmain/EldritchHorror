@@ -2,6 +2,7 @@ package ru.mgusev.eldritchhorror.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,13 +19,15 @@ import ru.mgusev.eldritchhorror.R;
 public class InvRVAdapter extends RecyclerView.Adapter<InvRVAdapter.InvDetailViewHolder> {
 
     static class InvDetailViewHolder extends RecyclerView.ViewHolder {
-        CardView invCardView;
-        ImageView invPhoto;
+        CardView invCardViewDetail;
+        ImageView invPhotoDetail;
+        ImageView invDeadDetail;
 
         public InvDetailViewHolder(View itemView) {
             super(itemView);
-            invCardView = itemView.findViewById(R.id.invCardView);
-            invPhoto = itemView.findViewById(R.id.invPhoto);
+            invCardViewDetail = itemView.findViewById(R.id.invCardViewDetail);
+            invPhotoDetail = itemView.findViewById(R.id.invPhotoDetail);
+            invDeadDetail = itemView.findViewById(R.id.invDeadDetail);
         }
     }
 
@@ -46,7 +49,17 @@ public class InvRVAdapter extends RecyclerView.Adapter<InvRVAdapter.InvDetailVie
     public void onBindViewHolder(final InvRVAdapter.InvDetailViewHolder holder, int position) {
         Resources resources = context.getResources();
         final int resourceId = resources.getIdentifier(listStorage.get(position).imageResource, "drawable", context.getPackageName());
-        holder.invPhoto.setImageResource(resourceId);
+        holder.invPhotoDetail.setImageResource(resourceId);
+
+        int colorID = R.color.color_starting_investigator;
+        if (listStorage.get(position).isReplacement) colorID = R.color.color_replacement_investigator;
+        holder.invCardViewDetail.setCardBackgroundColor(ContextCompat.getColor(context, colorID));
+
+        /*if (listStorage.get(position).isDead) {
+            holder.invDeadDetail.setVisibility(View.VISIBLE);
+            System.out.println(listStorage.get(position).name);
+        }
+        else holder.invDeadDetail.setVisibility(View.INVISIBLE);*/
     }
 
     @Override

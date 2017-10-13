@@ -12,6 +12,9 @@
     <color name="colorText">#ffffff</color>
     <color name="colorTransparent">#00000000</color>
 
+    <color name="color_starting_investigator">#003604</color>
+    <color name="color_replacement_investigator">#010741</color>
+
     <!--Disable Switch Colors-->
     <color name="disable_forground_grey">#ff6d00</color>
     <color name="disable_thumb_grey">#ff9100</color>

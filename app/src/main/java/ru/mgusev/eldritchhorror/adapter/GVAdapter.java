@@ -21,6 +21,7 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
     static class InvestigatorViewHolder extends RecyclerView.ViewHolder {
         CardView invCardView;
         ImageView invPhoto;
+        ImageView invDead;
         TextView invName;
         TextView invOccupation;
 
@@ -28,6 +29,7 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
             super(itemView);
             invCardView = itemView.findViewById(R.id.invCardView);
             invPhoto = itemView.findViewById(R.id.invPhoto);
+            invDead = itemView.findViewById(R.id.invDead);
             invName = itemView.findViewById(R.id.invName);
             invOccupation = itemView.findViewById(R.id.invOccupation);
         }
@@ -56,15 +58,23 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
         holder.invName.setText(listStorage.get(position).name);
         holder.invOccupation.setText(listStorage.get(position).occupation);
 
-        if (listStorage.get(position).isStarting || listStorage.get(position).isReplacement) {
-            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        if (listStorage.get(position).isStarting) {
+            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.color_starting_investigator));
             holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorText));
-            holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryText));
+            holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorText));
+        } else if (listStorage.get(position).isReplacement) {
+            holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.color_replacement_investigator));
+            holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorText));
+            holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorText));
         } else {
             holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorText));
             holder.invName.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryText));
             holder.invOccupation.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryText));
         }
+
+        if (listStorage.get(position).isDead) {
+            holder.invDead.setVisibility(View.VISIBLE);
+        } else holder.invDead.setVisibility(View.INVISIBLE);
 
         holder.invCardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,7 +3,6 @@ package ru.mgusev.eldritchhorror.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,7 +47,7 @@ public class GameDetailsActivity extends AppCompatActivity {
     TextView doomCount;
     TextView score;
     ImageView backgroundTop;
-    RecyclerView invRecyclerView;
+    RecyclerView invRecyclerViewDetail;
     TextView invNoneTV;
 
 
@@ -112,17 +111,17 @@ public class GameDetailsActivity extends AppCompatActivity {
 
     private void initInvRecycleView() {
         invNoneTV = (TextView) findViewById(R.id.invNoneTV);
-        invRecyclerView = (RecyclerView) findViewById(R.id.invRecycleView);
+        invRecyclerViewDetail = (RecyclerView) findViewById(R.id.invRecycleViewDetail);
 
         if (game.invList.size() != 0) {
             invNoneTV.setVisibility(View.GONE);
 
             LinearLayoutManager leanerLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-            invRecyclerView.setLayoutManager(leanerLayoutManager);
-            invRecyclerView.setHasFixedSize(true);
+            invRecyclerViewDetail.setLayoutManager(leanerLayoutManager);
+            invRecyclerViewDetail.setHasFixedSize(true);
 
             InvRVAdapter adapter = new InvRVAdapter(this.getApplicationContext(), game.invList);
-            invRecyclerView.setAdapter(adapter);
+            invRecyclerViewDetail.setAdapter(adapter);
         }
     }
 
