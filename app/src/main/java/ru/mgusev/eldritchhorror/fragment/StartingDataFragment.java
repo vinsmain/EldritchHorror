@@ -144,7 +144,6 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
     private void setDataToFields() {
         dateField.setText(MainActivity.formatter.format(activity.getGame().date));
-        System.out.println(dateField.getText());
         try {
             ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID)));
         } catch (SQLException e) {
@@ -215,7 +214,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        switch (view.getId()) {
+        switch (compoundButton.getId()) {
             case R.id.isSimpleMyths:
                 if (!b && !isNormalMyths.isChecked() && !isHardMyths.isChecked()) isNormalMyths.setChecked(true);
                 break;

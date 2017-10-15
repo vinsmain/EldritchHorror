@@ -97,13 +97,26 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
     }
 
     private void addGameValuesToFields() {
-        gatesCount.setText(String.valueOf(activity.getGame().gatesCount));
-        monstersCount.setText(String.valueOf(activity.getGame().monstersCount));
-        curseCount.setText(String.valueOf(activity.getGame().curseCount));
-        rumorsCount.setText(String.valueOf(activity.getGame().rumorsCount));
-        cluesCount.setText(String.valueOf(activity.getGame().cluesCount));
-        blessedCount.setText(String.valueOf(activity.getGame().blessedCount));
-        doomCount.setText(String.valueOf(activity.getGame().doomCount));
+        int i = activity.getGame().gatesCount;
+        gatesCount.setText(i == 0 ? "" : String.valueOf(i));
+
+        i = activity.getGame().monstersCount;
+        monstersCount.setText(i == 0 ? "" : String.valueOf(i));
+
+        i = activity.getGame().curseCount;
+        curseCount.setText(i == 0 ? "" : String.valueOf(i));
+
+        i = activity.getGame().rumorsCount;
+        rumorsCount.setText(i == 0 ? "" : String.valueOf(i));
+
+        i = activity.getGame().cluesCount;
+        cluesCount.setText(i == 0 ? "" : String.valueOf(i));
+
+        i = activity.getGame().blessedCount;
+        blessedCount.setText(i == 0 ? "" : String.valueOf(i));
+
+        i = activity.getGame().doomCount;
+        doomCount.setText(i == 0 ? "" : String.valueOf(i));
     }
 
     private int getScore() {
