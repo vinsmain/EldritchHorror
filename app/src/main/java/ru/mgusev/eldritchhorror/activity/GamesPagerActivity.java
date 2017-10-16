@@ -1,5 +1,6 @@
 package ru.mgusev.eldritchhorror.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -38,6 +41,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     EHFragmentPagerAdapter pagerAdapter;
     Toolbar toolbar;
     TextView score;
+    View currentFocusView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,24 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
                 if (position == 1) clearItem.setVisible(true);
                 else clearItem.setVisible(false);
+
+                if (position == 2) {
+                    if (currentFocusView != null) {
+                        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                        inputMethodManager.toggleSoftInputFromWindow(currentFocusView.getApplicationWindowToken(),InputMethodManager.SHOW_IMPLICIT, 0);
+                        currentFocusView.requestFocus();
+                    }
+                }
+
+                if (position != 2) {
+                    currentFocusView = getCurrentFocus();
+
+                    if (currentFocusView != null) {
+                        System.out.println(currentFocusView.findFocus());
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(currentFocusView.getWindowToken(), 0);
+                    }
+                }
             }
 
             @Override
