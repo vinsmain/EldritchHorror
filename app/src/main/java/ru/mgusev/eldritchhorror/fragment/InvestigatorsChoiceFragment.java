@@ -57,6 +57,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        setRetainInstance(true);
     }
 
     @Override

@@ -48,6 +48,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        setRetainInstance(true);
     }
 
     @Override

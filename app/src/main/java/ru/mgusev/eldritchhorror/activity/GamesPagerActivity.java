@@ -52,11 +52,12 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
         pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new EHFragmentPagerAdapter(this, getSupportFragmentManager(), this);
+        System.out.println("Oncreate " + this);
         pager.setAdapter(pagerAdapter);
 
         score = (TextView) findViewById(R.id.score_pager);
 
-        game = (Game) getIntent().getParcelableExtra("editParty");
+        if (game == null) game = (Game) getIntent().getParcelableExtra("editParty");
         if (game == null) game = new Game();
         score.setText(String.valueOf(game.score));
 
@@ -69,7 +70,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 if (position == 1) clearItem.setVisible(true);
                 else clearItem.setVisible(false);
 
-                if (position == 2) {
+                /*if (position == 2) {
                     if (currentFocusView != null) {
                         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                         inputMethodManager.toggleSoftInputFromWindow(currentFocusView.getApplicationWindowToken(),InputMethodManager.SHOW_IMPLICIT, 0);
@@ -85,7 +86,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(currentFocusView.getWindowToken(), 0);
                     }
-                }
+                }*/
             }
 
             @Override
@@ -161,5 +162,19 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         intent.putExtra("refreshGameList", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        addDataToGame();
+        outState.putParcelable("game", game);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        game = savedInstanceState.getParcelable("game");
+        System.out.println(game.date);
     }
 }

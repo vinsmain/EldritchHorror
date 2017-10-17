@@ -46,6 +46,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
     public void setActivity(PassMeLinkOnObject activity) {
         this.activity = activity;
+        System.out.println("setActivity " + activity);
     }
 
     public static StartingDataFragment newInstance(int page, PassMeLinkOnObject activity) {
@@ -58,9 +59,22 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
+    public void onDestroy() {
+        System.out.println("OnDestroy");
+        super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //outState.pu
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        setRetainInstance(true);
     }
 
     @Override
@@ -89,7 +103,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
         initAncientOneSpinner();
         initPlayersCountSpinner();
-
+        System.out.println("OncreateViev " + activity);
         setDataToFields();
 
 
@@ -143,6 +157,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     }
 
     private void setDataToFields() {
+        System.out.println(activity);
         dateField.setText(MainActivity.formatter.format(activity.getGame().date));
         try {
             ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID)));
