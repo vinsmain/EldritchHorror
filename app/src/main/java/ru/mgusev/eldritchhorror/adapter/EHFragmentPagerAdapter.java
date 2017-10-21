@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import ru.mgusev.eldritchhorror.activity.GamesPagerActivity;
 import ru.mgusev.eldritchhorror.fragment.InvestigatorsChoiceFragment;
@@ -42,5 +43,27 @@ public class EHFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return titleArray[position];
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+        // get the tags set by FragmentPagerAdapter
+        switch (position) {
+            case 0:
+                String firstTag = createdFragment.getTag();
+                System.out.println("1");
+                break;
+            case 1:
+                String secondTag = createdFragment.getTag();
+                System.out.println("2");
+                break;
+            case 2:
+                String thirdTag = createdFragment.getTag();
+                System.out.println("3");
+                break;
+        }
+        //... save the tags somewhere so you can reference them later
+        return createdFragment;
     }
 }

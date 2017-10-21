@@ -4,14 +4,18 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import ru.mgusev.eldritchhorror.eh_interface.OnFragmentCreatedListener;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
+
+import static android.content.ContentValues.TAG;
 
 public class ResultGameFragment extends Fragment implements TextWatcher {
 
@@ -59,6 +63,12 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
         setListeners();
 
         addGameValuesToFields();
+
+        try {
+            ((OnFragmentCreatedListener) getActivity()).onFragmentCreated(this);
+        } catch (ClassCastException e) {
+            Log.e(TAG, "Activity must inherit from interface OnFragmentCreatedListener", e);
+        }
 
         return view;
     }

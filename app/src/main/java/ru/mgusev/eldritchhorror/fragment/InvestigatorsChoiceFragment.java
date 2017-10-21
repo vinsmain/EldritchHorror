@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +20,14 @@ import java.util.List;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.activity.Investigator;
 import ru.mgusev.eldritchhorror.activity.InvestigatorActivity;
+import ru.mgusev.eldritchhorror.eh_interface.OnFragmentCreatedListener;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.GVAdapter;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 public class InvestigatorsChoiceFragment extends Fragment implements OnItemClicked {
 
@@ -76,6 +79,12 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         adapter = new GVAdapter(view.getContext(), investigatorList);
         invRecycleView.setAdapter(adapter);
         adapter.setOnClick(this);
+
+        try {
+            ((OnFragmentCreatedListener) getActivity()).onFragmentCreated(this);
+        } catch (ClassCastException e) {
+            Log.e(TAG, "Activity must inherit from interface OnFragmentCreatedListener", e);
+        }
 
         return view;
     }
