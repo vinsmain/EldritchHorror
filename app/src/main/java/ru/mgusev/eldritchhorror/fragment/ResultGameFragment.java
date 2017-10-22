@@ -4,20 +4,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import ru.mgusev.eldritchhorror.eh_interface.OnFragmentCreatedListener;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
 
-import static android.content.ContentValues.TAG;
-
-public class ResultGameFragment extends Fragment implements TextWatcher {
+public class ResultGameFragment extends Fragment implements TextWatcher, View.OnFocusChangeListener {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
@@ -64,10 +60,9 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
 
         addGameValuesToFields();
 
-        try {
-            ((OnFragmentCreatedListener) getActivity()).onFragmentCreated(this);
-        } catch (ClassCastException e) {
-            Log.e(TAG, "Activity must inherit from interface OnFragmentCreatedListener", e);
+        if (activity.getCurrentFocusView() != null) {
+            activity.getCurrentFocusView().requestFocus();
+            System.out.println(activity.getCurrentFocusView());
         }
 
         return view;
@@ -75,12 +70,19 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
 
     private void setListeners() {
         gatesCount.addTextChangedListener(this);
+        gatesCount.setOnFocusChangeListener(this);
         monstersCount.addTextChangedListener(this);
+        monstersCount.setOnFocusChangeListener(this);
         curseCount.addTextChangedListener(this);
+        curseCount.setOnFocusChangeListener(this);
         rumorsCount.addTextChangedListener(this);
+        rumorsCount.setOnFocusChangeListener(this);
         cluesCount.addTextChangedListener(this);
+        cluesCount.setOnFocusChangeListener(this);
         blessedCount.addTextChangedListener(this);
+        blessedCount.setOnFocusChangeListener(this);
         doomCount.addTextChangedListener(this);
+        doomCount.setOnFocusChangeListener(this);
     }
 
     private void initActivityElements() {
@@ -157,5 +159,15 @@ public class ResultGameFragment extends Fragment implements TextWatcher {
 
     private void refreshScore() {
         score.setText(String.valueOf(getScore()));
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        if (b && activity.getCurrentFocusView() != null && activity.getIsPositionChange()) {
+            activity.getCurrentFocusView().requestFocus();
+            activity.setIdPositionChange(false);
+        } else if (b) {
+            activity.setCurrentFocusView(view);
+        }
     }
 }

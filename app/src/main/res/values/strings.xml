@@ -44,4 +44,6 @@
     <string name="investigators_none">Сыщики не выбраны</string>
     <string name="success_deleting_message">Результат игры успешно удален!</string>
     <string name="add_game_header">Результат игры</string>
+    <string name="defeat_header">Поражение</string>
+    <string name="win_header">Победа</string>
 </resources>

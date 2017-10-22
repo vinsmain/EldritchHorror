@@ -4,7 +4,6 @@ import android.app.DialogFragment;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,8 @@ import java.text.ParseException;
 
 import ru.mgusev.eldritchhorror.activity.MainActivity;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
-import ru.mgusev.eldritchhorror.eh_interface.OnFragmentCreatedListener;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
-
-import static android.content.ContentValues.TAG;
 
 public class StartingDataFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -113,13 +109,6 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         initPlayersCountSpinner();
         System.out.println("OncreateViev " + activity);
         setDataToFields();
-
-        try {
-            ((OnFragmentCreatedListener) getActivity()).onFragmentCreated(this);
-        } catch (ClassCastException e) {
-            Log.e(TAG, "Activity must inherit from interface OnFragmentCreatedListener", e);
-        }
-
 
         return view;
     }

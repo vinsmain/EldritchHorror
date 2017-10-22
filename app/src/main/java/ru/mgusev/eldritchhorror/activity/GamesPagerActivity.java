@@ -1,9 +1,7 @@
 package ru.mgusev.eldritchhorror.activity;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -21,16 +19,13 @@ import java.sql.SQLException;
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.EHFragmentPagerAdapter;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
-import ru.mgusev.eldritchhorror.eh_interface.OnFragmentCreatedListener;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.fragment.InvestigatorsChoiceFragment;
 import ru.mgusev.eldritchhorror.fragment.ResultGameFragment;
 import ru.mgusev.eldritchhorror.fragment.StartingDataFragment;
 import ru.mgusev.eldritchhorror.model.Game;
 
-import static java.security.AccessController.getContext;
-
-public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkOnObject, OnFragmentCreatedListener {
+public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkOnObject {
 
     static final String TAG = "myLogs";
     public static final int PAGE_COUNT = 3;
@@ -45,6 +40,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     TextView score;
     View currentFocusView;
     int currentPosition = 0;
+    boolean isPositionChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,44 +49,38 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
         initToolbar();
 
-        if (savedInstanceState!= null)
-            currentPosition = savedInstanceState.getInt("viewpagerid", -1 );
+        if (savedInstanceState!= null) {
+            currentPosition = savedInstanceState.getInt("position", 0);
+            game = savedInstanceState.getParcelable("game");
+            currentFocusView = (EditText) findViewById(R.id.curseCount);
+            //currentFocusView.setId(savedInstanceState.getInt("focus"));
+            System.out.println("123 " + currentFocusView);
+            //currentFocusView.requestFocus();
+        }
 
         pagerAdapter = new EHFragmentPagerAdapter (this, getSupportFragmentManager(), this);
         pager = (ViewPager) findViewById(R.id.pager);
-        if (currentPosition != -1 ){
-            pager.setId(currentPosition);
-        }else{
-            currentPosition = pager.getId();
-        }
+        pager.setOffscreenPageLimit(2);
         pager.setAdapter(pagerAdapter);
 
         score = (TextView) findViewById(R.id.score_pager);
-
-        //pager = (ViewPager) findViewById(R.id.pager);
-
-
 
         if (game == null) game = (Game) getIntent().getParcelableExtra("editParty");
         if (game == null) game = new Game();
         score.setText(String.valueOf(game.score));
 
-
-            /*pagerAdapter = new EHFragmentPagerAdapter(this, getSupportFragmentManager(), this);
-            System.out.println("Oncreate " + this);
-            pager.setAdapter(pagerAdapter);
-
-        pager.setCurrentItem(currentPosition);*/
-       /* pager.postDelayed(new Runnable()
-        {
+        pager.postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
-                pager.setCurrentItem(currentPosition, true);
+            public void run() {
+                pager.setCurrentItem(currentPosition, false);
+                pagerAdapter.notifyDataSetChanged();
+                if (currentFocusView != null) {
+                    System.out.println("456 " + currentFocusView);
+                    currentFocusView.setSelected(true);
+                    currentFocusView.requestFocus();
+                }
             }
-        }, 100);*/
-
-
+        }, 100);
 
             invalidateOptionsMenu();
             pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -103,24 +93,15 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                     if (position == 1) clearItem.setVisible(true);
                     else clearItem.setVisible(false);
 
-
-                /*if (position == 2) {
-                    if (currentFocusView != null) {
+                    if (position == 2 && currentFocusView != null) {
                         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                         inputMethodManager.toggleSoftInputFromWindow(currentFocusView.getApplicationWindowToken(),InputMethodManager.SHOW_IMPLICIT, 0);
-                        currentFocusView.requestFocus();
-                    }
-                }
-
-                if (position != 2) {
-                    currentFocusView = getCurrentFocus();
-
-                    if (currentFocusView != null) {
-                        System.out.println(currentFocusView.findFocus());
+                    } else if (position != 2 && currentFocusView != null) {
+                        isPositionChange = true;
+                        currentFocusView.clearFocus();
                         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(currentFocusView.getWindowToken(), 0);
                     }
-                }*/
                 }
 
                 @Override
@@ -132,12 +113,6 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 }
             });
 
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        //pager.setCurrentItem(currentPosition, true);
     }
 
     private void initToolbar() {
@@ -207,27 +182,29 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         addDataToGame();
         outState.putParcelable("game", game);
-        outState.putInt("position", pager.getId());
-        //outState.putParcelable("pager", pager.onSaveInstanceState());
-
+        outState.putInt("position", currentPosition);
+        if (currentFocusView != null) outState.putInt("focus", currentFocusView.getId());
     }
 
-   /* @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        //super.onRestoreInstanceState(savedInstanceState);
-        game = savedInstanceState.getParcelable("game");
-        currentPosition = savedInstanceState.getInt("position");
-        //pager.onRestoreInstanceState(savedInstanceState.getParcelable("pager"));
-        //pager.setCurrentItem(currentPosition);
-        System.out.println("currentPosition " + currentPosition);
-    }*/
-
+    @Override
+    public void setCurrentFocusView(View currentFocusView) {
+        this.currentFocusView = currentFocusView;
+    }
 
     @Override
-    public void onFragmentCreated(Fragment fragment) {
-        //System.out.println("Fragment page number " + ((StartingDataFragment)fragment).getPageNumber());
+    public View getCurrentFocusView() {
+        return currentFocusView;
+    }
+
+    @Override
+    public void setIdPositionChange(boolean value) {
+        this.isPositionChange = value;
+    }
+
+    @Override
+    public boolean getIsPositionChange() {
+        return isPositionChange;
     }
 }
