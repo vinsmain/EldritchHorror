@@ -43,4 +43,10 @@ public class AncientOneDAO  extends BaseDaoImpl {
         qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_ID, id);
         return qb.queryForFirst().imageResource;
     }
+
+    public int getExpansionImageResource(int ancientOneID) throws SQLException {
+        QueryBuilder<AncientOne, Integer> qb = this.queryBuilder();
+        qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_ID, ancientOneID);
+        return qb.queryForFirst().expansionID;
+    }
 }

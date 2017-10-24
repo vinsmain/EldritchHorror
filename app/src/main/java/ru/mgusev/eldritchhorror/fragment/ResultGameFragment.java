@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
     Switch defeatByElimination;
     Switch defeatByMythosDeplition;
     Switch defeatByAwakenedAncientOne;
+
     EditText gatesCount;
     EditText monstersCount;
     EditText curseCount;
@@ -40,6 +42,8 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
     EditText cluesCount;
     EditText blessedCount;
     EditText doomCount;
+
+    ImageView winImage;
     TextView score;
 
     public void setActivity(PassMeLinkOnObject activity) {
@@ -115,6 +119,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
         cluesCount = (EditText) view.findViewById(R.id.cluesCount);
         blessedCount = (EditText) view.findViewById(R.id.blessedCount);
         doomCount = (EditText) view.findViewById(R.id.doomCount);
+        winImage = (ImageView) getActivity().findViewById(R.id.win_image);
         score = (TextView) getActivity().findViewById(R.id.score_pager);
     }
 
@@ -210,11 +215,15 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
                     resultGameText.setText(R.string.win_header);
                     defeatTable.setVisibility(View.GONE);
                     winTable.setVisibility(View.VISIBLE);
+                    winImage.setImageResource(R.drawable.stars);
+                    score.setVisibility(View.VISIBLE);
                 }
                 else {
                     resultGameText.setText(R.string.defeat_header);
                     defeatTable.setVisibility(View.VISIBLE);
                     winTable.setVisibility(View.GONE);
+                    winImage.setImageResource(R.drawable.skull);
+                    score.setVisibility(View.GONE);
                 }
                 break;
             case R.id.defeatByElimination:

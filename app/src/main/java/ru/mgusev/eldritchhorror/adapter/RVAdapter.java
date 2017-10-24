@@ -30,10 +30,12 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
 
         CardView cardView;
         ImageView background;
+        ImageView expansionImage;
         TextView date;
         TextView ancientOne;
         TextView playersCount;
         TextView score;
+        ImageView winImage;
         SwipeLayout swipeLayout;
         ImageView editImgSwipe;
         ImageView deleteImgSwipe;
@@ -42,10 +44,12 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
             super(itemView);
             cardView = itemView.findViewById(R.id.itemCV);
             background = itemView.findViewById(R.id.background);
+            expansionImage = itemView.findViewById(R.id.expansion_image);
             date = itemView.findViewById(R.id.date);
             ancientOne = itemView.findViewById(R.id.ancientOne);
             playersCount = itemView.findViewById(R.id.playersCount);
             score = itemView.findViewById(R.id.score);
+            winImage = itemView.findViewById(R.id.win_image_main);
             editImgSwipe = itemView.findViewById(R.id.editImgSwipe);
             deleteImgSwipe = itemView.findViewById(R.id.deleteImgSwipe);
             swipeLayout =  itemView.findViewById(R.id.swipeLayout);
@@ -95,14 +99,25 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
         holder.date.setText(MainActivity.formatter.format(gameList.get(position).date));
         try {
             Resources resources = context.getResources();
-            final int resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(gameList.get(position).ancientOneID), "drawable", context.getPackageName());
+            int resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(gameList.get(position).ancientOneID), "drawable", context.getPackageName());
             holder.background.setImageResource(resourceId);
+            if (HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(gameList.get(position).ancientOneID) != null) {
+                resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(gameList.get(position).ancientOneID), "drawable", context.getPackageName());
+                holder.expansionImage.setImageResource(resourceId);
+            }
             holder.ancientOne.setText(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(gameList.get(position).ancientOneID));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         holder.playersCount.setText(String.valueOf(gameList.get(position).playersCount));
-        holder.score.setText(String.valueOf(gameList.get(position).score));
+        if (gameList.get(position).isWinGame) {
+            holder.winImage.setImageResource(R.drawable.stars);
+            holder.score.setText(String.valueOf(gameList.get(position).score));
+            holder.score.setVisibility(View.VISIBLE);
+        } else {
+            holder.winImage.setImageResource(R.drawable.skull);
+            holder.score.setVisibility(View.GONE);
+        }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

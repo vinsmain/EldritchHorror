@@ -2,6 +2,7 @@ package ru.mgusev.eldritchhorror.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -31,6 +32,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     final static int REQUEST_CODE_INVESTIGATOR = 1;
 
     int pageNumber;
+    private int columnsCount = 3;
 
     View view;
     PassMeLinkOnObject activity;
@@ -66,7 +68,10 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         invSavedList = activity.getGame().invList;
 
         RecyclerView invRecycleView = (RecyclerView) view.findViewById(R.id.invRecycleView);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) columnsCount = 5;
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), columnsCount);
         invRecycleView.setLayoutManager(gridLayoutManager);
         invRecycleView.setHasFixedSize(true);
 

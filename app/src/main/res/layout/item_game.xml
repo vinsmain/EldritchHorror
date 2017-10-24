@@ -66,6 +66,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <ImageView
+                android:id="@+id/expansion_image"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:srcCompat="@drawable/under_the_pyramids" />
+
             <LinearLayout
                 android:id="@+id/linearLayout4"
                 android:layout_width="0dp"
@@ -184,7 +195,7 @@
                     tools:text="12" />
 
                 <ImageView
-                    android:id="@+id/imageView11"
+                    android:id="@+id/win_image_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

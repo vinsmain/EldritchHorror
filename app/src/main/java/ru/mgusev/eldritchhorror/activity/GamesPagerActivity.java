@@ -54,7 +54,6 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
             game = savedInstanceState.getParcelable("game");
             currentFocusView = (EditText) findViewById(R.id.curseCount);
             //currentFocusView.setId(savedInstanceState.getInt("focus"));
-            System.out.println("123 " + currentFocusView);
             //currentFocusView.requestFocus();
         }
 
@@ -75,7 +74,6 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 pager.setCurrentItem(currentPosition, false);
                 pagerAdapter.notifyDataSetChanged();
                 if (currentFocusView != null) {
-                    System.out.println("456 " + currentFocusView);
                     currentFocusView.setSelected(true);
                     currentFocusView.requestFocus();
                 }

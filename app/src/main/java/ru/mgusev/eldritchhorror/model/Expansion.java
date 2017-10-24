@@ -2,7 +2,9 @@ package ru.mgusev.eldritchhorror.model;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+@DatabaseTable(tableName = "expansions")
 public class Expansion {
 
     public static final String EXPANSION_FIELD_ID = "_id";

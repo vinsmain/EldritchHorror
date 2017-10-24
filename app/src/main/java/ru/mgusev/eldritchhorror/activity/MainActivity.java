@@ -2,6 +2,7 @@ package ru.mgusev.eldritchhorror.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,8 @@ import ru.mgusev.eldritchhorror.model.Game;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
 
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+
+    private int columnsCount = 1;
 
     private List<Game> gameList;
     RecyclerView recyclerView;
@@ -62,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         recyclerView = (RecyclerView) findViewById(R.id.gameList);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) columnsCount = 2;
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, columnsCount);
         //LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);

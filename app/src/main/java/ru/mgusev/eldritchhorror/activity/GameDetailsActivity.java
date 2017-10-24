@@ -3,6 +3,7 @@ package ru.mgusev.eldritchhorror.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,7 +48,9 @@ public class GameDetailsActivity extends AppCompatActivity {
     TextView blessedCount;
     TextView doomCount;
     TextView score;
+    ImageView winImage;
     ImageView backgroundTop;
+    ImageView expansionImage;
     RecyclerView invRecyclerViewDetail;
     TextView invNoneTV;
 
@@ -76,7 +79,9 @@ public class GameDetailsActivity extends AppCompatActivity {
         blessedCount = (TextView) findViewById(R.id.blessedCountDetail);
         doomCount = (TextView) findViewById(R.id.doomCountDetail);
         score = (TextView) findViewById(R.id.totalScoreDetail);
+        winImage = (ImageView) findViewById(R.id.win_image_details);
         backgroundTop = (ImageView) findViewById(R.id.backgroundDetail);
+        expansionImage = (ImageView) findViewById(R.id.expansion_image_details);
 
         initPartyDetails();
         initInvRecycleView();
@@ -140,7 +145,22 @@ public class GameDetailsActivity extends AppCompatActivity {
         cluesCount.setText(String.valueOf(game.cluesCount));
         blessedCount.setText(String.valueOf(game.blessedCount));
         doomCount.setText(String.valueOf(game.doomCount));
-        score.setText(String.valueOf(game.score));
+        if (game.isWinGame) {
+            score.setText(String.valueOf(game.score));
+            score.setVisibility(View.VISIBLE);
+            winImage.setImageResource(R.drawable.stars);
+        } else {
+            score.setVisibility(View.GONE);
+            winImage.setImageResource(R.drawable.skull);
+        }
+        try {
+            if (HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(game.ancientOneID) != null) {
+                int resourceId = getResources().getIdentifier(HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(game.ancientOneID), "drawable", this.getPackageName());
+                expansionImage.setImageResource(resourceId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
