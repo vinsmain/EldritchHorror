@@ -23,6 +23,9 @@
     <string name="edit_result">Редактировать результат игры</string>
     <string name="partyDetails">Детали игры</string>
     <string name="gameResult">Результаты игры</string>
+    <string name="win_or_defeat_header">Исход игры</string>
+    <string name="win_table_header">Подсчет победных очков</string>
+    <string name="defeat_table_header">Причина поражения</string>
     <string name="dialogAlert">Подтвердите действие</string>
     <string name="deleteDialogMessage">Удалить результат игры?</string>
     <string name="cleanDialogMessage">Очистить список выбранных сыщиков?</string>
@@ -46,4 +49,7 @@
     <string name="add_game_header">Результат игры</string>
     <string name="defeat_header">Поражение</string>
     <string name="win_header">Победа</string>
+    <string name="defeat_by_elimination">Все сыщики выбыли из игры</string>
+    <string name="defeat_by_mythos_depletion">Все карты мифа вышли из игры</string>
+    <string name="defeat_by_awakened_ancient_one">По условиям на листе Древнего</string>
 </resources>

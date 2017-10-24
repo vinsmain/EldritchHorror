@@ -8,7 +8,9 @@ import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
 
-import ru.mgusev.eldritchhorror.activity.Investigator;
+import ru.mgusev.eldritchhorror.dao.ExpansionDAO;
+import ru.mgusev.eldritchhorror.model.Expansion;
+import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.dao.AncientOneDAO;
 import ru.mgusev.eldritchhorror.dao.InvestigatorDAO;
 import ru.mgusev.eldritchhorror.model.AncientOne;
@@ -26,6 +28,7 @@ public class DatabaseLocalHelper extends OrmLiteSqliteOpenHelper {
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private InvestigatorDAO investigatorDAO = null;
     private AncientOneDAO ancientOneDAO = null;
+    private ExpansionDAO expansionDAO = null;
     private static DatabaseLocalHelper helper = null;
     private Context context;
 
@@ -73,11 +76,20 @@ public class DatabaseLocalHelper extends OrmLiteSqliteOpenHelper {
         return ancientOneDAO;
     }
 
+    //синглтон для ExpansionDAO
+    public ExpansionDAO getExpansionDAO() throws SQLException{
+        if(expansionDAO == null){
+            expansionDAO = new ExpansionDAO(getConnectionSource(), Expansion.class);
+        }
+        return expansionDAO;
+    }
+
     //выполняется при закрытии приложения
     @Override
     public void close(){
         super.close();
         investigatorDAO = null;
         ancientOneDAO = null;
+        expansionDAO = null;
     }
 }

@@ -8,7 +8,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 
-import ru.mgusev.eldritchhorror.activity.Investigator;
+import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.dao.GameDAO;
 import ru.mgusev.eldritchhorror.dao.InvestigatorDAO;
 import ru.mgusev.eldritchhorror.model.Game;

@@ -10,6 +10,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import ru.mgusev.eldritchhorror.R;
+import ru.mgusev.eldritchhorror.model.Investigator;
 
 public class InvestigatorActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
 

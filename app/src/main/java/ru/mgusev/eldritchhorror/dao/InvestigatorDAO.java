@@ -8,7 +8,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.List;
 
-import ru.mgusev.eldritchhorror.activity.Investigator;
+import ru.mgusev.eldritchhorror.model.Investigator;
 
 public class InvestigatorDAO extends BaseDaoImpl {
     public InvestigatorDAO(ConnectionSource connectionSource, Class dataClass) throws SQLException {

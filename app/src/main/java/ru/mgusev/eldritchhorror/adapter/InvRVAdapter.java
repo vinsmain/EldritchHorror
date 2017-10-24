@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import ru.mgusev.eldritchhorror.activity.Investigator;
+import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.R;
 
 public class InvRVAdapter extends RecyclerView.Adapter<InvRVAdapter.InvDetailViewHolder> {

@@ -10,6 +10,7 @@ public class AncientOne {
     public static final String ANCIENT_ONE_FIELD_ID = "_id";
     public static final String ANCIENT_ONE_FIELD_IMAGE_RESOURCE = "image_resource";
     public static final String ANCIENT_ONE_FIELD_NAME = "name";
+    public static final String ANCIENT_ONE_EXPANSION_ID = "expansion_id";
 
     @DatabaseField(dataType = DataType.INTEGER, columnName = ANCIENT_ONE_FIELD_ID)
     public int id;
@@ -19,6 +20,9 @@ public class AncientOne {
 
     @DatabaseField(dataType = DataType.STRING, columnName = ANCIENT_ONE_FIELD_NAME)
     public String name;
+
+    @DatabaseField(dataType = DataType.INTEGER, columnName = ANCIENT_ONE_EXPANSION_ID)
+    public int expansionID;
 
     public AncientOne() {
     }

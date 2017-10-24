@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.mgusev.eldritchhorror.database.HelperFactory;
-import ru.mgusev.eldritchhorror.activity.Investigator;
+import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.activity.InvestigatorActivity;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;

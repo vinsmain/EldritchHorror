@@ -7,13 +7,16 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
 
-public class ResultGameFragment extends Fragment implements TextWatcher, View.OnFocusChangeListener {
+public class ResultGameFragment extends Fragment implements TextWatcher, View.OnFocusChangeListener, CompoundButton.OnCheckedChangeListener {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
@@ -22,6 +25,14 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
     View view;
     PassMeLinkOnObject activity;
 
+    TableLayout winTable;
+    TableLayout defeatTable;
+
+    TextView resultGameText;
+    Switch resultGameSwitch;
+    Switch defeatByElimination;
+    Switch defeatByMythosDeplition;
+    Switch defeatByAwakenedAncientOne;
     EditText gatesCount;
     EditText monstersCount;
     EditText curseCount;
@@ -69,6 +80,10 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
     }
 
     private void setListeners() {
+        resultGameSwitch.setOnCheckedChangeListener(this);
+        defeatByElimination.setOnCheckedChangeListener(this);
+        defeatByMythosDeplition.setOnCheckedChangeListener(this);
+        defeatByAwakenedAncientOne.setOnCheckedChangeListener(this);
         gatesCount.addTextChangedListener(this);
         gatesCount.setOnFocusChangeListener(this);
         monstersCount.addTextChangedListener(this);
@@ -86,6 +101,13 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
     }
 
     private void initActivityElements() {
+        winTable = (TableLayout) view.findViewById(R.id.winTable);
+        defeatTable = (TableLayout) view.findViewById(R.id.defeatTable);
+        resultGameText = (TextView) view.findViewById(R.id.resultGameText);
+        resultGameSwitch = (Switch) view.findViewById(R.id.resultGameSwitch);
+        defeatByElimination = (Switch) view.findViewById(R.id.defeatByElimination);
+        defeatByMythosDeplition = (Switch) view.findViewById(R.id.defeatByMythosDeplition);
+        defeatByAwakenedAncientOne = (Switch) view.findViewById(R.id.defeatByAwakenedAncientOne);
         gatesCount = (EditText) view.findViewById(R.id.gatesCount);
         monstersCount = (EditText) view.findViewById(R.id.monstersCount);
         curseCount = (EditText) view.findViewById(R.id.curseCount);
@@ -98,6 +120,10 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
 
     public void addDataToGame() {
         if (view != null) {
+            activity.getGame().isWinGame = resultGameSwitch.isChecked();
+            activity.getGame().isDefeatByElimination = defeatByElimination.isChecked();
+            activity.getGame().isDefeatByMythosDepletion = defeatByMythosDeplition.isChecked();
+            activity.getGame().isDefeatByAwakenedAncientOne = defeatByAwakenedAncientOne.isChecked();
             activity.getGame().gatesCount = getResultToField(gatesCount);
             activity.getGame().monstersCount = getResultToField(monstersCount);
             activity.getGame().curseCount = getResultToField(curseCount);
@@ -110,6 +136,11 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
     }
 
     private void addGameValuesToFields() {
+        resultGameSwitch.setChecked(activity.getGame().isWinGame);
+        defeatByElimination.setChecked(activity.getGame().isDefeatByElimination);
+        defeatByMythosDeplition.setChecked(activity.getGame().isDefeatByMythosDepletion);
+        defeatByAwakenedAncientOne.setChecked(activity.getGame().isDefeatByAwakenedAncientOne);
+
         int i = activity.getGame().gatesCount;
         gatesCount.setText(i == 0 ? "" : String.valueOf(i));
 
@@ -168,6 +199,44 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
             activity.setIdPositionChange(false);
         } else if (b) {
             activity.setCurrentFocusView(view);
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        switch (compoundButton.getId()) {
+            case R.id.resultGameSwitch:
+                if (b) {
+                    resultGameText.setText(R.string.win_header);
+                    defeatTable.setVisibility(View.GONE);
+                    winTable.setVisibility(View.VISIBLE);
+                }
+                else {
+                    resultGameText.setText(R.string.defeat_header);
+                    defeatTable.setVisibility(View.VISIBLE);
+                    winTable.setVisibility(View.GONE);
+                }
+                break;
+            case R.id.defeatByElimination:
+                if (b) {
+                    defeatByMythosDeplition.setChecked(false);
+                    defeatByAwakenedAncientOne.setChecked(false);
+                }
+                break;
+            case R.id.defeatByMythosDeplition:
+                if (b) {
+                    defeatByElimination.setChecked(false);
+                    defeatByAwakenedAncientOne.setChecked(false);
+                }
+                break;
+            case R.id.defeatByAwakenedAncientOne:
+                if (b) {
+                    defeatByElimination.setChecked(false);
+                    defeatByMythosDeplition.setChecked(false);
+                }
+                break;
+            default:
+                break;
         }
     }
 }

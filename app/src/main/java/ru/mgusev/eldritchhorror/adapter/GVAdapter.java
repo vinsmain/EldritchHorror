@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
-import ru.mgusev.eldritchhorror.activity.Investigator;
+import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
 

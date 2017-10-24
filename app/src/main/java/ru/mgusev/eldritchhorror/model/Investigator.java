@@ -1,4 +1,4 @@
-package ru.mgusev.eldritchhorror.activity;
+package ru.mgusev.eldritchhorror.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -18,6 +18,7 @@ public class Investigator implements Parcelable {
     public static final String INVESTIGATOR_FIELD_IS_STARTING = "is_starting";
     public static final String INVESTIGATOR_FIELD_IS_REPLACEMENT = "is_replacement";
     public static final String INVESTIGATOR_FIELD_IS_DEAD = "is_dead";
+    public static final String INVESTIGATOR_FIELD_EXPANSION_ID = "expansion_id";
 
     @DatabaseField(generatedId = true, columnName = INVESTIGATOR_FIELD_ID)
     public int id;
@@ -46,6 +47,9 @@ public class Investigator implements Parcelable {
     @DatabaseField(dataType = DataType.BOOLEAN, columnName = INVESTIGATOR_FIELD_IS_DEAD)
     public boolean isDead;
 
+    @DatabaseField(dataType = DataType.INTEGER, columnName = INVESTIGATOR_FIELD_EXPANSION_ID)
+    public int expansionID;
+
     public Investigator() {
     }
 
@@ -59,6 +63,7 @@ public class Investigator implements Parcelable {
         isStarting = in.readByte() != 0;
         isReplacement = in.readByte() != 0;
         isDead = in.readByte() != 0;
+        expansionID = in.readInt();
     }
 
     public static final Creator<Investigator> CREATOR = new Creator<Investigator>() {
@@ -89,5 +94,6 @@ public class Investigator implements Parcelable {
         parcel.writeByte((byte) (isStarting ? 1 : 0));
         parcel.writeByte((byte) (isReplacement ? 1 : 0));
         parcel.writeByte((byte) (isDead ? 1 : 0));
+        parcel.writeInt(expansionID);
     }
 }
