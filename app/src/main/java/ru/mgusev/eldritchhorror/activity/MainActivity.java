@@ -83,10 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setScoreValues();
 
-        gamesCount.setText(String.valueOf(adapter.getItemCount()));
-        bestScore.setText(bestScoreValue);
-        worstScore.setText(worstScoreValue);
-
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
     }
 
@@ -183,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initGameList();
         adapter.setGameList(gameList);
         adapter.notifyDataSetChanged();
+        setScoreValues();
         Toast.makeText(this, R.string.success_deleting_message, Toast.LENGTH_SHORT).show();
     }
 
@@ -190,10 +187,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             Game game = HelperFactory.getHelper().getGameDAO().getTopGameToSort(true);
             if (game != null) bestScoreValue = String.valueOf(game.score);
+            else bestScoreValue = "";
             game = HelperFactory.getHelper().getGameDAO().getTopGameToSort(false);
             if (game != null) worstScoreValue = String.valueOf(game.score);
+            else worstScoreValue = "";
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        gamesCount.setText(String.valueOf(adapter.getItemCount()));
+        bestScore.setText(bestScoreValue);
+        worstScore.setText(worstScoreValue);
     }
 }

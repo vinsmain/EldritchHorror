@@ -104,7 +104,8 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
             if (HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(gameList.get(position).ancientOneID) != null) {
                 resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(gameList.get(position).ancientOneID), "drawable", context.getPackageName());
                 holder.expansionImage.setImageResource(resourceId);
-            }
+                holder.expansionImage.setVisibility(View.VISIBLE);
+            } else holder.expansionImage.setVisibility(View.GONE);
             holder.ancientOne.setText(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(gameList.get(position).ancientOneID));
         } catch (SQLException e) {
             e.printStackTrace();

@@ -31,10 +31,11 @@
 
     <ImageView
         android:id="@+id/expansion_image_details"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:srcCompat="@drawable/under_the_pyramids" />
@@ -109,7 +110,7 @@
 
                     <TableLayout
                         android:id="@+id/tableLayout"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:shrinkColumns="*"

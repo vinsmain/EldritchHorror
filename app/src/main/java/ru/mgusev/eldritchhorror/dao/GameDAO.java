@@ -22,6 +22,7 @@ public class GameDAO extends BaseDaoImpl {
 
     public Game getTopGameToSort(boolean sort) throws SQLException {
         QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.where().eq(Game.GAME_FIELD_WIN_GAME, true);
         qb.orderBy(Game.GAME_FIELD_SCORE, sort);
         return qb.queryForFirst();
     }

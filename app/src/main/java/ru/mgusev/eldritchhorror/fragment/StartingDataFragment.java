@@ -32,6 +32,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
     View view;
     PassMeLinkOnObject activity;
+    ImageView expansionImage;
 
     ImageButton dateButton;
     TextView dateField;
@@ -71,6 +72,8 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_starting_data, null);
+
+        expansionImage = (ImageView) getActivity().findViewById(R.id.expansion_image_pager);
 
         dateButton = (ImageButton) view.findViewById(R.id.dateImgBtn);
         dateButton.setOnClickListener(this);
@@ -145,7 +148,6 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     }
 
     private void setDataToFields() {
-        System.out.println(activity);
         dateField.setText(MainActivity.formatter.format(activity.getGame().date));
         try {
             ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID)));
@@ -178,11 +180,17 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         ancientOneSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                final int resourceId;
+                int resourceId;
                 Resources resources = getResources();
                 try {
                     resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(i + 1), "drawable", getActivity().getPackageName());
                     ((ImageView)getActivity().findViewById(R.id.background_pager)).setImageResource(resourceId);
+                    String resourceName = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(i + 1);
+                    if (resourceName != null) {
+                        resourceId = resources.getIdentifier(resourceName, "drawable", getContext().getPackageName());
+                        expansionImage.setImageResource(resourceId);
+                        expansionImage.setVisibility(View.VISIBLE);
+                    } else expansionImage.setVisibility(View.GONE);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
