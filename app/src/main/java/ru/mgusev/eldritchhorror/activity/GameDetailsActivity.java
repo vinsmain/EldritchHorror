@@ -3,7 +3,6 @@ package ru.mgusev.eldritchhorror.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -154,8 +152,8 @@ public class GameDetailsActivity extends AppCompatActivity {
             winImage.setImageResource(R.drawable.skull);
         }
         try {
-            if (HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(game.ancientOneID) != null) {
-                int resourceId = getResources().getIdentifier(HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(game.ancientOneID), "drawable", this.getPackageName());
+            if (HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOneID(game.ancientOneID) != null) {
+                int resourceId = getResources().getIdentifier(HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOneID(game.ancientOneID), "drawable", this.getPackageName());
                 expansionImage.setImageResource(resourceId);
             }
         } catch (SQLException e) {

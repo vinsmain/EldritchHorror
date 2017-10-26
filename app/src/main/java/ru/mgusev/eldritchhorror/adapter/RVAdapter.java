@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
@@ -101,8 +100,8 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
             Resources resources = context.getResources();
             int resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(gameList.get(position).ancientOneID), "drawable", context.getPackageName());
             holder.background.setImageResource(resourceId);
-            if (HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(gameList.get(position).ancientOneID) != null) {
-                resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(gameList.get(position).ancientOneID), "drawable", context.getPackageName());
+            if (HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOneID(gameList.get(position).ancientOneID) != null) {
+                resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOneID(gameList.get(position).ancientOneID), "drawable", context.getPackageName());
                 holder.expansionImage.setImageResource(resourceId);
                 holder.expansionImage.setVisibility(View.VISIBLE);
             } else holder.expansionImage.setVisibility(View.GONE);

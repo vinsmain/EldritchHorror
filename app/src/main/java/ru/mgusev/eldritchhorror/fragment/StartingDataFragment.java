@@ -185,7 +185,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
                 try {
                     resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(i + 1), "drawable", getActivity().getPackageName());
                     ((ImageView)getActivity().findViewById(R.id.background_pager)).setImageResource(resourceId);
-                    String resourceName = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOne(i + 1);
+                    String resourceName = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOneID(i + 1);
                     if (resourceName != null) {
                         resourceId = resources.getIdentifier(resourceName, "drawable", getContext().getPackageName());
                         expansionImage.setImageResource(resourceId);

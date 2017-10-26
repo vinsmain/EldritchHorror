@@ -29,6 +29,16 @@
             app:srcCompat="@drawable/charlie_kane" />
 
         <ImageView
+            android:id="@+id/invExpansionImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/invDead"
+            app:layout_constraintRight_toRightOf="@+id/invDead"
+            tools:srcCompat="@drawable/under_the_pyramids" />
+
+        <ImageView
             android:id="@+id/invDead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

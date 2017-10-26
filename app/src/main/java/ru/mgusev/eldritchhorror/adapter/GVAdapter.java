@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.sql.SQLException;
 import java.util.List;
 
+import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
@@ -21,6 +24,7 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
     static class InvestigatorViewHolder extends RecyclerView.ViewHolder {
         CardView invCardView;
         ImageView invPhoto;
+        ImageView invExpansionImage;
         ImageView invDead;
         TextView invName;
         TextView invOccupation;
@@ -29,6 +33,7 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
             super(itemView);
             invCardView = itemView.findViewById(R.id.invCardView);
             invPhoto = itemView.findViewById(R.id.invPhoto);
+            invExpansionImage = itemView.findViewById(R.id.invExpansionImage);
             invDead = itemView.findViewById(R.id.invDead);
             invName = itemView.findViewById(R.id.invName);
             invOccupation = itemView.findViewById(R.id.invOccupation);
@@ -53,10 +58,21 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
     @Override
     public void onBindViewHolder(final InvestigatorViewHolder holder, int position) {
         Resources resources = context.getResources();
-        final int resourceId = resources.getIdentifier(listStorage.get(position).imageResource, "drawable", context.getPackageName());
+        int resourceId = resources.getIdentifier(listStorage.get(position).imageResource, "drawable", context.getPackageName());
         holder.invPhoto.setImageResource(resourceId);
         holder.invName.setText(listStorage.get(position).name);
         holder.invOccupation.setText(listStorage.get(position).occupation);
+
+        try {
+            String expansionResource = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByID(listStorage.get(position).expansionID);
+            if (expansionResource != null) {
+                resourceId = resources.getIdentifier(expansionResource, "drawable", context.getPackageName());
+                holder.invExpansionImage.setImageResource(resourceId);
+                holder.invExpansionImage.setVisibility(View.VISIBLE);
+            } else holder.invExpansionImage.setVisibility(View.GONE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         if (listStorage.get(position).isStarting) {
             holder.invCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.color_starting_investigator));

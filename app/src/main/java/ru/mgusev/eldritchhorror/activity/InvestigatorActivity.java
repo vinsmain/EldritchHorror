@@ -4,18 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.sql.SQLException;
+
 import ru.mgusev.eldritchhorror.R;
+import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Investigator;
 
 public class InvestigatorActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
 
     Investigator investigator;
     ImageView invPhotoDialog;
+    ImageView invExpansionDialog;
     TextView invNameDialog;
     TextView invOccupationDialog;
     Switch switchStartingGame;
@@ -30,6 +35,7 @@ public class InvestigatorActivity extends Activity implements CompoundButton.OnC
         investigator = (Investigator) getIntent().getParcelableExtra("investigator");
 
         invPhotoDialog = (ImageView) findViewById(R.id.invPhotoDialog);
+        invExpansionDialog = (ImageView) findViewById(R.id.invExpansionDialog);
         invNameDialog = (TextView) findViewById(R.id.invNameDialog);
         invOccupationDialog = (TextView) findViewById(R.id.invOccupationDialog);
         switchStartingGame = (Switch) findViewById(R.id.switchStartingGame);
@@ -48,10 +54,21 @@ public class InvestigatorActivity extends Activity implements CompoundButton.OnC
 
     private void initInvestigator() {
         Resources resources = this.getResources();
-        final int resourceId = resources.getIdentifier(investigator.imageResource, "drawable", this.getPackageName());
+        int resourceId = resources.getIdentifier(investigator.imageResource, "drawable", this.getPackageName());
         invPhotoDialog.setImageResource(resourceId);
         invNameDialog.setText(investigator.name);
         invOccupationDialog.setText(investigator.occupation);
+
+        try {
+            String expansionResource = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByID(investigator.expansionID);
+            if (expansionResource != null) {
+                resourceId = resources.getIdentifier(expansionResource, "drawable", this.getPackageName());
+                invExpansionDialog.setImageResource(resourceId);
+                invExpansionDialog.setVisibility(View.VISIBLE);
+            } else invExpansionDialog.setVisibility(View.GONE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         if (!investigator.isMale) {
             switchStartingGame.setText(R.string.starting_game_female);
