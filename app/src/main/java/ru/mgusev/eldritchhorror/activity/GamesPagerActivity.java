@@ -92,8 +92,9 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                     else clearItem.setVisible(false);
 
                     if (position == 2 && currentFocusView != null) {
-                        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-                        inputMethodManager.toggleSoftInputFromWindow(currentFocusView.getApplicationWindowToken(),InputMethodManager.SHOW_IMPLICIT, 0);
+                        currentFocusView.clearFocus();
+                        //InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                        //inputMethodManager.toggleSoftInputFromWindow(currentFocusView.getApplicationWindowToken(),InputMethodManager.SHOW_IMPLICIT, 0);
                     } else if (position != 2 && currentFocusView != null) {
                         isPositionChange = true;
                         currentFocusView.clearFocus();

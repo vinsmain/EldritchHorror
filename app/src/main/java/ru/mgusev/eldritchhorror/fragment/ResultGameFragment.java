@@ -200,7 +200,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
     @Override
     public void onFocusChange(View view, boolean b) {
         if (b && activity.getCurrentFocusView() != null && activity.getIsPositionChange()) {
-            activity.getCurrentFocusView().requestFocus();
+            //activity.getCurrentFocusView().requestFocus();
             activity.setIdPositionChange(false);
         } else if (b) {
             activity.setCurrentFocusView(view);

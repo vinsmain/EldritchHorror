@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Древний ужас</string>
+    <string name="app_name">Древний ужас Компаньон</string>
+    <string name="main_header">Мои игры</string>
     <string name="choose_date">Выберите дату</string>
     <string name="ready">Готово</string>
     <string name="date">Дата</string>

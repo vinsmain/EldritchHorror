@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            setTitle(R.string.app_name);
+            setTitle(R.string.main_header);
         }
 
         addPartyButton = (FloatingActionButton) findViewById(R.id.addPartyButton);
