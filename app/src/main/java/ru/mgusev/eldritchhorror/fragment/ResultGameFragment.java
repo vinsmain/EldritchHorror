@@ -17,7 +17,7 @@ import android.widget.TextView;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
 
-public class ResultGameFragment extends Fragment implements TextWatcher, View.OnFocusChangeListener, CompoundButton.OnCheckedChangeListener {
+public class ResultGameFragment extends Fragment implements TextWatcher, CompoundButton.OnCheckedChangeListener {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
@@ -75,11 +75,6 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
 
         addGameValuesToFields();
 
-        if (activity.getCurrentFocusView() != null) {
-            activity.getCurrentFocusView().requestFocus();
-            System.out.println(activity.getCurrentFocusView());
-        }
-
         return view;
     }
 
@@ -89,19 +84,12 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
         defeatByMythosDeplition.setOnCheckedChangeListener(this);
         defeatByAwakenedAncientOne.setOnCheckedChangeListener(this);
         gatesCount.addTextChangedListener(this);
-        gatesCount.setOnFocusChangeListener(this);
         monstersCount.addTextChangedListener(this);
-        monstersCount.setOnFocusChangeListener(this);
         curseCount.addTextChangedListener(this);
-        curseCount.setOnFocusChangeListener(this);
         rumorsCount.addTextChangedListener(this);
-        rumorsCount.setOnFocusChangeListener(this);
         cluesCount.addTextChangedListener(this);
-        cluesCount.setOnFocusChangeListener(this);
         blessedCount.addTextChangedListener(this);
-        blessedCount.setOnFocusChangeListener(this);
         doomCount.addTextChangedListener(this);
-        doomCount.setOnFocusChangeListener(this);
     }
 
     private void initActivityElements() {
@@ -195,16 +183,6 @@ public class ResultGameFragment extends Fragment implements TextWatcher, View.On
 
     private void refreshScore() {
         score.setText(String.valueOf(getScore()));
-    }
-
-    @Override
-    public void onFocusChange(View view, boolean b) {
-        if (b && activity.getCurrentFocusView() != null && activity.getIsPositionChange()) {
-            //activity.getCurrentFocusView().requestFocus();
-            activity.setIdPositionChange(false);
-        } else if (b) {
-            activity.setCurrentFocusView(view);
-        }
     }
 
     @Override

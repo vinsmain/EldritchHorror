@@ -48,6 +48,8 @@
                                 android:layout_span="3"
                                 android:layout_weight="1"
                                 android:gravity="center_horizontal"
+                                android:focusableInTouchMode="true"
+                                android:focusable="true"
                                 android:text="@string/win_or_defeat_header"
                                 android:textColor="@color/colorPrimaryText"
                                 android:textSize="16sp" />
@@ -176,6 +178,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
+                        android:focusableInTouchMode="true"
                         android:shrinkColumns="*"
                         android:stretchColumns="*">
 
@@ -221,7 +224,6 @@
                                 android:hint="@string/zero"
                                 android:inputType="number"
                                 android:maxLength="2"
-                                android:selectAllOnFocus="false"
                                 android:textAlignment="center"
                                 android:textColor="@color/colorSecondaryText"
                                 android:textColorHint="@drawable/text_hint_selector" />

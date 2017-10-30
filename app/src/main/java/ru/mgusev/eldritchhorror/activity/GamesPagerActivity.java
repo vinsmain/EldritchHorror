@@ -38,9 +38,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     EHFragmentPagerAdapter pagerAdapter;
     Toolbar toolbar;
     TextView score;
-    View currentFocusView;
     int currentPosition = 0;
-    boolean isPositionChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +50,6 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         if (savedInstanceState!= null) {
             currentPosition = savedInstanceState.getInt("position", 0);
             game = savedInstanceState.getParcelable("game");
-            currentFocusView = (EditText) findViewById(R.id.curseCount);
-            //currentFocusView.setId(savedInstanceState.getInt("focus"));
-            //currentFocusView.requestFocus();
         }
 
         pagerAdapter = new EHFragmentPagerAdapter (this, getSupportFragmentManager(), this);
@@ -73,10 +68,6 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
             public void run() {
                 pager.setCurrentItem(currentPosition, false);
                 pagerAdapter.notifyDataSetChanged();
-                if (currentFocusView != null) {
-                    currentFocusView.setSelected(true);
-                    currentFocusView.requestFocus();
-                }
             }
         }, 100);
 
@@ -91,15 +82,12 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                     if (position == 1) clearItem.setVisible(true);
                     else clearItem.setVisible(false);
 
-                    if (position == 2 && currentFocusView != null) {
-                        currentFocusView.clearFocus();
-                        //InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-                        //inputMethodManager.toggleSoftInputFromWindow(currentFocusView.getApplicationWindowToken(),InputMethodManager.SHOW_IMPLICIT, 0);
-                    } else if (position != 2 && currentFocusView != null) {
-                        isPositionChange = true;
-                        currentFocusView.clearFocus();
-                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(currentFocusView.getWindowToken(), 0);
+                    if (position != 2) {
+                        View view = getCurrentFocus();
+                        if (view != null) {
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        }
                     }
                 }
 
@@ -184,26 +172,5 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         addDataToGame();
         outState.putParcelable("game", game);
         outState.putInt("position", currentPosition);
-        if (currentFocusView != null) outState.putInt("focus", currentFocusView.getId());
-    }
-
-    @Override
-    public void setCurrentFocusView(View currentFocusView) {
-        this.currentFocusView = currentFocusView;
-    }
-
-    @Override
-    public View getCurrentFocusView() {
-        return currentFocusView;
-    }
-
-    @Override
-    public void setIdPositionChange(boolean value) {
-        this.isPositionChange = value;
-    }
-
-    @Override
-    public boolean getIsPositionChange() {
-        return isPositionChange;
     }
 }
