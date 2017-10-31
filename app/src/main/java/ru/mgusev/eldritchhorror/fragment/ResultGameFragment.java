@@ -1,5 +1,6 @@
 package ru.mgusev.eldritchhorror.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -7,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -202,6 +204,12 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
                     winTable.setVisibility(View.GONE);
                     winImage.setImageResource(R.drawable.skull);
                     score.setVisibility(View.GONE);
+
+                    View view = getActivity().getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
                 }
                 break;
             case R.id.defeatByElimination:

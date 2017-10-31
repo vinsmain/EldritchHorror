@@ -53,4 +53,7 @@
     <string name="defeat_by_elimination">Все сыщики выбыли из игры</string>
     <string name="defeat_by_mythos_depletion">Все карты мифа вышли из игры</string>
     <string name="defeat_by_awakened_ancient_one">По условиям на листе Древнего</string>
+
+    <string name="add_new_game">Создание игры</string>
+    <string name="edit_game">Редактирование игры</string>
 </resources>

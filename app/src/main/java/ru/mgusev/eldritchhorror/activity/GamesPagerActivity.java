@@ -39,13 +39,14 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     Toolbar toolbar;
     TextView score;
     int currentPosition = 0;
+    int titleResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games_pager);
-
-        initToolbar();
+        //AndroidBug5497Workaround.assistActivity(this);
+        //https://stackoverflow.com/questions/35081142/android-material-design-nestedscrollview-collapsingtoolbarlayout-strange-behavio
 
         if (savedInstanceState!= null) {
             currentPosition = savedInstanceState.getInt("position", 0);
@@ -62,6 +63,11 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         if (game == null) game = (Game) getIntent().getParcelableExtra("editParty");
         if (game == null) game = new Game();
         score.setText(String.valueOf(game.score));
+
+        if (game.id == -1) titleResource = R.string.add_new_game;
+        else titleResource = R.string.edit_game;
+
+        initToolbar();
 
         pager.postDelayed(new Runnable() {
             @Override
@@ -105,8 +111,10 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbarPager);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(titleResource);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle(R.string.add_game_header);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

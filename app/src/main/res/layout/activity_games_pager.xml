@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/background_light"
+    android:id="@+id/main_content"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -13,9 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/pager.collapsing"
@@ -23,6 +22,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
+            app:titleEnabled="false"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -38,37 +38,24 @@
                 app:layout_constraintTop_toTopOf="@+id/toolbarPager"
                 tools:srcCompat="@drawable/azathoth" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbarPager"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorTransparent"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_collapseMode="pin"/>
-
             <ImageView
                 android:id="@+id/expansion_image_pager"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:srcCompat="@drawable/under_the_pyramids"
+                android:layout_gravity="bottom|start"
+                app:layout_collapseMode="pin"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/pager"
-                android:layout_marginLeft="8dp"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                android:layout_marginLeft="8dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginRight="8dp"
-                android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/pager"
+                android:layout_gravity="bottom|end"
+                app:layout_collapseMode="pin"
                 android:id="@+id/linearLayout2">
 
                 <TextView
@@ -76,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="12"
+                    tools:text="12"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="36sp"
                     tools:layout_editor_absoluteX="348dp"
@@ -92,9 +79,19 @@
                     tools:layout_editor_absoluteY="40dp" />
             </LinearLayout>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarPager"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorTransparent"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_collapseMode="pin"/>
 
+
+        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
