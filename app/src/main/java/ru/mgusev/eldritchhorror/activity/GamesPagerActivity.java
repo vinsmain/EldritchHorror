@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -45,14 +46,14 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games_pager);
-        //AndroidBug5497Workaround.assistActivity(this);
-        //https://stackoverflow.com/questions/35081142/android-material-design-nestedscrollview-collapsingtoolbarlayout-strange-behavio
+        AndroidBug5497Workaround.assistActivity(this);
+        //https://github.com/chenxiruanhai/AndroidBugFix/blob/master/bug-5497/AndroidBug5497Workaround.java
 
         if (savedInstanceState!= null) {
             currentPosition = savedInstanceState.getInt("position", 0);
             game = savedInstanceState.getParcelable("game");
         }
-
+        ((NestedScrollView)findViewById(R.id.pager_scroll)).setFillViewport(true);
         pagerAdapter = new EHFragmentPagerAdapter (this, getSupportFragmentManager(), this);
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(2);

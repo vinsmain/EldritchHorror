@@ -27,7 +27,7 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".activity.GamesPagerActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
     </application>
 
 </manifest>
