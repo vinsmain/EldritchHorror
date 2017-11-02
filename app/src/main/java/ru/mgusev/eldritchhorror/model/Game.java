@@ -39,7 +39,7 @@ public class Game implements Parcelable {
     public int id;
 
     @DatabaseField(dataType = DataType.DATE_STRING, columnName = GAME_FIELD_DATE)
-    public Date date = new Date();
+    public Date date;
 
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_ANCIENT_ONE_ID)
     public int ancientOneID;
@@ -99,7 +99,7 @@ public class Game implements Parcelable {
 
     public Game() {
         id = -1;
-        //date = new Date();
+        date = new Date();
         ancientOneID = 1;
         playersCount = 1;
         isSimpleMyths = true;
@@ -118,11 +118,12 @@ public class Game implements Parcelable {
         blessedCount = 0;
         doomCount = 0;
         score = 0;
-        invList  = new ArrayList<>();
+        invList = new ArrayList<>();
     }
 
     protected Game(Parcel in) {
         id = in.readInt();
+        date = new Date(in.readLong());
         ancientOneID = in.readInt();
         playersCount = in.readInt();
         isSimpleMyths = in.readByte() != 0;
@@ -164,6 +165,7 @@ public class Game implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
+        parcel.writeLong(date.getTime());
         parcel.writeInt(ancientOneID);
         parcel.writeInt(playersCount);
         parcel.writeByte((byte) (isSimpleMyths ? 1 : 0));

@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.mgusev.eldritchhorror.activity.GamesPagerActivity;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.activity.InvestigatorActivity;
@@ -51,6 +52,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         fragment.setActivity(activity);
         fragment.setArguments(arguments);
+        System.out.println(fragment);
         return fragment;
     }
 
@@ -138,7 +140,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     public void onItemClick(int position) {
         Intent intentInvestigator = new Intent(getContext(), InvestigatorActivity.class);
         intentInvestigator.putExtra("investigator", investigatorList.get(position));
-        startActivityForResult(intentInvestigator, REQUEST_CODE_INVESTIGATOR);
+        getActivity().startActivityForResult(intentInvestigator, REQUEST_CODE_INVESTIGATOR);
     }
 
     @Override

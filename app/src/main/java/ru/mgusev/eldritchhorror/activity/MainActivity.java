@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addPartyButton:
-                //Intent intent = new Intent(this, AddGameActivity.class);
                 Intent intent = new Intent(this, GamesPagerActivity.class);
                 startActivity(intent);
                 break;

@@ -42,7 +42,7 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
 
     @Override
     public void onDateSet(android.widget.DatePicker datePicker, int i, int i1, int i2) {
-        TextView textView = (TextView) getActivity().findViewById(R.id.dateFieldq);
+        TextView textView = (TextView) getActivity().findViewById(R.id.dateField);
         Calendar calendar = Calendar.getInstance();
         calendar.set(i, i1, i2);
         textView.setText(String.format(Locale.getDefault(), "%td.%tm.%tY", calendar, calendar, calendar));

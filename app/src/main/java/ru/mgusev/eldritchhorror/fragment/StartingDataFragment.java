@@ -77,7 +77,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
         dateButton = (ImageButton) view.findViewById(R.id.dateImgBtn);
         dateButton.setOnClickListener(this);
-        dateField = (TextView) view.findViewById(R.id.dateFieldq);
+        dateField = (TextView) view.findViewById(R.id.dateField);
 
         isSimpleMyths = (Switch) view.findViewById(R.id.isSimpleMyths);
         isNormalMyths = (Switch) view.findViewById(R.id.isNormalMyths);

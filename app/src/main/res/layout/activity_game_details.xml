@@ -50,25 +50,24 @@
                 android:layout_marginLeft="8dp" />
 
             <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_gravity="bottom|end"
                 android:layout_marginRight="8dp"
                 android:orientation="horizontal"
-                android:layout_gravity="bottom|end"
-                app:layout_collapseMode="pin"
-                android:id="@+id/linearLayout2">
+                app:layout_collapseMode="pin">
 
                 <TextView
                     android:id="@+id/totalScoreDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    tools:text="12"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="36sp"
                     tools:layout_editor_absoluteX="348dp"
-                    tools:layout_editor_absoluteY="92dp" />
+                    tools:layout_editor_absoluteY="92dp"
+                    tools:text="12" />
 
                 <ImageView
                     android:id="@+id/win_image_details"
@@ -117,16 +116,16 @@
                     android:layout_height="wrap_content">
 
                     <ImageButton
-                        android:id="@+id/imageButton"
+                        android:id="@+id/editStartingDataButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:background="@color/colorTransparent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/pencil"
-                        android:layout_marginEnd="8dp" />
+                        app:srcCompat="@drawable/fragment_edit" />
 
                     <TableLayout
                         android:id="@+id/tableLayout"
@@ -307,10 +306,21 @@
                 android:layout_margin="8dp"
                 app:cardCornerRadius="0dp">
 
-
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/editInvestigatorsButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/colorTransparent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/fragment_edit"
+                        android:layout_marginEnd="8dp" />
 
                     <TextView
                         android:id="@+id/textView10"
@@ -357,192 +367,313 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/winCardView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="0dp">
 
-                <TableLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/editWinButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:shrinkColumns="*"
-                    android:stretchColumns="*">
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorTransparent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/fragment_edit"
+                    android:layout_marginEnd="8dp" />
 
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
+                        android:shrinkColumns="*"
+                        android:stretchColumns="*"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        android:layout_marginBottom="8dp">
 
-                        <TextView
-                            android:id="@+id/gameResultDetailHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_span="2"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
-                            android:text="@string/gameResult"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="16sp" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:id="@+id/gatesCountDetailHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/gatesCount"
-                            android:textColor="@color/colorSecondaryText" />
-
-                        <TextView
-                            android:id="@+id/gatesCountDetail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:minWidth="100dp"
-                            android:textColor="@color/colorSecondaryText" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:id="@+id/monstersCountDetailHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/monstersCount"
-                            android:textColor="@color/colorSecondaryText" />
-
-                        <TextView
-                            android:id="@+id/monstersCountDetail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:textColor="@color/colorSecondaryText" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:id="@+id/curseCountDetailHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/curseCount"
-                            android:textColor="@color/colorSecondaryText" />
-
-                        <TextView
-                            android:id="@+id/curseCountDetail"
+                        <TableRow
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|end"
-                            android:textColor="@color/colorSecondaryText" />
-                    </TableRow>
+                            android:padding="8dp">
 
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
+                            <TextView
+                                android:id="@+id/gameResultDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_span="2"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:text="@string/gameResult"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="16sp" />
 
-                        <TextView
-                            android:id="@+id/rumorsCountDetailHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/rumorsCount"
-                            android:textColor="@color/colorSecondaryText" />
+                        </TableRow>
 
-                        <TextView
-                            android:id="@+id/rumorsCountDetail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:textColor="@color/colorSecondaryText" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:id="@+id/cluesCountDetailHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/cluesCount"
-                            android:textColor="@color/colorSecondaryText" />
-
-                        <TextView
-                            android:id="@+id/cluesCountDetail"
+                        <TableRow
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|end"
-                            android:textColor="@color/colorSecondaryText" />
-                    </TableRow>
+                            android:padding="8dp">
 
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
+                            <TextView
+                                android:id="@+id/gatesCountDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/gatesCount"
+                                android:textColor="@color/colorSecondaryText" />
 
-                        <TextView
-                            android:id="@+id/blessedCountDetailHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/blessedCount"
-                            android:textColor="@color/colorSecondaryText" />
+                            <TextView
+                                android:id="@+id/gatesCountDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:minWidth="100dp"
+                                android:textColor="@color/colorSecondaryText" />
+                        </TableRow>
 
-                        <TextView
-                            android:id="@+id/blessedCountDetail"
+                        <TableRow
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|end"
-                            android:textColor="@color/colorSecondaryText" />
-                    </TableRow>
+                            android:padding="8dp">
 
-                    <TableRow
+                            <TextView
+                                android:id="@+id/monstersCountDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/monstersCount"
+                                android:textColor="@color/colorSecondaryText" />
+
+                            <TextView
+                                android:id="@+id/monstersCountDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:textColor="@color/colorSecondaryText" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/curseCountDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/curseCount"
+                                android:textColor="@color/colorSecondaryText" />
+
+                            <TextView
+                                android:id="@+id/curseCountDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end"
+                                android:textColor="@color/colorSecondaryText" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/rumorsCountDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/rumorsCount"
+                                android:textColor="@color/colorSecondaryText" />
+
+                            <TextView
+                                android:id="@+id/rumorsCountDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:textColor="@color/colorSecondaryText" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/cluesCountDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/cluesCount"
+                                android:textColor="@color/colorSecondaryText" />
+
+                            <TextView
+                                android:id="@+id/cluesCountDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end"
+                                android:textColor="@color/colorSecondaryText" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/blessedCountDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/blessedCount"
+                                android:textColor="@color/colorSecondaryText" />
+
+                            <TextView
+                                android:id="@+id/blessedCountDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end"
+                                android:textColor="@color/colorSecondaryText" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/doomCountDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/doomCount"
+                                android:textColor="@color/colorSecondaryText" />
+
+                            <TextView
+                                android:id="@+id/doomCountDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:textColor="@color/colorSecondaryText" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/defeatCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="0dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/editDefeatButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/colorTransparent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/fragment_edit"
+                        android:layout_marginEnd="8dp" />
 
-                        <TextView
-                            android:id="@+id/doomCountDetailHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/doomCount"
-                            android:textColor="@color/colorSecondaryText" />
+                    <TableLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:shrinkColumns="*"
+                        android:stretchColumns="*"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            android:id="@+id/doomCountDetail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:textColor="@color/colorSecondaryText" />
-                    </TableRow>
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
 
-                </TableLayout>
+                            <TextView
+                                android:id="@+id/defeatTableDetailHeader"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:text="@string/defeat_table_header"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="16sp" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/defeatByEliminationDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/defeat_by_elimination" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/defeatByMythosDeplitionDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/defeat_by_mythos_depletion" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/defeatByAwakenedAncientOneDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/defeat_by_awakened_ancient_one" />
+
+                        </TableRow>
+                    </TableLayout>
+                </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
         </LinearLayout>

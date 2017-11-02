@@ -6,12 +6,14 @@ import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,7 +28,7 @@ import ru.mgusev.eldritchhorror.adapter.InvRVAdapter;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Game;
 
-public class GameDetailsActivity extends AppCompatActivity {
+public class GameDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     Game game;
 
@@ -51,6 +53,16 @@ public class GameDetailsActivity extends AppCompatActivity {
     ImageView expansionImage;
     RecyclerView invRecyclerViewDetail;
     TextView invNoneTV;
+    CardView winCardView;
+    CardView defeatCardView;
+    TableRow defeatByEliminationDetail;
+    TableRow defeatByMythosDeplitionDetail;
+    TableRow defeatByAwakenedAncientOneDetail;
+
+    ImageButton editStartingDataButton;
+    ImageButton editInvestigatorsButton;
+    ImageButton editWinButton;
+    ImageButton editDefeatButton;
 
 
     @Override
@@ -80,9 +92,16 @@ public class GameDetailsActivity extends AppCompatActivity {
         winImage = (ImageView) findViewById(R.id.win_image_details);
         backgroundTop = (ImageView) findViewById(R.id.backgroundDetail);
         expansionImage = (ImageView) findViewById(R.id.expansion_image_details);
+        winCardView = (CardView) findViewById(R.id.winCardView);
+        defeatCardView = (CardView) findViewById(R.id.defeatCardView);
+        defeatByEliminationDetail = (TableRow) findViewById(R.id.defeatByEliminationDetail);
+        defeatByMythosDeplitionDetail = (TableRow) findViewById(R.id.defeatByMythosDeplitionDetail);
+        defeatByAwakenedAncientOneDetail = (TableRow) findViewById(R.id.defeatByAwakenedAncientOneDetail);
 
         initPartyDetails();
         initInvRecycleView();
+        initEditButtons();
+        initListeners();
     }
 
     @Override
@@ -120,6 +139,20 @@ public class GameDetailsActivity extends AppCompatActivity {
         }
     }
 
+    private void initEditButtons() {
+        editStartingDataButton = (ImageButton) findViewById(R.id.editStartingDataButton);
+        editInvestigatorsButton = (ImageButton) findViewById(R.id.editInvestigatorsButton);
+        editWinButton = (ImageButton) findViewById(R.id.editWinButton);
+        editDefeatButton = (ImageButton) findViewById(R.id.editDefeatButton);
+    }
+
+    private void initListeners() {
+        editStartingDataButton.setOnClickListener(this);
+        editInvestigatorsButton.setOnClickListener(this);
+        editWinButton.setOnClickListener(this);
+        editDefeatButton.setOnClickListener(this);
+    }
+
     private void initPartyDetails() {
         dateField.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(game.date));
         try {
@@ -143,13 +176,22 @@ public class GameDetailsActivity extends AppCompatActivity {
         cluesCount.setText(String.valueOf(game.cluesCount));
         blessedCount.setText(String.valueOf(game.blessedCount));
         doomCount.setText(String.valueOf(game.doomCount));
+
+        if (!game.isDefeatByElimination) defeatByEliminationDetail.setVisibility(View.GONE);
+        if (!game.isDefeatByMythosDepletion) defeatByMythosDeplitionDetail.setVisibility(View.GONE);
+        if (!game.isDefeatByAwakenedAncientOne) defeatByAwakenedAncientOneDetail.setVisibility(View.GONE);
+
         if (game.isWinGame) {
             score.setText(String.valueOf(game.score));
             score.setVisibility(View.VISIBLE);
             winImage.setImageResource(R.drawable.stars);
+            winCardView.setVisibility(View.VISIBLE);
+            defeatCardView.setVisibility(View.GONE);
         } else {
             score.setVisibility(View.GONE);
             winImage.setImageResource(R.drawable.skull);
+            defeatCardView.setVisibility(View.VISIBLE);
+            winCardView.setVisibility(View.GONE);
         }
         try {
             if (HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOneID(game.ancientOneID) != null) {
@@ -168,9 +210,7 @@ public class GameDetailsActivity extends AppCompatActivity {
                 deleteDialog();
                 return true;
             case R.id.action_edit:
-                Intent intentEdit = new Intent(this, GamesPagerActivity.class);
-                intentEdit.putExtra("editParty", game);
-                startActivity(intentEdit);
+                startIntent(0);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -213,5 +253,32 @@ public class GameDetailsActivity extends AppCompatActivity {
         intentDelete.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intentDelete);
         Toast.makeText(this, R.string.success_deleting_message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.editStartingDataButton:
+                startIntent(0);
+                break;
+            case R.id.editInvestigatorsButton:
+                startIntent(1);
+                break;
+            case R.id.editWinButton:
+                startIntent(2);
+                break;
+            case R.id.editDefeatButton:
+                startIntent(2);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void startIntent(int position) {
+        Intent intentEdit = new Intent(this, GamesPagerActivity.class);
+        intentEdit.putExtra("editParty", game);
+        intentEdit.putExtra("setPosition", position);
+        startActivity(intentEdit);
     }
 }

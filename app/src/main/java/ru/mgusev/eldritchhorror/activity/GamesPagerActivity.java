@@ -1,10 +1,14 @@
 package ru.mgusev.eldritchhorror.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,6 +29,7 @@ import ru.mgusev.eldritchhorror.fragment.InvestigatorsChoiceFragment;
 import ru.mgusev.eldritchhorror.fragment.ResultGameFragment;
 import ru.mgusev.eldritchhorror.fragment.StartingDataFragment;
 import ru.mgusev.eldritchhorror.model.Game;
+import ru.mgusev.eldritchhorror.model.Investigator;
 
 public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkOnObject {
 
@@ -49,6 +54,8 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         AndroidBug5497Workaround.assistActivity(this);
         //https://github.com/chenxiruanhai/AndroidBugFix/blob/master/bug-5497/AndroidBug5497Workaround.java
 
+        currentPosition = (int) getIntent().getIntExtra("setPosition", 0);
+
         if (savedInstanceState!= null) {
             currentPosition = savedInstanceState.getInt("position", 0);
             game = savedInstanceState.getParcelable("game");
@@ -63,6 +70,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
         if (game == null) game = (Game) getIntent().getParcelableExtra("editParty");
         if (game == null) game = new Game();
+
         score.setText(String.valueOf(game.score));
 
         if (game.id == -1) titleResource = R.string.add_new_game;
@@ -119,9 +127,32 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishDialog();
             }
         });
+    }
+
+    private void finishDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.dialogBackAlert))
+                .setMessage(getResources().getString(R.string.backDialogMessage))
+                .setIcon(R.drawable.back_icon)
+                .setCancelable(false)
+                .setPositiveButton(getResources().getString(R.string.messageOK),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                finish();
+                            }
+                        })
+                .setNegativeButton(getResources().getString(R.string.messageCancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
@@ -181,5 +212,11 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         addDataToGame();
         outState.putParcelable("game", game);
         outState.putInt("position", currentPosition);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        pagerAdapter.getItem(1).onActivityResult(requestCode, resultCode, data);
     }
 }

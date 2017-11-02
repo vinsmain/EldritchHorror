@@ -56,4 +56,6 @@
 
     <string name="add_new_game">Создание игры</string>
     <string name="edit_game">Редактирование игры</string>
+    <string name="dialogBackAlert">Несохраненные данные будут утеряны!</string>
+    <string name="backDialogMessage">Все равно выйти?</string>
 </resources>

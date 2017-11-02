@@ -24,7 +24,7 @@
         <activity android:name=".activity.GameDetailsActivity" />
         <activity
             android:name=".activity.InvestigatorActivity"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@style/DialogTheme" />
         <activity
             android:name=".activity.GamesPagerActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
