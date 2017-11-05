@@ -12,7 +12,7 @@ public class AncientOne {
     public static final String ANCIENT_ONE_FIELD_NAME = "name";
     public static final String ANCIENT_ONE_EXPANSION_ID = "expansion_id";
 
-    @DatabaseField(dataType = DataType.INTEGER, columnName = ANCIENT_ONE_FIELD_ID)
+    @DatabaseField(dataType = DataType.INTEGER, generatedId = true, columnName = ANCIENT_ONE_FIELD_ID)
     public int id;
 
     @DatabaseField(dataType = DataType.STRING, columnName = ANCIENT_ONE_FIELD_IMAGE_RESOURCE)

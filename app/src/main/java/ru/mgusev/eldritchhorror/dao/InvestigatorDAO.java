@@ -16,7 +16,10 @@ public class InvestigatorDAO extends BaseDaoImpl {
     }
 
     public List<Investigator> getAllInvestigatorsLocal() throws SQLException{
-        return this.queryForAll();
+        QueryBuilder<Investigator, Integer> qb = this.queryBuilder();
+        qb.orderBy(Investigator.INVESTIGATOR_FIELD_EXPANSION_ID, true);
+        qb.orderBy(Investigator.INVESTIGATOR_FIELD_NAME, true);
+        return qb.query();
     }
 
     public List<Investigator> getInvestigatorsListByGameID(int gameID) throws SQLException {

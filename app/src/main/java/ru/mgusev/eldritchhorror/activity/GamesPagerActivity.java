@@ -172,6 +172,9 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
             case R.id.action_clear:
                 ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).cleanDialog();
                 return true;
+            case R.id.action_edit_expansion:
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

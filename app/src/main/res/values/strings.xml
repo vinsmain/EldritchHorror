@@ -58,4 +58,5 @@
     <string name="edit_game">Редактирование игры</string>
     <string name="dialogBackAlert">Несохраненные данные будут утеряны!</string>
     <string name="backDialogMessage">Все равно выйти?</string>
+    <string name="edit_expansion">Редактировать список дополнений</string>
 </resources>

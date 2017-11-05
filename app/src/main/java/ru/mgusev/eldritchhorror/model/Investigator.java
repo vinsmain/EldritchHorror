@@ -20,7 +20,7 @@ public class Investigator implements Parcelable {
     public static final String INVESTIGATOR_FIELD_IS_DEAD = "is_dead";
     public static final String INVESTIGATOR_FIELD_EXPANSION_ID = "expansion_id";
 
-    @DatabaseField(generatedId = true, columnName = INVESTIGATOR_FIELD_ID)
+    @DatabaseField(dataType = DataType.INTEGER, generatedId = true, columnName = INVESTIGATOR_FIELD_ID)
     public int id;
 
     @DatabaseField(dataType = DataType.INTEGER, columnName = INVESTIGATOR_FIELD_GAME_ID)
