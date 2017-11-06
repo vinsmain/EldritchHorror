@@ -30,7 +30,7 @@ import static android.app.Activity.RESULT_OK;
 public class InvestigatorsChoiceFragment extends Fragment implements OnItemClicked {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
-    final static int REQUEST_CODE_INVESTIGATOR = 1;
+    public final static int REQUEST_CODE_INVESTIGATOR = 1;
 
     int pageNumber;
     private int columnsCount = 3;
@@ -40,7 +40,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
 
     List<Investigator> investigatorList;
     List<Investigator> invSavedList;
-    GVAdapter adapter;
+    public GVAdapter adapter;
 
     public void setActivity(PassMeLinkOnObject activity) {
         this.activity = activity;

@@ -6,6 +6,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.List;
 
+import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.AncientOne;
 
 public class AncientOneDAO  extends BaseDaoImpl {
@@ -19,6 +20,11 @@ public class AncientOneDAO  extends BaseDaoImpl {
 
     public String[] getAncientOneArray() throws SQLException {
         List<AncientOne> ancientOneArrayList = getAllAncientOnes();
+        for (int i = 0; i < ancientOneArrayList.size(); ) {
+            if (!HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(ancientOneArrayList.get(i).expansionID)) {
+                ancientOneArrayList.remove(i);
+            } else i++;
+        }
         String[] ancientOneArray = new String[ancientOneArrayList.size()];
         for (int i = 0; i < ancientOneArrayList.size(); i++) {
             ancientOneArray[i] = ancientOneArrayList.get(i).name;

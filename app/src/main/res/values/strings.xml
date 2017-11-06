@@ -59,4 +59,5 @@
     <string name="dialogBackAlert">Несохраненные данные будут утеряны!</string>
     <string name="backDialogMessage">Все равно выйти?</string>
     <string name="edit_expansion">Редактировать список дополнений</string>
+    <string name="expansion_list_header">Выберите дополнения к игре</string>
 </resources>

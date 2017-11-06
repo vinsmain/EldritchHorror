@@ -37,6 +37,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     ImageButton dateButton;
     TextView dateField;
     Spinner ancientOneSpinner;
+    public ArrayAdapter<String> ancientOneAdapter;
     Spinner playersCountSpinner;
     Switch isSimpleMyths;
     Switch isNormalMyths;
@@ -88,11 +89,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         isNormalMyths.setOnCheckedChangeListener(this);
         isHardMyths.setOnCheckedChangeListener(this);
 
-        try {
-            ancientOneArray = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneArray();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        initAncientOneArray();
         playersCountArray = getResources().getStringArray(R.array.playersCountArray);
 
         initAncientOneSpinner();
@@ -100,6 +97,15 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         setDataToFields();
 
         return view;
+    }
+
+    public void initAncientOneArray() {
+        try {
+            ancientOneArray = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneArray();
+            for (int i = 0; i < ancientOneArray.length; i++)             System.out.println(ancientOneArray[i]);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -170,8 +176,8 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         return 0;
     }
 
-    private void initAncientOneSpinner() {
-        ArrayAdapter<String> ancientOneAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner, ancientOneArray);
+    public void initAncientOneSpinner() {
+        ancientOneAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner, ancientOneArray);
         ancientOneAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ancientOneSpinner = (Spinner) view.findViewById(R.id.ancientOneSpinner);

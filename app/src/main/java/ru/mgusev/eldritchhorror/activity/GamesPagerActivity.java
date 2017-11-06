@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -16,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -29,12 +26,12 @@ import ru.mgusev.eldritchhorror.fragment.InvestigatorsChoiceFragment;
 import ru.mgusev.eldritchhorror.fragment.ResultGameFragment;
 import ru.mgusev.eldritchhorror.fragment.StartingDataFragment;
 import ru.mgusev.eldritchhorror.model.Game;
-import ru.mgusev.eldritchhorror.model.Investigator;
 
 public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkOnObject {
 
     static final String TAG = "myLogs";
     public static final int PAGE_COUNT = 3;
+    final static int REQUEST_CODE_EXPANSION = 2;
 
     public Game game;
 
@@ -173,7 +170,8 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).cleanDialog();
                 return true;
             case R.id.action_edit_expansion:
-
+                Intent intent = new Intent(this, ExpansionChoiceActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_EXPANSION);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -220,6 +218,16 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        pagerAdapter.getItem(1).onActivityResult(requestCode, resultCode, data);
+        System.out.println("requesCode " + requestCode);
+        if (requestCode == InvestigatorsChoiceFragment.REQUEST_CODE_INVESTIGATOR) {
+            System.out.println("54656767");
+            pagerAdapter.getItem(1).onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == REQUEST_CODE_EXPANSION) {
+            System.out.println("123123");
+            ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneArray();
+            ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneSpinner();
+            ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter.notifyDataSetChanged();
+        }
     }
 }
