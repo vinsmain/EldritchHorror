@@ -218,15 +218,14 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("requesCode " + requestCode);
         if (requestCode == InvestigatorsChoiceFragment.REQUEST_CODE_INVESTIGATOR) {
-            System.out.println("54656767");
             pagerAdapter.getItem(1).onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == REQUEST_CODE_EXPANSION) {
-            System.out.println("123123");
-            ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneArray();
-            ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneSpinner();
+            //((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneArray();
+            //((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneSpinner();
+            ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).addDataToGame();
+            ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).initInvestigatorList();
             ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter.notifyDataSetChanged();
         }
     }

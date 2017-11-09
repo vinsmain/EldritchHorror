@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
 
     List<Investigator> investigatorList;
     List<Investigator> invSavedList;
+    List<Investigator> tempInvList;
     public GVAdapter adapter;
 
     public void setActivity(PassMeLinkOnObject activity) {
@@ -52,7 +55,6 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         fragment.setActivity(activity);
         fragment.setArguments(arguments);
-        System.out.println(fragment);
         return fragment;
     }
 
@@ -67,7 +69,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_investigators_choice, null);
 
-        invSavedList = activity.getGame().invList;
+
 
         RecyclerView invRecycleView = (RecyclerView) view.findViewById(R.id.invRecycleView);
 
@@ -118,9 +120,15 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         alert.show();
     }
 
-    private void initInvestigatorList() {
+    public void initInvestigatorList() {
         try {
-            investigatorList = HelperFactory.getStaticHelper().getInvestigatorDAO().getAllInvestigatorsLocal();
+            if (investigatorList == null) {
+                investigatorList = new ArrayList<>();
+            }
+
+            investigatorList.clear();
+            investigatorList.addAll(HelperFactory.getStaticHelper().getInvestigatorDAO().getAllInvestigatorsLocal());
+            invSavedList = activity.getGame().invList;
             if (invSavedList != null) {
                 for (int i = 0; i < invSavedList.size(); i++) {
                     for (int j = 0; j < investigatorList.size(); j++) {
@@ -129,6 +137,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
                             break;
                         }
                     }
+                    if (!investigatorList.contains(invSavedList.get(i))) investigatorList.add(invSavedList.get(i));
                 }
             }
         } catch (SQLException e) {
@@ -161,6 +170,8 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
             for (int i = 0; i < investigatorList.size(); i++) {
                 if (investigatorList.get(i).name.equals(investigatorUpdate.name)) {
                     investigatorList.set(i, investigatorUpdate);
+                    addDataToGame();
+                    initInvestigatorList();
                     adapter.notifyDataSetChanged();
                     break;
                 }

@@ -37,5 +37,6 @@ dependencies {
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     compile 'com.android.support:support-v4:26.+'
+    compile 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
     testCompile 'junit:junit:4.12'
 }

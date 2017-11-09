@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.mgusev.eldritchhorror.database.HelperFactory;
@@ -19,17 +20,13 @@ public class AncientOneDAO  extends BaseDaoImpl {
     }
 
     public String[] getAncientOneArray() throws SQLException {
-        List<AncientOne> ancientOneArrayList = getAllAncientOnes();
-        for (int i = 0; i < ancientOneArrayList.size(); ) {
-            if (!HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(ancientOneArrayList.get(i).expansionID)) {
-                ancientOneArrayList.remove(i);
-            } else i++;
+        List<AncientOne> ancientOneList = getAllAncientOnes();
+        List<String> nameList = new ArrayList<>();
+        for (AncientOne ancientOne : ancientOneList) {
+            if (HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(ancientOne.expansionID)) nameList.add(ancientOne.name);
         }
-        String[] ancientOneArray = new String[ancientOneArrayList.size()];
-        for (int i = 0; i < ancientOneArrayList.size(); i++) {
-            ancientOneArray[i] = ancientOneArrayList.get(i).name;
-        }
-        return ancientOneArray;
+
+        return nameList.toArray(new String[nameList.size()]);
     }
 
     public int getAncientOneIDByName(String name) throws SQLException {

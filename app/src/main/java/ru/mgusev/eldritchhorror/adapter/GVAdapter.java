@@ -57,15 +57,6 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
 
     @Override
     public void onBindViewHolder(final InvestigatorViewHolder holder, int position) {
-        try {
-            if (!HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(listStorage.get(position).expansionID)) {
-                holder.invCardView.setVisibility(View.GONE);
-            }
-            else holder.invCardView.setVisibility(View.VISIBLE);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier(listStorage.get(position).imageResource, "drawable", context.getPackageName());
         holder.invPhoto.setImageResource(resourceId);

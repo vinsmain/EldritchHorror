@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import ru.mgusev.eldritchhorror.model.Game;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
 
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    final static int REQUEST_CODE_EXPANSION = 2;
 
     private int columnsCount = 1;
 
@@ -84,6 +87,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setScoreValues();
 
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit_expansion:
+                Intent intent = new Intent(this, ExpansionChoiceActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void initGameList() {
