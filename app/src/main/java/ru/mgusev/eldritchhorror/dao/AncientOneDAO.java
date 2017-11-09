@@ -52,4 +52,10 @@ public class AncientOneDAO  extends BaseDaoImpl {
         qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_ID, ancientOneID);
         return qb.queryForFirst().expansionID;
     }
+
+    public AncientOne getAncientOneByName(String name) throws SQLException {
+        QueryBuilder<AncientOne, Integer> qb = this.queryBuilder();
+        qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_NAME, name);
+        return qb.queryForFirst();
+    }
 }

@@ -23,6 +23,7 @@ import ru.mgusev.eldritchhorror.activity.MainActivity;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
+import ru.mgusev.eldritchhorror.model.AncientOne;
 
 public class StartingDataFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -101,8 +102,8 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
     public void initAncientOneArray() {
         try {
-            ancientOneArray = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneArray();
-            for (int i = 0; i < ancientOneArray.length; i++)             System.out.println(ancientOneArray[i]);
+            if (ancientOneArray == null) ancientOneArray = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneArray();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -187,11 +188,13 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int resourceId;
+                AncientOne selectedAncientOne;
                 Resources resources = getResources();
                 try {
-                    resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(i + 1), "drawable", getActivity().getPackageName());
+                    selectedAncientOne = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneByName(ancientOneArray[i]);
+                    resourceId = resources.getIdentifier(selectedAncientOne.imageResource, "drawable", getActivity().getPackageName());
                     ((ImageView)getActivity().findViewById(R.id.background_pager)).setImageResource(resourceId);
-                    String resourceName = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByAncientOneID(i + 1);
+                    String resourceName = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByID(selectedAncientOne.expansionID);
                     if (resourceName != null) {
                         resourceId = resources.getIdentifier(resourceName, "drawable", getContext().getPackageName());
                         expansionImage.setImageResource(resourceId);

@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
@@ -33,6 +35,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     public final static int REQUEST_CODE_INVESTIGATOR = 1;
+    private static final String BUNDLE_RECYCLER_LAYOUT = "classname.recycler.layout";
 
     int pageNumber;
     private int columnsCount = 3;
@@ -42,7 +45,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
 
     List<Investigator> investigatorList;
     List<Investigator> invSavedList;
-    List<Investigator> tempInvList;
+    RecyclerView invRecycleView;
     public GVAdapter adapter;
 
     public void setActivity(PassMeLinkOnObject activity) {
@@ -71,7 +74,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
 
 
 
-        RecyclerView invRecycleView = (RecyclerView) view.findViewById(R.id.invRecycleView);
+        invRecycleView = (RecyclerView) view.findViewById(R.id.invRecycleView);
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) columnsCount = 5;
 
@@ -171,6 +174,9 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
                 if (investigatorList.get(i).name.equals(investigatorUpdate.name)) {
                     investigatorList.set(i, investigatorUpdate);
                     addDataToGame();
+
+
+
                     initInvestigatorList();
                     adapter.notifyDataSetChanged();
                     break;
@@ -189,4 +195,25 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
             activity.getGame().invList = invUsedList;
         }
     }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if(savedInstanceState != null)
+        {
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            invRecycleView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+            System.out.println("123123");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, invRecycleView.getLayoutManager().onSaveInstanceState());
+        System.out.println("78979889");
+    }
+
+
 }

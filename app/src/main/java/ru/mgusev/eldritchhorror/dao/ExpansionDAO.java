@@ -36,11 +36,6 @@ public class ExpansionDAO extends BaseDaoImpl {
         return qb.query();
     }
 
-    public List<Expansion> getExpansions() throws SQLException{
-        QueryBuilder<Expansion, Integer> qb = this.queryBuilder();
-        return qb.query();
-    }
-
     public boolean isEnableByID(int expansionID) throws SQLException {
         QueryBuilder<Expansion, Integer> qb = this.queryBuilder();
         qb.where().eq(Expansion.EXPANSION_FIELD_ID, expansionID);
