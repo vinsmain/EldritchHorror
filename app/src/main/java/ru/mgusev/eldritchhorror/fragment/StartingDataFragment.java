@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import ru.mgusev.eldritchhorror.activity.MainActivity;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
@@ -44,8 +47,9 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     Switch isNormalMyths;
     Switch isHardMyths;
     Switch isStartingRumor;
-    String[] ancientOneArray;
+    List <String> ancientOneList;
     String[] playersCountArray;
+    String currentAncientOneName;
 
     public void setActivity(PassMeLinkOnObject activity) {
         this.activity = activity;
@@ -102,8 +106,21 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
     public void initAncientOneArray() {
         try {
-            if (ancientOneArray == null) ancientOneArray = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneArray();
-
+            if (ancientOneList == null) ancientOneList = new ArrayList<>();
+            boolean flag = false;
+            ancientOneList.clear();
+            ancientOneList.addAll(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameList());
+            for (String name : ancientOneList) {
+                if (name.equals(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID))) {
+                    currentAncientOneName = name;
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                ancientOneList.add(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID));
+                Collections.sort(ancientOneList);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -142,7 +159,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
                 e.printStackTrace();
             }
             try {
-                activity.getGame().ancientOneID = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneArray[ancientOneSpinner.getSelectedItemPosition()]);
+                activity.getGame().ancientOneID = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(ancientOneSpinner.getSelectedItemPosition()));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -157,7 +174,8 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     private void setDataToFields() {
         dateField.setText(MainActivity.formatter.format(activity.getGame().date));
         try {
-            ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneArray, HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID)));
+            ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneList.toArray(new String[ancientOneList.size()]),
+                    HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -178,7 +196,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     }
 
     public void initAncientOneSpinner() {
-        ancientOneAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner, ancientOneArray);
+        ancientOneAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner, ancientOneList);
         ancientOneAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ancientOneSpinner = (Spinner) view.findViewById(R.id.ancientOneSpinner);
@@ -191,7 +209,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
                 AncientOne selectedAncientOne;
                 Resources resources = getResources();
                 try {
-                    selectedAncientOne = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneByName(ancientOneArray[i]);
+                    selectedAncientOne = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneByName(ancientOneList.get(i));
                     resourceId = resources.getIdentifier(selectedAncientOne.imageResource, "drawable", getActivity().getPackageName());
                     ((ImageView)getActivity().findViewById(R.id.background_pager)).setImageResource(resourceId);
                     String resourceName = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByID(selectedAncientOne.expansionID);

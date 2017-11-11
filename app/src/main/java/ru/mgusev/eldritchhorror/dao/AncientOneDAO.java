@@ -19,14 +19,15 @@ public class AncientOneDAO  extends BaseDaoImpl {
         return this.queryForAll();
     }
 
-    public String[] getAncientOneArray() throws SQLException {
-        List<AncientOne> ancientOneList = getAllAncientOnes();
+    public List<String> getAncientOneNameList() throws SQLException {
+        QueryBuilder<AncientOne, Integer> qb = this.queryBuilder();
+        qb.orderBy(AncientOne.ANCIENT_ONE_FIELD_NAME, true);
+        List<AncientOne> ancientOneList = qb.query();
         List<String> nameList = new ArrayList<>();
         for (AncientOne ancientOne : ancientOneList) {
             if (HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(ancientOne.expansionID)) nameList.add(ancientOne.name);
         }
-
-        return nameList.toArray(new String[nameList.size()]);
+        return nameList;
     }
 
     public int getAncientOneIDByName(String name) throws SQLException {
