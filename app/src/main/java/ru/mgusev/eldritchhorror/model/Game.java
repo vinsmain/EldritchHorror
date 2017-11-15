@@ -100,7 +100,7 @@ public class Game implements Parcelable {
     public Game() {
         id = -1;
         date = new Date();
-        ancientOneID = 1;
+        ancientOneID = -1;
         playersCount = 1;
         isSimpleMyths = true;
         isNormalMyths = true;

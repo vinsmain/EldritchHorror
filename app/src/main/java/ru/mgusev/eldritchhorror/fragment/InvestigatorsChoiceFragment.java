@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.mgusev.eldritchhorror.activity.DialogKeeper;
 import ru.mgusev.eldritchhorror.activity.GamesPagerActivity;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Investigator;
@@ -47,6 +48,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     List<Investigator> invSavedList;
     RecyclerView invRecycleView;
     public GVAdapter adapter;
+    AlertDialog alert;
 
     public void setActivity(PassMeLinkOnObject activity) {
         this.activity = activity;
@@ -110,16 +112,19 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 cleanInvList();
+                                ((GamesPagerActivity) activity).refreshInvestigatorsList();
                                 dialog.cancel();
+                                ((GamesPagerActivity) activity).setAlert(false);
                             }
                         })
                 .setNegativeButton(getResources().getString(R.string.messageCancel),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
+                                ((GamesPagerActivity) activity).setAlert(false);
                             }
                         });
-        AlertDialog alert = builder.create();
+        alert = builder.create();
         alert.show();
     }
 
@@ -135,7 +140,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
             if (invSavedList != null) {
                 for (int i = 0; i < invSavedList.size(); i++) {
                     for (int j = 0; j < investigatorList.size(); j++) {
-                        if (investigatorList.get(j).name.equals(invSavedList.get(i).name)) {
+                        if (investigatorList.get(j).getName().equals(invSavedList.get(i).getName())) {
                             investigatorList.set(j, invSavedList.get(i));
                             break;
                         }
@@ -171,11 +176,9 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         if (resultCode == RESULT_OK) {
             Investigator investigatorUpdate = data.getParcelableExtra("investigator");
             for (int i = 0; i < investigatorList.size(); i++) {
-                if (investigatorList.get(i).name.equals(investigatorUpdate.name)) {
+                if (investigatorList.get(i).getName().equals(investigatorUpdate.getName())) {
                     investigatorList.set(i, investigatorUpdate);
                     addDataToGame();
-
-
 
                     initInvestigatorList();
                     adapter.notifyDataSetChanged();
@@ -200,11 +203,9 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        if(savedInstanceState != null)
-        {
+        if(savedInstanceState != null) {
             Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
             invRecycleView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
-            System.out.println("123123");
         }
     }
 
@@ -212,8 +213,9 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, invRecycleView.getLayoutManager().onSaveInstanceState());
-        System.out.println("78979889");
     }
 
-
+    public AlertDialog getAlert() {
+        return alert;
+    }
 }

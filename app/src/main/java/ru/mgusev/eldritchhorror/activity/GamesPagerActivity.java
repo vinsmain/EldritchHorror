@@ -43,6 +43,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     TextView score;
     int currentPosition = 0;
     int titleResource;
+    boolean isAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         if (savedInstanceState!= null) {
             currentPosition = savedInstanceState.getInt("position", 0);
             game = savedInstanceState.getParcelable("game");
+            isAlert = savedInstanceState.getBoolean("DIALOG");
         }
         ((NestedScrollView)findViewById(R.id.pager_scroll)).setFillViewport(true);
         pagerAdapter = new EHFragmentPagerAdapter (this, getSupportFragmentManager(), this);
@@ -72,46 +74,46 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
         if (game.id == -1) titleResource = R.string.add_new_game;
         else titleResource = R.string.edit_game;
-
         initToolbar();
+
 
         pager.postDelayed(new Runnable() {
             @Override
             public void run() {
-                pager.setCurrentItem(currentPosition, false);
-                pagerAdapter.notifyDataSetChanged();
+            pager.setCurrentItem(currentPosition, false);
+            pagerAdapter.notifyDataSetChanged();
+            if (isAlert) ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).cleanDialog();
             }
         }, 100);
 
-            invalidateOptionsMenu();
-            pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        invalidateOptionsMenu();
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-                @Override
-                public void onPageSelected(int position) {
-                    Log.d(TAG, "onPageSelected, position = " + position);
-                    currentPosition = position;
+            @Override
+            public void onPageSelected(int position) {
+                Log.d(TAG, "onPageSelected, position = " + position);
+                currentPosition = position;
 
-                    if (position == 1) clearItem.setVisible(true);
-                    else clearItem.setVisible(false);
+                if (position == 1) clearItem.setVisible(true);
+                else clearItem.setVisible(false);
 
-                    if (position != 2) {
-                        View view = getCurrentFocus();
-                        if (view != null) {
-                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                        }
+                if (position != 2) {
+                    View view = getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
                 }
+            }
 
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                }
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                }
-            });
-
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     private void initToolbar() {
@@ -127,6 +129,12 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 finishDialog();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        finishDialog();
     }
 
     private void finishDialog() {
@@ -150,6 +158,8 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                         });
         AlertDialog alert = builder.create();
         alert.show();
+
+        DialogKeeper.doKeepDialog(alert);
     }
 
     @Override
@@ -167,6 +177,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 writeGameToDB();
                 return true;
             case R.id.action_clear:
+                isAlert = true;
                 ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).cleanDialog();
                 return true;
             case R.id.action_edit_expansion:
@@ -211,8 +222,10 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         addDataToGame();
+        outState.putBoolean("DIALOG", isAlert);
         outState.putParcelable("game", game);
         outState.putInt("position", currentPosition);
+        if (((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).getAlert() != null) ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).getAlert().cancel();
     }
 
     @Override
@@ -222,12 +235,29 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
             pagerAdapter.getItem(1).onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == REQUEST_CODE_EXPANSION) {
-            ((StartingDataFragment) pagerAdapter.getItem(0)).addDataToGame();
-            ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneArray();
-            ((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter.notifyDataSetChanged();
-            ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).addDataToGame();
-            ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).initInvestigatorList();
-            ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter.notifyDataSetChanged();
+            refreshAncientOneSpinner();
+            refreshInvestigatorsList();
         }
+    }
+
+    public void refreshInvestigatorsList() {
+        ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).addDataToGame();
+        ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).initInvestigatorList();
+        ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter.notifyDataSetChanged();
+    }
+
+    private void refreshAncientOneSpinner() {
+        ((StartingDataFragment) pagerAdapter.getItem(0)).addDataToGame();
+        ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneArray();
+        ((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter.notifyDataSetChanged();
+        ((StartingDataFragment) pagerAdapter.getItem(0)).setDataToFields();
+    }
+
+    public boolean isAlert() {
+        return isAlert;
+    }
+
+    public void setAlert(boolean alert) {
+        isAlert = alert;
     }
 }

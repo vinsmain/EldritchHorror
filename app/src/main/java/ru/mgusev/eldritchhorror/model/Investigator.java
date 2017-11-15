@@ -7,14 +7,18 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Locale;
+
 @DatabaseTable(tableName = "investigators")
 public class Investigator implements Parcelable {
     public static final String INVESTIGATOR_FIELD_ID = "_id";
     public static final String INVESTIGATOR_FIELD_GAME_ID = "game_id";
     public static final String INVESTIGATOR_FIELD_IMAGE_RESOURCE = "image_resource";
     public static final String INVESTIGATOR_FIELD_IS_MALE = "is_male";
-    public static final String INVESTIGATOR_FIELD_NAME = "name";
-    public static final String INVESTIGATOR_FIELD_OCCUPATION = "occupation";
+    public static final String INVESTIGATOR_FIELD_NAME_EN = "name_en";
+    public static final String INVESTIGATOR_FIELD_NAME_RU = "name_ru";
+    public static final String INVESTIGATOR_FIELD_OCCUPATION_EN = "occupation_en";
+    public static final String INVESTIGATOR_FIELD_OCCUPATION_RU = "occupation_ru";
     public static final String INVESTIGATOR_FIELD_IS_STARTING = "is_starting";
     public static final String INVESTIGATOR_FIELD_IS_REPLACEMENT = "is_replacement";
     public static final String INVESTIGATOR_FIELD_IS_DEAD = "is_dead";
@@ -32,11 +36,17 @@ public class Investigator implements Parcelable {
     @DatabaseField(dataType = DataType.BOOLEAN, columnName = INVESTIGATOR_FIELD_IS_MALE)
     public boolean isMale;
 
-    @DatabaseField(dataType = DataType.STRING, columnName = INVESTIGATOR_FIELD_NAME)
-    public String name;
+    @DatabaseField(dataType = DataType.STRING, columnName = INVESTIGATOR_FIELD_NAME_EN)
+    public String nameEN;
 
-    @DatabaseField(dataType = DataType.STRING, columnName = INVESTIGATOR_FIELD_OCCUPATION)
-    public String occupation;
+    @DatabaseField(dataType = DataType.STRING, columnName = INVESTIGATOR_FIELD_NAME_RU)
+    public String nameRU;
+
+    @DatabaseField(dataType = DataType.STRING, columnName = INVESTIGATOR_FIELD_OCCUPATION_EN)
+    public String occupationEN;
+
+    @DatabaseField(dataType = DataType.STRING, columnName = INVESTIGATOR_FIELD_OCCUPATION_RU)
+    public String occupationRU;
 
     @DatabaseField(dataType = DataType.BOOLEAN, columnName = INVESTIGATOR_FIELD_IS_STARTING)
     public boolean isStarting;
@@ -58,8 +68,10 @@ public class Investigator implements Parcelable {
         gameId = in.readInt();
         imageResource = in.readString();
         isMale = in.readByte() != 0;
-        name = in.readString();
-        occupation = in.readString();
+        nameEN = in.readString();
+        nameRU = in.readString();
+        occupationEN = in.readString();
+        occupationRU = in.readString();
         isStarting = in.readByte() != 0;
         isReplacement = in.readByte() != 0;
         isDead = in.readByte() != 0;
@@ -89,11 +101,23 @@ public class Investigator implements Parcelable {
         parcel.writeInt(gameId);
         parcel.writeString(imageResource);
         parcel.writeByte((byte) (isMale ? 1 : 0));
-        parcel.writeString(name);
-        parcel.writeString(occupation);
+        parcel.writeString(nameEN);
+        parcel.writeString(nameRU);
+        parcel.writeString(occupationEN);
+        parcel.writeString(occupationRU);
         parcel.writeByte((byte) (isStarting ? 1 : 0));
         parcel.writeByte((byte) (isReplacement ? 1 : 0));
         parcel.writeByte((byte) (isDead ? 1 : 0));
         parcel.writeInt(expansionID);
+    }
+
+    public String getName() {
+        if (Locale.getDefault().getLanguage().equals("ru")) return nameRU;
+        else return nameEN;
+    }
+
+    public String getOccupation() {
+        if (Locale.getDefault().getLanguage().equals("ru")) return occupationRU;
+        else return occupationEN;
     }
 }

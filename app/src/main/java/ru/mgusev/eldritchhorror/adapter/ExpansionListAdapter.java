@@ -49,7 +49,7 @@ public class ExpansionListAdapter extends RecyclerView.Adapter<ExpansionListAdap
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier(listStorage.get(position).imageResource, "drawable", context.getPackageName());
         holder.itemExpansionImage.setImageResource(resourceId);
-        holder.itemExpansionSwitch.setText(listStorage.get(position).name);
+        holder.itemExpansionSwitch.setText(listStorage.get(position).getName());
         if (listStorage.get(position).isEnable) holder.itemExpansionSwitch.setChecked(true);
         else holder.itemExpansionSwitch.setChecked(false);
         holder.itemExpansionSwitch.setOnCheckedChangeListener(this);
@@ -64,7 +64,7 @@ public class ExpansionListAdapter extends RecyclerView.Adapter<ExpansionListAdap
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         int position = 0;
         for (int i = 0; i < listStorage.size(); i++) {
-            if (listStorage.get(i).name.equals(compoundButton.getText())) {
+            if (listStorage.get(i).getName().equals(compoundButton.getText())) {
                 listStorage.get(i).isEnable = b;
                 position = i;
                 break;

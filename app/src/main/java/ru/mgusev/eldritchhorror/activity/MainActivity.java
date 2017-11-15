@@ -1,8 +1,10 @@
 package ru.mgusev.eldritchhorror.activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +34,6 @@ import ru.mgusev.eldritchhorror.model.Game;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
 
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-    final static int REQUEST_CODE_EXPANSION = 2;
 
     private int columnsCount = 1;
 
@@ -48,10 +50,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView bestScore;
     TextView worstScore;
 
+    AlertDialog alert;
+    boolean isAlert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState!= null) {
+            gameList = savedInstanceState.getParcelableArrayList("gameList");
+            deletingGame = savedInstanceState.getParcelable("deletingGame");
+            isAlert = savedInstanceState.getBoolean("DIALOG");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         if (toolbar != null) {
@@ -75,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        initGameList();
+        if (gameList == null) initGameList();
 
         adapter = new RVAdapter(this.getApplicationContext(), gameList);
         recyclerView.setAdapter(adapter);
@@ -87,30 +98,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setScoreValues();
 
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit_expansion:
-                Intent intent = new Intent(this, ExpansionChoiceActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        if (isAlert) deleteDialog();
     }
 
     public void initGameList() {
-        gameList = new ArrayList<>();
+        if (gameList == null) gameList = new ArrayList<>();
         try {
-            gameList = HelperFactory.getHelper().getGameDAO().getAllGames();
+            gameList.clear();
+            gameList.addAll(HelperFactory.getHelper().getGameDAO().getAllGames());
             for (int i = 0; i < gameList.size(); i ++) {
                 gameList.get(i).invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(gameList.get(i).id);
             }
@@ -162,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onDeleteClick(int position) {
         deletingGame = gameList.get(position);
+        isAlert = true;
         deleteDialog();
     }
 
@@ -176,31 +172,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void onClick(DialogInterface dialog, int id) {
                                 deleteParty();
                                 dialog.cancel();
+                                isAlert = false;
                             }
                         })
                 .setNegativeButton(getResources().getString(R.string.messageCancel),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
+                                isAlert = false;
                             }
                         });
-        AlertDialog alert = builder.create();
+        alert = builder.create();
         alert.show();
     }
 
     private void deleteParty() {
+        System.out.println(deletingGame.ancientOneID);
         try {
             HelperFactory.getHelper().getGameDAO().delete(deletingGame);
             HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(deletingGame.id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         initGameList();
-        adapter.setGameList(gameList);
         adapter.notifyDataSetChanged();
         setScoreValues();
         Toast.makeText(this, R.string.success_deleting_message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("DIALOG", isAlert);
+        outState.putParcelableArrayList("gameList", (ArrayList<? extends Parcelable>) gameList);
+        outState.putParcelable("deletingGame", deletingGame);
+        if (alert != null) alert.cancel();
     }
 
     private void setScoreValues() {
@@ -208,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Game game = HelperFactory.getHelper().getGameDAO().getTopGameToSort(true);
             if (game != null) bestScoreValue = String.valueOf(game.score);
             else bestScoreValue = "";
+
             game = HelperFactory.getHelper().getGameDAO().getTopGameToSort(false);
             if (game != null) worstScoreValue = String.valueOf(game.score);
             else worstScoreValue = "";

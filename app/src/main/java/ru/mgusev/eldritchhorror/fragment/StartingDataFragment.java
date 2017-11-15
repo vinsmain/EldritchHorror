@@ -110,7 +110,8 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
             boolean flag = false;
             ancientOneList.clear();
             ancientOneList.addAll(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameList());
-            for (String name : ancientOneList) {
+            if (activity.getGame().ancientOneID == -1) activity.getGame().ancientOneID = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(0));
+                for (String name : ancientOneList) {
                 if (name.equals(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID))) {
                     currentAncientOneName = name;
                     flag = true;
@@ -171,7 +172,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private void setDataToFields() {
+    public void setDataToFields() {
         dateField.setText(MainActivity.formatter.format(activity.getGame().date));
         try {
             ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneList.toArray(new String[ancientOneList.size()]),
@@ -221,6 +222,9 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                addDataToGame();
+                initAncientOneArray();
+                ancientOneAdapter.notifyDataSetChanged();
             }
 
             @Override

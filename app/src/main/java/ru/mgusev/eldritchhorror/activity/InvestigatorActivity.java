@@ -56,8 +56,8 @@ public class InvestigatorActivity extends Activity implements CompoundButton.OnC
         Resources resources = this.getResources();
         int resourceId = resources.getIdentifier(investigator.imageResource, "drawable", this.getPackageName());
         invPhotoDialog.setImageResource(resourceId);
-        invNameDialog.setText(investigator.name);
-        invOccupationDialog.setText(investigator.occupation);
+        invNameDialog.setText(investigator.getName());
+        invOccupationDialog.setText(investigator.getOccupation());
 
         try {
             String expansionResource = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByID(investigator.expansionID);

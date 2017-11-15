@@ -22,7 +22,7 @@ public class EHFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public EHFragmentPagerAdapter(Context context, FragmentManager fm, PassMeLinkOnObject activity) {
         super(fm);
-        titleArray = new String[]{context.getString(R.string.activity_add_party_header), context.getString(R.string.activity_investigators_choice_header), context.getString(R.string.activity_result_party_header)};
+        titleArray = new String[]{context.getString(R.string.activity_add_party_header), context.getString(R.string.activity_investigators_choice_header), context.getString(R.string.gameResult)};
         startingDataFragment = StartingDataFragment.newInstance(0, activity);
         investigatorsChoiceFragment = InvestigatorsChoiceFragment.newInstance(1, activity);
         resultGameFragment = ResultGameFragment.newInstance(2, activity);

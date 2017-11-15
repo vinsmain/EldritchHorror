@@ -1,5 +1,6 @@
 package ru.mgusev.eldritchhorror.activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableRow;
@@ -238,6 +240,8 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
                         });
         AlertDialog alert = builder.create();
         alert.show();
+
+        DialogKeeper.doKeepDialog(alert);
     }
 
     private void deleteParty() {

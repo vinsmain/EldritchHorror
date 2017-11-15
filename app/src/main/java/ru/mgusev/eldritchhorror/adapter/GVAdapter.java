@@ -60,8 +60,8 @@ public class GVAdapter extends RecyclerView.Adapter<GVAdapter.InvestigatorViewHo
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier(listStorage.get(position).imageResource, "drawable", context.getPackageName());
         holder.invPhoto.setImageResource(resourceId);
-        holder.invName.setText(listStorage.get(position).name);
-        holder.invOccupation.setText(listStorage.get(position).occupation);
+        holder.invName.setText(listStorage.get(position).getName());
+        holder.invOccupation.setText(listStorage.get(position).getOccupation());
 
         try {
             String expansionResource = HelperFactory.getStaticHelper().getExpansionDAO().getImageResourceByID(listStorage.get(position).expansionID);
