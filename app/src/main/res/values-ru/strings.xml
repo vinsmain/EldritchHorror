@@ -14,7 +14,7 @@
     <string name="next">Далее</string>
     <string name="gatesCount">Число открытых врат на поле</string>
     <string name="monstersCount">Число монстров на поле</string>
-    <string name="curseCount">Общее число состояний \"Проклятие\" и \"Темная сделака\" на руках у сыщиков</string>
+    <string name="curseCount">Общее число состояний \"Проклятие\" и \"Темная сделка\" на руках у сыщиков</string>
     <string name="rumorsCount">Число карт слуха в игре</string>
     <string name="cluesCount">Общее число улик на руках у сыщиков</string>
     <string name="blessedCount">Общее число состояний \"Благословение\" на руках у сыщиков</string>
