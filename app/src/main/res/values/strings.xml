@@ -58,4 +58,7 @@
     <string name="backDialogMessage">Все равно выйти?</string>
     <string name="edit_expansion">Редактировать список дополнений</string>
     <string name="expansion_list_header">Выберите дополнения к игре</string>
+    <string name="games_count">Общее число игр</string>
+    <string name="best_result">Лучший результат</string>
+    <string name="worst_result">Худший результат</string>
 </resources>

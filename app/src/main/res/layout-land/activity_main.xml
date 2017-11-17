@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                app:srcCompat="@drawable/eh_main" />
+                app:srcCompat="@drawable/eh_main_land" />
 
             <TableLayout
                 android:layout_width="wrap_content"
@@ -45,6 +45,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/games_count"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
 
                     <ImageView
                         android:id="@+id/imageView"
@@ -69,6 +78,15 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end">
 
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/best_result"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+
                     <ImageView
                         android:id="@+id/imageView6"
                         android:layout_width="wrap_content"
@@ -91,6 +109,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/worst_result"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
 
                     <ImageView
                         android:id="@+id/imageView7"
