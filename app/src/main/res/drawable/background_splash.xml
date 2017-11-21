@@ -7,7 +7,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/eldritch_horror_logo_en" />
+            android:src="@drawable/eldritch_horror_logo" />
     </item>
 
 </layer-list>

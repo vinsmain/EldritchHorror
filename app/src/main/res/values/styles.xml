@@ -39,4 +39,9 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorText</item>
     </style>
+
+    <style name="donateTheme" parent="Base.Widget.AppCompat.Light.ActionBar">
+        <item name="colorControlNormal">@color/colorText</item>
+        <item name="titleTextColor">@color/colorText</item>
+    </style>
 </resources>

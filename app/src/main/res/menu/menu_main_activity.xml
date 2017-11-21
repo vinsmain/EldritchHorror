@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_edit_expansion"
+        android:id="@+id/action_about"
         android:title="@string/edit_expansion"
-        android:icon="@drawable/filter"
+        android:icon="@drawable/about"
         app:showAsAction="always|collapseActionView" />
 
 </menu>

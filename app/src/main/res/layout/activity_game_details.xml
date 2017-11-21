@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:isScrollContainer="true"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/background_light"
-    android:id="@+id/main_content"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:isScrollContainer="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -23,16 +22,16 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:titleEnabled="false"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
 
             <ImageView
                 android:id="@+id/backgroundDetail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:alpha="0.5"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                android:alpha="0.5"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -43,11 +42,11 @@
                 android:id="@+id/expansion_image_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:srcCompat="@drawable/under_the_pyramids"
                 android:layout_gravity="bottom|start"
-                app:layout_collapseMode="pin"
                 android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="8dp"
+                app:layout_collapseMode="pin"
+                tools:srcCompat="@drawable/under_the_pyramids" />
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -86,7 +85,7 @@
                 android:background="@color/colorTransparent"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -231,8 +230,8 @@
                                 android:id="@+id/additionalRulesDetailHeader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:layout_span="2"
+                                android:layout_weight="1"
                                 android:gravity="center_horizontal"
                                 android:text="@string/additionalRules"
                                 android:textColor="@color/colorPrimaryText"
@@ -315,13 +314,13 @@
                         android:id="@+id/editInvestigatorsButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:background="@color/colorTransparent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/fragment_edit"
-                        android:layout_marginEnd="8dp" />
+                        app:srcCompat="@drawable/fragment_edit" />
 
                     <TextView
                         android:id="@+id/textView10"
@@ -358,13 +357,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:layout_marginTop="8dp"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp"
                         android:clipToPadding="false"
+                        android:paddingEnd="4dp"
+                        android:paddingStart="4dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10"
-                        app:layout_constraintRight_toRightOf="parent" />
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10" />
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
@@ -380,35 +379,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <ImageButton
-                    android:id="@+id/editWinButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/colorTransparent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/fragment_edit"
-                    android:layout_marginEnd="8dp" />
+                    <ImageButton
+                        android:id="@+id/editWinButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/colorTransparent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/fragment_edit" />
 
                     <TableLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:shrinkColumns="*"
                         android:stretchColumns="*"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp">
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <TableRow
                             android:layout_width="wrap_content"
@@ -603,13 +602,13 @@
                         android:id="@+id/editDefeatButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:background="@color/colorTransparent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/fragment_edit"
-                        android:layout_marginEnd="8dp" />
+                        app:srcCompat="@drawable/fragment_edit" />
 
                     <TableLayout
                         android:layout_width="0dp"

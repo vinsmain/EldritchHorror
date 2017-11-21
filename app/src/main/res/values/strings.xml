@@ -61,4 +61,11 @@
     <string name="games_count">Общее число игр</string>
     <string name="best_result">Лучший результат</string>
     <string name="worst_result">Худший результат</string>
+    <string name="about">About</string>
+    <string name="donate">Donate</string>
+    <string name="version_header">v.\u0020</string>
+
+    <string name="authors_header">Над приложением работали</string>
+    <string name="developer">mGusev</string>
+    <string name="translator">lChebotareva</string>
 </resources>
