@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adcolony.sdk.*;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +32,9 @@ import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
 import ru.mgusev.eldritchhorror.model.Game;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
+
+    private final static String APP_ID = "appfe3bcc9bb3be4c1190";
+    private final static String ZONE_ID = "vze74bd5b196ed4ff49c";
 
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
@@ -51,10 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     AlertDialog alert;
     boolean isAlert;
 
+    AdColonyInterstitial adc = null;
+    AdColonyInterstitialListener listener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AdColony.configure(this, APP_ID, ZONE_ID);
 
         if (savedInstanceState!= null) {
             gameList = savedInstanceState.getParcelableArrayList("gameList");
@@ -97,6 +106,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
         if (isAlert) deleteDialog();
+
+        /*AdColonyInterstitialListener listener = new AdColonyInterstitialListener() {
+            @Override
+            public void onRequestFilled(AdColonyInterstitial ad) {
+                /** Store and use this ad object to show your ad when appropriate
+                adc = ad;
+            }
+        };
+
+        AdColony.requestInterstitial(ZONE_ID, listener);*/
+
+        AdColonyRewardListener listener1 = new AdColonyRewardListener() {
+            @Override
+            public void onReward(AdColonyReward reward) {
+                /** Query the reward object for information here */
+                System.out.println(reward.getRewardName());
+                System.out.println(reward.getRewardAmount());
+            }
+        };
+
+/** Set reward listener for your app to be alerted of reward events */
+        AdColony.setRewardListener(listener1);
+    }
+
+    void getAdColony() {
+        listener = new AdColonyInterstitialListener() {
+            @Override
+            public void onRequestFilled(AdColonyInterstitial ad) {
+                /** Store and use this ad object to show your ad when appropriate */
+                adc = ad;
+                System.out.println(adc);
+            }
+        };
+
+        AdColony.requestInterstitial(ZONE_ID, listener);
     }
 
     public void initGameList() {
@@ -148,9 +192,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addPartyButton:
-                //view.setEnabled(false);
-                Intent intent = new Intent(this, GamesPagerActivity.class);
-                startActivity(intent);
+                getAdColony();
+                if (adc != null) adc.show();
+                //Intent intent = new Intent(this, GamesPagerActivity.class);
+                //startActivity(intent);
                 break;
             default:
                 break;
