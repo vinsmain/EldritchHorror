@@ -44,4 +44,8 @@
         <item name="colorControlNormal">@color/colorText</item>
         <item name="titleTextColor">@color/colorText</item>
     </style>
+
+    <style name="AppTheme.ColorHighlight">
+        <item name="android:colorControlHighlight">@color/colorHighlight</item>
+    </style>
 </resources>

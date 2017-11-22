@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,6 +68,7 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
     private List<Game> gameList;
     private Context context;
     private SwipeLayout currentSwipeLayout;
+    private Animation animAlpha;
 
     public void setGameList(List<Game> gameList) {
         this.gameList = gameList;
@@ -74,6 +77,7 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
     public RVAdapter(Context context, List<Game> gameList) {
         this.context = context;
         this.gameList = gameList;
+        animAlpha = AnimationUtils.loadAnimation(context, R.anim.alpha);
     }
 
     @Override
@@ -122,7 +126,15 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //v.startAnimation(animAlpha);
                 onClick.onItemClick(position);
+            }
+        });
+
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                return false;
             }
         });
 

@@ -1,6 +1,5 @@
 package ru.mgusev.eldritchhorror.activity;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -15,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -150,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addPartyButton:
+                //view.setEnabled(false);
                 Intent intent = new Intent(this, GamesPagerActivity.class);
                 startActivity(intent);
                 break;

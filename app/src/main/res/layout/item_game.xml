@@ -44,7 +44,9 @@
         android:elevation="2dp"
         app:cardBackgroundColor="@color/colorText"
         app:cardCornerRadius="0dp"
-        app:cardElevation="2dp">
+        app:cardElevation="2dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:theme="@style/AppTheme.ColorHighlight">
 
         <!-- Surface View Start-->
 

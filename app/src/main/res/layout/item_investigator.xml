@@ -10,7 +10,9 @@
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="0dp"
     app:cardElevation="2dp"
-    app:contentPadding="8dp">
+    app:contentPadding="8dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:theme="@style/AppTheme.ColorHighlight">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

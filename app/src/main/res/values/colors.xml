@@ -19,4 +19,6 @@
     <color name="disable_forground_grey">#ff6d00</color>
     <color name="disable_thumb_grey">#ff9100</color>
     <color name="enable_thrumb_green">#bdbdbd</color>
+
+    <color name="colorHighlight">#607d8b</color>
 </resources>
