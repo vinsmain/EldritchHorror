@@ -23,6 +23,7 @@ import com.adcolony.sdk.*;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,6 +31,7 @@ import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.RVAdapter;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
+import ru.mgusev.eldritchhorror.fragment.DonateDialogFragment;
 import ru.mgusev.eldritchhorror.model.Game;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
@@ -58,8 +60,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     AlertDialog alert;
     boolean isAlert;
 
-    private AdColonyInterstitial adc;
+    private AdColonyInterstitial adc = null;
     private AdColonyInterstitialListener listener;
+    private DonateDialogFragment dialog;
+    private DateHelper dateHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onReward(AdColonyReward reward) {
                 /** Query reward object for info here */
                 Log.d( TAG, "onReward" );
+                adc = null;
             }
         });
 
@@ -121,8 +126,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+        dateHelper = new DateHelper(this);
 
-
+        dialog = new DonateDialogFragment();
+        dialog.setMainActivity(this);
 
         if (savedInstanceState!= null) {
             gameList = savedInstanceState.getParcelableArrayList("gameList");
@@ -216,8 +223,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addPartyButton:
-
-                if (adc != null) adc.show();
+                if (dateHelper.isAdvertisingShow()) dialog.show(getSupportFragmentManager(), "DonateDialogFragment");
+                System.out.println("12312543456456");
+                //if (adc != null) adc.show();
                 //Intent intent = new Intent(this, GamesPagerActivity.class);
                 //startActivity(intent);
                 break;
@@ -332,5 +340,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             AdColony.requestInterstitial(ZONE_ID, listener);
         }
 
+    }
+
+    public AdColonyInterstitial getAdc() {
+        return adc;
     }
 }
