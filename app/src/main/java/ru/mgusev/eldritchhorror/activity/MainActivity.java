@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private final static String APP_ID = "appfe3bcc9bb3be4c1190";
     private final static String ZONE_ID = "vze74bd5b196ed4ff49c";
+    final private String TAG = "AdColonyDemo";
 
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
@@ -56,14 +58,71 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     AlertDialog alert;
     boolean isAlert;
 
-    AdColonyInterstitial adc = null;
-    AdColonyInterstitialListener listener;
+    private AdColonyInterstitial adc;
+    private AdColonyInterstitialListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AdColony.configure(this, APP_ID, ZONE_ID);
+
+
+        AdColonyAppOptions app_options = new AdColonyAppOptions().setUserID(Installation.id(this));
+
+        /**
+         * Configure AdColony in your launching Activity's onCreate() method so that cached ads can
+         * be available as soon as possible.
+         */
+        AdColony.configure(this, app_options, APP_ID, ZONE_ID);
+
+        /** Create and set a reward listener */
+        AdColony.setRewardListener(new AdColonyRewardListener() {
+            @Override
+            public void onReward(AdColonyReward reward) {
+                /** Query reward object for info here */
+                Log.d( TAG, "onReward" );
+            }
+        });
+
+        /**
+         * Set up listener for interstitial ad callbacks. You only need to implement the callbacks
+         * that you care about. The only required callback is onRequestFilled, as this is the only
+         * way to get an ad object.
+         */
+        listener = new AdColonyInterstitialListener() {
+            /** Ad passed back in request filled callback, ad can now be shown */
+            @Override
+            public void onRequestFilled(AdColonyInterstitial ad) {
+                adc = ad;
+                Log.d(TAG, "onRequestFilled");
+                Log.d(TAG, adc.getZoneID());
+            }
+
+            /** Ad request was not filled */
+            @Override
+            public void onRequestNotFilled( AdColonyZone zone ) {
+                Log.d(TAG, zone.getZoneID());
+                Log.d(TAG, "onRequestNotFilled");
+            }
+
+            /** Ad opened, reset UI to reflect state change */
+            @Override
+            public void onOpened(AdColonyInterstitial ad) {
+                Log.d(TAG, "onOpened");
+            }
+
+            /** Request a new ad if ad is expiring */
+            @Override
+            public void onExpiring(AdColonyInterstitial ad) {
+                AdColony.requestInterstitial(ZONE_ID, this);
+                Log.d( TAG, "onExpiring" );
+            }
+        };
+
+
+
+
+
 
         if (savedInstanceState!= null) {
             gameList = savedInstanceState.getParcelableArrayList("gameList");
@@ -106,41 +165,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
         if (isAlert) deleteDialog();
-
-        /*AdColonyInterstitialListener listener = new AdColonyInterstitialListener() {
-            @Override
-            public void onRequestFilled(AdColonyInterstitial ad) {
-                /** Store and use this ad object to show your ad when appropriate
-                adc = ad;
-            }
-        };
-
-        AdColony.requestInterstitial(ZONE_ID, listener);*/
-
-        AdColonyRewardListener listener1 = new AdColonyRewardListener() {
-            @Override
-            public void onReward(AdColonyReward reward) {
-                /** Query the reward object for information here */
-                System.out.println(reward.getRewardName());
-                System.out.println(reward.getRewardAmount());
-            }
-        };
-
-/** Set reward listener for your app to be alerted of reward events */
-        AdColony.setRewardListener(listener1);
-    }
-
-    void getAdColony() {
-        listener = new AdColonyInterstitialListener() {
-            @Override
-            public void onRequestFilled(AdColonyInterstitial ad) {
-                /** Store and use this ad object to show your ad when appropriate */
-                adc = ad;
-                System.out.println(adc);
-            }
-        };
-
-        AdColony.requestInterstitial(ZONE_ID, listener);
     }
 
     public void initGameList() {
@@ -192,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addPartyButton:
-                getAdColony();
+
                 if (adc != null) adc.show();
                 //Intent intent = new Intent(this, GamesPagerActivity.class);
                 //startActivity(intent);
@@ -285,5 +309,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gamesCount.setText(String.valueOf(adapter.getItemCount()));
         bestScore.setText(bestScoreValue);
         worstScore.setText(worstScoreValue);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        /**
+         * It's somewhat arbitrary when your ad request should be made. Here we are simply making
+         * a request if there is no valid ad available onResume, but really this can be done at any
+         * reasonable time before you plan on showing an ad.
+         */
+        if (adc == null || adc.isExpired())
+        {
+            /**
+             * Optionally update location info in the ad options for each request:
+             * LocationManager location_manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+             * Location location = location_manager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
+             * ad_options.setUserMetadata( ad_options.getUserMetadata().setUserLocation( location ) );
+             */
+            AdColony.requestInterstitial(ZONE_ID, listener);
+        }
+
     }
 }

@@ -64,7 +64,10 @@
     <string name="about">О приложении</string>
     <string name="donate">Поддержать проект</string>
 
+    <string name="donate_message">Для доступа ко всем возможностям приложения посмотрите рекламный ролик</string>
+    <string name="view_question">Начать просмотр?</string>
+
     <string name="authors_header">Над приложением работали</string>
     <string name="developer">mGusev</string>
-    <string name="translator">lChebotareva</string>
+    <string name="translator">lChebotaryova</string>
 </resources>

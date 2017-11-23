@@ -28,7 +28,7 @@ repositories {
     jcenter()
     /** The repository required for AdColony 3.0 and above */
     maven {
-        url  "https://adcolony.bintray.com/AdColony"
+        url "https://adcolony.bintray.com/AdColony"
     }
 }
 
@@ -38,8 +38,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     // https://mvnrepository.com/artifact/com.j256.ormlite/ormlite-android
-    compile 'com.j256.ormlite:ormlite-android:5.0'
     // https://github.com/jgilfelt/android-sqlite-asset-helper
+    compile 'com.j256.ormlite:ormlite-android:5.0'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.0.0-alpha1'
@@ -47,10 +47,10 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
-    compile 'com.android.support:support-v4:26.+'
+    compile 'com.android.support:support-v4:26'
     compile 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
-    testCompile 'junit:junit:4.12'
     compile 'com.adcolony:sdk:3.2.1'
-    compile 'com.google.android.gms:play-services-ads:10.0.1'
-    compile 'com.android.support:support-annotations:25.0.1'
+    compile 'com.google.android.gms:play-services-ads:11.0.4'
+    compile 'com.android.support:support-annotations:25.3.1'
+    testCompile 'junit:junit:4.12'
 }

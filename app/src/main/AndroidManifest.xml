@@ -38,15 +38,16 @@
         <activity
             android:name=".activity.DonateActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.TransparentActivity"></activity>
-
-        <activity android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
+        <activity android:name=".activity.TransparentActivity" />
+        <activity
+            android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true"/>
-        <activity android:name="com.adcolony.sdk.AdColonyAdViewActivity"
+            android:hardwareAccelerated="true" />
+        <activity
+            android:name="com.adcolony.sdk.AdColonyAdViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true"/>
-
+            android:hardwareAccelerated="true" />
+        <activity android:name=".activity.DonateDialogActivity"></activity>
     </application>
 
 </manifest>
