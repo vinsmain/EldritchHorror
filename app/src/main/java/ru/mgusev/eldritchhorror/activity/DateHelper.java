@@ -3,7 +3,6 @@ package ru.mgusev.eldritchhorror.activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-
 import java.util.Date;
 
 public class DateHelper {
@@ -12,26 +11,27 @@ public class DateHelper {
     private Context context;
     private static final String SETTINGS = "settings";
     private static final String SETTINGS_DATE = "settings_date";
+    private static final long TWENTY_FOUR_HOURS = 8640000;
 
     public DateHelper(Context context) {
         this.context = context;
     }
 
-    public void saveDate() {
+    public void saveDate(long date) {
         sPref = context.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
         Editor ed = sPref.edit();
-        Date date = new Date();
-        ed.putLong(SETTINGS_DATE, date.getTime());
+        ed.putLong(SETTINGS_DATE, date);
         ed.apply();
     }
 
-    public void loadDate() {
+    private long loadDate() {
         sPref = context.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
-        Long dateLong = sPref.getLong(SETTINGS_DATE, 0);
-        System.out.println(new Date(dateLong));
+        return sPref.getLong(SETTINGS_DATE, 0);
     }
 
     public boolean isAdvertisingShow() {
-        return true;
+        Date currentDate = new Date();
+        if (loadDate() == 0 || loadDate() > currentDate.getTime()) saveDate(currentDate.getTime() - TWENTY_FOUR_HOURS);
+        return currentDate.getTime() - loadDate() >= TWENTY_FOUR_HOURS;
     }
 }

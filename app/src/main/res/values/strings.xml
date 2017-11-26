@@ -65,8 +65,10 @@
     <string name="donate">Donate</string>
     <string name="version_header">v.\u0020</string>
 
-    <string name="donate_message">Для доступа ко всем возможностям приложения посмотрите рекламный ролик</string>
+    <string name="donate_message">Для доступа ко всем возможностям приложения на 24 часа посмотрите рекламный ролик</string>
     <string name="view_question">Начать просмотр?</string>
+    <string name="view_error">Не удалось загрузить рекламный ролик\nПредоставлен кратковременный доступ</string>
+    <string name="view_success">Получен доступ на 24 часа</string>
 
     <string name="authors_header">Над приложением работали</string>
     <string name="developer">mGusev</string>
