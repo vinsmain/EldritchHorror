@@ -16,6 +16,7 @@ public class AdColonyHelper {
     private AdColonyInterstitial adc = null;
     private AdColonyInterstitialListener listener;
     private boolean isAdvertisingLoad = false;
+    private boolean isNotFolled = false;
     DateHelper dateHelper;
 
     public AdColonyHelper(final Activity activity) {
@@ -55,6 +56,7 @@ public class AdColonyHelper {
                 adc = ad;
                 isAdvertisingLoad = true;
                 Log.d(TAG, "onRequestFilled");
+                Log.d(TAG, String.valueOf(isAdvertisingLoad()));
             }
 
             /** Ad request was not filled */
@@ -62,6 +64,7 @@ public class AdColonyHelper {
             public void onRequestNotFilled( AdColonyZone zone ) {
                 adc = null;
                 isAdvertisingLoad = false;
+                isNotFolled = true;
                 Log.d(TAG, "onRequestNotFilled");
             }
 
@@ -99,6 +102,10 @@ public class AdColonyHelper {
 
     public boolean isAdvertisingLoad() {
         return isAdvertisingLoad;
+    }
+
+    public boolean isNotFolled() {
+        return isNotFolled;
     }
 
     public AdColonyInterstitial getAdc() {

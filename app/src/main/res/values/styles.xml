@@ -48,4 +48,8 @@
     <style name="AppTheme.ColorHighlight">
         <item name="android:colorControlHighlight">@color/colorHighlight</item>
     </style>
+
+    <style name="Loader" parent="DialogTheme">
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
 </resources>

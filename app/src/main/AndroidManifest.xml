@@ -47,7 +47,9 @@
             android:name="com.adcolony.sdk.AdColonyAdViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true" />
-        <activity android:name=".activity.DonateDialogActivity"></activity>
+        <activity android:name=".activity.DonateDialogActivity" />
+        <activity android:name=".activity.LoaderActivity"
+            android:theme="@style/Loader" />
     </application>
 
 </manifest>
