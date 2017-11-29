@@ -25,7 +25,9 @@
             android:layout_weight="1"
             android:elevation="2dp"
             android:padding="8dp"
-            app:srcCompat="@drawable/delete" />
+            app:srcCompat="@drawable/delete"
+            android:foreground="?attr/selectableItemBackground"
+            android:theme="@style/AppTheme.ColorHighlight" />
 
         <ImageView
             android:id="@+id/editImgSwipe"
@@ -34,7 +36,9 @@
             android:layout_weight="1"
             android:elevation="2dp"
             android:padding="8dp"
-            app:srcCompat="@drawable/pencil" />
+            app:srcCompat="@drawable/pencil"
+            android:foreground="?attr/selectableItemBackground"
+            android:theme="@style/AppTheme.ColorHighlight" />
     </LinearLayout>
 
     <android.support.v7.widget.CardView
@@ -44,7 +48,9 @@
         android:elevation="2dp"
         app:cardBackgroundColor="@color/colorText"
         app:cardCornerRadius="0dp"
-        app:cardElevation="2dp">
+        app:cardElevation="2dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:theme="@style/AppTheme.ColorHighlight" >
 
         <!-- Surface View Start-->
 

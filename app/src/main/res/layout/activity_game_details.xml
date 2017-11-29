@@ -124,6 +124,8 @@
                         android:background="@color/colorTransparent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:theme="@style/AppTheme.ColorHighlight"
                         app:srcCompat="@drawable/fragment_edit" />
 
                     <TableLayout
@@ -320,6 +322,8 @@
                         android:background="@color/colorTransparent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:theme="@style/AppTheme.ColorHighlight"
                         app:srcCompat="@drawable/fragment_edit" />
 
                     <TextView
@@ -389,6 +393,8 @@
                         android:background="@color/colorTransparent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:theme="@style/AppTheme.ColorHighlight"
                         app:srcCompat="@drawable/fragment_edit" />
 
                     <TableLayout
@@ -608,6 +614,8 @@
                         android:background="@color/colorTransparent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:theme="@style/AppTheme.ColorHighlight"
                         app:srcCompat="@drawable/fragment_edit" />
 
                     <TableLayout

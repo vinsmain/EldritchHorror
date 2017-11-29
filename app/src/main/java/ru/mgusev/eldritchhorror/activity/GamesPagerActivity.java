@@ -3,6 +3,7 @@ package ru.mgusev.eldritchhorror.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
@@ -51,6 +52,9 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         setContentView(R.layout.activity_games_pager);
         AndroidBug5497Workaround.assistActivity(this);
         //https://github.com/chenxiruanhai/AndroidBugFix/blob/master/bug-5497/AndroidBug5497Workaround.java
+
+        if (getIntent().getBooleanExtra("ORIENTATION", false)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         currentPosition = (int) getIntent().getIntExtra("setPosition", 0);
 
@@ -251,10 +255,6 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneArray();
         ((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter.notifyDataSetChanged();
         ((StartingDataFragment) pagerAdapter.getItem(0)).setDataToFields();
-    }
-
-    public boolean isAlert() {
-        return isAlert;
     }
 
     public void setAlert(boolean alert) {

@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     AlertDialog alert;
     boolean isAlert;
+    boolean isAdvertisingDialog;
 
     private DonateDialogFragment dialog;
     private DateHelper dateHelper;
@@ -63,12 +64,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dateHelper = new DateHelper(this);
 
         dialog = new DonateDialogFragment();
-        dialog.setMainActivity(this);
+        dialog.setActivity(this);
 
         if (savedInstanceState!= null) {
             gameList = savedInstanceState.getParcelableArrayList("gameList");
             deletingGame = savedInstanceState.getParcelable("deletingGame");
             isAlert = savedInstanceState.getBoolean("DIALOG");
+            isAdvertisingDialog = savedInstanceState.getBoolean("DIALOG_ADVERTISING");
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
@@ -106,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
         if (isAlert) deleteDialog();
+        if (isAdvertisingDialog) onClick(addPartyButton);
     }
 
     public void initGameList() {
@@ -157,7 +160,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addPartyButton:
-                if (dateHelper.isAdvertisingShow()) dialog.show(getSupportFragmentManager(), "DonateDialogFragment");
+                if (dateHelper.isAdvertisingShow()) {
+                    isAdvertisingDialog = true;
+                    dialog.show(getSupportFragmentManager(), "DonateDialogFragment");
+                }
                 else addGame();
                 break;
             default:
@@ -165,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void addGame() {
+    private void addGame() {
         Intent intent = new Intent(this, GamesPagerActivity.class);
         startActivity(intent);
     }
@@ -230,9 +236,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(this, R.string.success_deleting_message, Toast.LENGTH_SHORT).show();
     }
 
+    public void setAdvertisingDialog(boolean advertisingDialog) {
+        isAdvertisingDialog = advertisingDialog;
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean("DIALOG", isAlert);
+        outState.putBoolean("DIALOG_ADVERTISING", isAdvertisingDialog);
         outState.putParcelableArrayList("gameList", (ArrayList<? extends Parcelable>) gameList);
         outState.putParcelable("deletingGame", deletingGame);
         if (alert != null) alert.cancel();

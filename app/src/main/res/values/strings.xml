@@ -71,6 +71,8 @@
     <string name="view_success">Получен доступ на 24 часа</string>
 
     <string name="authors_header">Над приложением работали</string>
-    <string name="developer">mGusev</string>
+    <string name="development_header">Разработка</string>
+    <string name="developer">ShishSmasloM</string>
+    <string name="translation_header">Перевод</string>
     <string name="translator">lChebotareva</string>
 </resources>

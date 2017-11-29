@@ -1,26 +1,25 @@
 package ru.mgusev.eldritchhorror.activity;
 
-import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 import com.adcolony.sdk.*;
 import java.util.Date;
-import ru.mgusev.eldritchhorror.R;
 
 public class AdColonyHelper {
 
+    private static AdColonyHelper instance;
+
     private final static String APP_ID = "appfe3bcc9bb3be4c1190";
     private final static String ZONE_ID = "vze74bd5b196ed4ff49c";
-    final private String TAG = "AdColonyDemo";
+    private final String TAG = "AdColonyDemo";
 
     private AdColonyInterstitial adc = null;
     private AdColonyInterstitialListener listener;
     private boolean isAdvertisingLoad = false;
-    private boolean isNotFolled = false;
-    DateHelper dateHelper;
+    private boolean isNotFilled = false;
+    private boolean isOnReward = false;
+    private DateHelper dateHelper;
 
-    public AdColonyHelper(final Activity activity) {
-
+    private AdColonyHelper(final LoaderActivity activity) {
 
         dateHelper = new DateHelper(activity);
 
@@ -38,9 +37,10 @@ public class AdColonyHelper {
             public void onReward(AdColonyReward reward) {
                 /** Query reward object for info here */
                 Log.d( TAG, "onReward" );
+                isOnReward = true;
                 adc = null;
                 dateHelper.saveDate((new Date()).getTime());
-                Toast.makeText(activity, R.string.view_success, Toast.LENGTH_LONG).show();
+                activity.addGame();
             }
         });
 
@@ -56,7 +56,6 @@ public class AdColonyHelper {
                 adc = ad;
                 isAdvertisingLoad = true;
                 Log.d(TAG, "onRequestFilled");
-                Log.d(TAG, String.valueOf(isAdvertisingLoad()));
             }
 
             /** Ad request was not filled */
@@ -64,13 +63,14 @@ public class AdColonyHelper {
             public void onRequestNotFilled( AdColonyZone zone ) {
                 adc = null;
                 isAdvertisingLoad = false;
-                isNotFolled = true;
+                isNotFilled = true;
                 Log.d(TAG, "onRequestNotFilled");
             }
 
             /** Ad opened, reset UI to reflect state change */
             @Override
             public void onOpened(AdColonyInterstitial ad) {
+                adc = null;
                 Log.d(TAG, "onOpened");
             }
 
@@ -89,23 +89,37 @@ public class AdColonyHelper {
          * a request if there is no valid ad available onResume, but really this can be done at any
          * reasonable time before you plan on showing an ad.
          */
-        if (adc == null || adc.isExpired()) {
+        //if (adc == null || adc.isExpired()) {
             /**
              * Optionally update location info in the ad options for each request:
              * LocationManager location_manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
              * Location location = location_manager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
              * ad_options.setUserMetadata( ad_options.getUserMetadata().setUserLocation( location ) );
              */
+            isAdvertisingLoad = false;
+            isNotFilled = false;
+            isOnReward = false;
             AdColony.requestInterstitial(ZONE_ID, listener);
+        //}
+    }
+
+    public static AdColonyHelper getInstance(LoaderActivity activity){
+        if (null == instance){
+            instance = new AdColonyHelper(activity);
         }
+        return instance;
     }
 
     public boolean isAdvertisingLoad() {
         return isAdvertisingLoad;
     }
 
-    public boolean isNotFolled() {
-        return isNotFolled;
+    public boolean isNotFilled() {
+        return isNotFilled;
+    }
+
+    public boolean isOnReward() {
+        return isOnReward;
     }
 
     public AdColonyInterstitial getAdc() {
