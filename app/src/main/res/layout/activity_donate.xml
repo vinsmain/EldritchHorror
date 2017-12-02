@@ -9,11 +9,8 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_donate"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="56dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:layout_collapseMode="pin"
@@ -58,6 +55,16 @@
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:text="@string/authors_header"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/development_header"
+            android:textAlignment="center"
             android:textColor="@color/colorPrimaryText" />
 
         <TextView
@@ -67,6 +74,15 @@
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:text="@string/developer" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/translation_header"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText" />
 
         <TextView
             android:id="@+id/textView13"

@@ -2,7 +2,6 @@ package ru.mgusev.eldritchhorror.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -43,7 +42,6 @@ public class LoaderActivity extends Activity {
 
     public void addGame() {
         Intent intent = new Intent(this, GamesPagerActivity.class);
-        intent.putExtra("ORIENTATION", getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
         startActivity(intent);
         if (helper.isOnReward()) showSuccessAlert();
         else showErrorAlert();

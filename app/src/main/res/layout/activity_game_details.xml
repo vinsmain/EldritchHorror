@@ -118,14 +118,14 @@
                         android:id="@+id/editStartingDataButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="0dp"
                         android:background="@color/colorTransparent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:padding="8dp"
+                        android:theme="@style/AppTheme.ColorHighlight"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:theme="@style/AppTheme.ColorHighlight"
                         app:srcCompat="@drawable/fragment_edit" />
 
                     <TableLayout
@@ -316,14 +316,14 @@
                         android:id="@+id/editInvestigatorsButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="0dp"
                         android:background="@color/colorTransparent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:padding="8dp"
+                        android:theme="@style/AppTheme.ColorHighlight"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:theme="@style/AppTheme.ColorHighlight"
                         app:srcCompat="@drawable/fragment_edit" />
 
                     <TextView
@@ -387,14 +387,14 @@
                         android:id="@+id/editWinButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="0dp"
                         android:background="@color/colorTransparent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:padding="8dp"
+                        android:theme="@style/AppTheme.ColorHighlight"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:theme="@style/AppTheme.ColorHighlight"
                         app:srcCompat="@drawable/fragment_edit" />
 
                     <TableLayout
@@ -608,14 +608,14 @@
                         android:id="@+id/editDefeatButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="0dp"
                         android:background="@color/colorTransparent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:padding="8dp"
+                        android:theme="@style/AppTheme.ColorHighlight"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:theme="@style/AppTheme.ColorHighlight"
                         app:srcCompat="@drawable/fragment_edit" />
 
                     <TableLayout

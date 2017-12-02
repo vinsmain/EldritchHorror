@@ -11,7 +11,7 @@ public class DateHelper {
     private Context context;
     private static final String SETTINGS = "settings";
     private static final String SETTINGS_DATE = "settings_date";
-    private static final long TWENTY_FOUR_HOURS = 8640000;
+    private static final long TWENTY_FOUR_HOURS = 86400000; //milliseconds
 
     public DateHelper(Context context) {
         this.context = context;
