@@ -3,6 +3,7 @@ package ru.mgusev.eldritchhorror.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.RVAdapter;
@@ -56,6 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DonateDialogFragment dialog;
     private DateHelper dateHelper;
 
+    private AdColonyHelper helper;
+    private AdColonyTask task;
+    private boolean isLock;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +78,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             deletingGame = savedInstanceState.getParcelable("deletingGame");
             isAlert = savedInstanceState.getBoolean("DIALOG");
             isAdvertisingDialog = savedInstanceState.getBoolean("DIALOG_ADVERTISING");
+            isLock = savedInstanceState.getBoolean("LOCK");
+        }
+
+        helper = AdColonyHelper.getInstance(this);
+        if (!isLock && !helper.isAdvertisingLoad()) {
+            task = new AdColonyTask();
+            task.execute();
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
@@ -108,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
         if (isAlert) deleteDialog();
-        if (isAdvertisingDialog) onClick(addPartyButton);
+        if (isAdvertisingDialog) showDonateDialog();
     }
 
     public void initGameList() {
@@ -160,9 +174,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addPartyButton:
-                if (dateHelper.isAdvertisingShow() && adapter.getItemCount() >= 5) {
-                    isAdvertisingDialog = true;
-                    dialog.show(getSupportFragmentManager(), "DonateDialogFragment");
+                if (helper.isAdvertisingLoad() && dateHelper.isAdvertisingShow() && adapter.getItemCount() >= 5) {
+                    showDonateDialog();
                 }
                 else addGame();
                 break;
@@ -171,7 +184,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void addGame() {
+    public void showDonateDialog() {
+        isAdvertisingDialog = true;
+        dialog.show(getSupportFragmentManager(), "DonateDialogFragment");
+    }
+
+    public void showAD() {
+        try {
+            helper.getAdc().show();
+        } catch (NullPointerException e) {
+            Log.d("Fail show video", "Get video again");
+            task = new AdColonyTask();
+            task.execute();
+            addGame();
+        }
+    }
+
+    public void addGame() {
         Intent intent = new Intent(this, GamesPagerActivity.class);
         startActivity(intent);
     }
@@ -244,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean("DIALOG", isAlert);
         outState.putBoolean("DIALOG_ADVERTISING", isAdvertisingDialog);
+        outState.putBoolean("LOCK", isLock);
         outState.putParcelableArrayList("gameList", (ArrayList<? extends Parcelable>) gameList);
         outState.putParcelable("deletingGame", deletingGame);
         if (alert != null) alert.cancel();
@@ -264,5 +294,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gamesCount.setText(String.valueOf(adapter.getItemCount()));
         bestScore.setText(bestScoreValue);
         worstScore.setText(worstScoreValue);
+    }
+
+    //AdColonyTask
+    private class AdColonyTask extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            isLock = true;
+            helper.startRequestInterstitial();
+            int i = 0;
+            while (!helper.isAdvertisingLoad() && !helper.isNotFilled() && i < 30) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                i++;
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            isLock = false;
+        }
     }
 }

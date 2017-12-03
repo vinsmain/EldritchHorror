@@ -52,27 +52,27 @@
     <string name="defeat_by_mythos_depletion">A Mythos card cannot be drawn</string>
     <string name="defeat_by_awakened_ancient_one">Indication on the Ancient One sheet</string>
 
-    <string name="add_new_game">Создание игры</string>
-    <string name="edit_game">Редактирование игры</string>
-    <string name="dialogBackAlert">Несохраненные данные будут утеряны!</string>
-    <string name="backDialogMessage">Все равно выйти?</string>
-    <string name="edit_expansion">Редактировать список дополнений</string>
-    <string name="expansion_list_header">Выберите дополнения к игре</string>
-    <string name="games_count">Общее число игр</string>
-    <string name="best_result">Лучший результат</string>
-    <string name="worst_result">Худший результат</string>
+    <string name="add_new_game">Create a new game</string>
+    <string name="edit_game">Edit game</string>
+    <string name="dialogBackAlert">Unsaved data will be lost!</string>
+    <string name="backDialogMessage">Do you want to leave?</string>
+    <string name="edit_expansion">Edit the list of expansion</string>
+    <string name="expansion_list_header">Select expansions</string>
+    <string name="games_count">Total number of games</string>
+    <string name="best_result">Best result</string>
+    <string name="worst_result">Worst result</string>
     <string name="about">About</string>
-    <string name="donate">Donate</string>
+    <string name="donate">Donate now</string>
     <string name="version_header">v.\u0020</string>
 
-    <string name="donate_message">Для доступа ко всем возможностям приложения на 24 часа посмотрите рекламный ролик</string>
-    <string name="view_question">Начать просмотр?</string>
+    <string name="donate_message">To get full access for 24 hours play ad video</string>
+    <string name="view_question">Play now?</string>
     <string name="view_error">Не удалось загрузить рекламный ролик\nПредоставлен кратковременный доступ</string>
     <string name="view_success">Получен доступ на 24 часа</string>
 
-    <string name="authors_header">Над приложением работали</string>
-    <string name="development_header">Разработка</string>
+    <string name="authors_header">Created by</string>
+    <string name="development_header">Developed by</string>
     <string name="developer">ShishSmasloM</string>
-    <string name="translation_header">Перевод</string>
+    <string name="translation_header">Translated by</string>
     <string name="translator">lChebotaryova</string>
 </resources>

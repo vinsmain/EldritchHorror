@@ -38,7 +38,6 @@
         <activity
             android:name=".activity.DonateActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.TransparentActivity" />
         <activity
             android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -47,9 +46,6 @@
             android:name="com.adcolony.sdk.AdColonyAdViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true" />
-        <activity android:name=".activity.DonateDialogActivity" />
-        <activity android:name=".activity.LoaderActivity"
-            android:theme="@style/Loader" />
     </application>
 
 </manifest>

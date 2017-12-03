@@ -19,7 +19,7 @@ public class AdColonyHelper {
     private boolean isOnReward = false;
     private DateHelper dateHelper;
 
-    private AdColonyHelper(final LoaderActivity activity) {
+    private AdColonyHelper(final MainActivity activity) {
 
         dateHelper = new DateHelper(activity);
 
@@ -103,7 +103,7 @@ public class AdColonyHelper {
         //}
     }
 
-    public static AdColonyHelper getInstance(LoaderActivity activity){
+    public static AdColonyHelper getInstance(MainActivity activity){
         if (null == instance){
             instance = new AdColonyHelper(activity);
         }
