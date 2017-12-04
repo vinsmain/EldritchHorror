@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -38,7 +39,9 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     PassMeLinkOnObject activity;
     ImageView expansionImage;
 
-    ImageButton dateButton;
+    TableRow dateRow;
+    TableRow ancientOneRow;
+    TableRow playersCountRow;
     TextView dateField;
     Spinner ancientOneSpinner;
     public ArrayAdapter<String> ancientOneAdapter;
@@ -81,8 +84,13 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
         expansionImage = (ImageView) getActivity().findViewById(R.id.expansion_image_pager);
 
-        dateButton = (ImageButton) view.findViewById(R.id.dateImgBtn);
-        dateButton.setOnClickListener(this);
+        dateRow = (TableRow) view.findViewById(R.id.date_row);
+        ancientOneRow = (TableRow) view.findViewById(R.id.ancient_one_row);
+        playersCountRow = (TableRow) view.findViewById(R.id.players_count_row);
+        dateRow.setOnClickListener(this);
+        ancientOneRow.setOnClickListener(this);
+        playersCountRow.setOnClickListener(this);
+
         dateField = (TextView) view.findViewById(R.id.dateField);
 
         isSimpleMyths = (Switch) view.findViewById(R.id.isSimpleMyths);
@@ -140,12 +148,18 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.dateImgBtn:
+            case R.id.date_row:
                 Bundle args=new Bundle();
                 args.putString("date", (String) dateField.getText());
                 DialogFragment dateDialog = new DatePicker();
                 dateDialog.setArguments(args);
                 dateDialog.show(getActivity().getFragmentManager(), "datePicker");
+                break;
+            case R.id.ancient_one_row:
+                ancientOneSpinner.performClick();
+                break;
+            case R.id.players_count_row:
+                playersCountSpinner.performClick();
                 break;
             default:
                 break;

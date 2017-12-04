@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_delete"
+        android:icon="@drawable/delete_white"
         android:title="@string/deleteDialogMessage"
-        android:icon="@drawable/delete"
         app:showAsAction="always|collapseActionView" />
 
     <item
         android:id="@+id/action_edit"
+        android:icon="@drawable/pencil_white"
         android:title="@string/edit_result"
-        android:icon="@drawable/pencil"
         app:showAsAction="always|collapseActionView" />
 </menu>
