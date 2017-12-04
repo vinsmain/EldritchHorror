@@ -3,8 +3,8 @@
     <color name="colorPrimary">#607d8b</color>
     <color name="colorPrimaryDark">#455a64</color>
     <color name="colorPrimaryLight">#cfd8dc</color>
-    <color name="colorAccent">#ff6d00</color>
-    <color name="colorAccentLight">#ff9100</color>
+    <color name="colorAccent">#ff9436</color>
+    <color name="colorAccentLight">#ffbb61</color>
     <color name="colorHint">#bdbdbd</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
@@ -12,8 +12,13 @@
     <color name="colorText">#ffffff</color>
     <color name="colorTransparent">#00000000</color>
 
+    <color name="color_starting_investigator">#ff9136</color>
+    <color name="color_replacement_investigator">#607d8b</color>
+
     <!--Disable Switch Colors-->
     <color name="disable_forground_grey">#ff6d00</color>
     <color name="disable_thumb_grey">#ff9100</color>
     <color name="enable_thrumb_green">#bdbdbd</color>
+
+    <color name="colorHighlight">#607d8b</color>
 </resources>

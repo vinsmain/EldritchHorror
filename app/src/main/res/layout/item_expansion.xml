@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_expansion_layout"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:theme="@style/DialogTheme">
+
+    <ImageView
+        android:id="@+id/item_expansion_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/cities_in_ruin" />
+
+    <Switch
+        android:id="@+id/item_expansion_switch"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:gravity="left|center_vertical|start"
+        android:text="Switch"
+        android:textColor="@color/colorSecondaryText" />
+</LinearLayout>

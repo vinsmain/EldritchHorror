@@ -8,11 +8,15 @@
     android:layout_margin="2dp"
     android:elevation="2dp"
     app:cardBackgroundColor="@android:color/white"
-    app:contentPadding="4dp">
+    app:cardCornerRadius="0dp"
+    app:cardElevation="2dp"
+    app:contentPadding="8dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:theme="@style/AppTheme.ColorHighlight">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/invPhoto"
@@ -27,24 +31,29 @@
             app:srcCompat="@drawable/charlie_kane" />
 
         <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/invPhoto"
-            app:layout_constraintLeft_toLeftOf="@+id/invPhoto"
-            app:srcCompat="@drawable/start_flag" />
+            android:id="@+id/invExpansionImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/invDead"
+            app:layout_constraintRight_toRightOf="@+id/invDead"
+            tools:srcCompat="@drawable/under_the_pyramids" />
 
         <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:id="@+id/invDead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/invPhoto"
+            app:layout_constraintLeft_toLeftOf="@+id/invPhoto"
             app:layout_constraintRight_toRightOf="@+id/invPhoto"
-            app:srcCompat="@drawable/skull_dead" />
+            app:layout_constraintTop_toTopOf="@+id/invPhoto"
+            app:srcCompat="@drawable/dead" />
 
         <TextView
             android:id="@+id/invName"
@@ -69,7 +78,7 @@
             android:layout_marginTop="4dp"
             android:gravity="center_horizontal"
             android:text="TextView"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

@@ -5,6 +5,7 @@
     android:id="@+id/swipeLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
     android:background="@color/colorText">
 
     <LinearLayout
@@ -24,7 +25,9 @@
             android:layout_weight="1"
             android:elevation="2dp"
             android:padding="8dp"
-            app:srcCompat="@drawable/delete" />
+            app:srcCompat="@drawable/delete"
+            android:foreground="?attr/selectableItemBackground"
+            android:theme="@style/AppTheme.ColorHighlight" />
 
         <ImageView
             android:id="@+id/editImgSwipe"
@@ -33,7 +36,9 @@
             android:layout_weight="1"
             android:elevation="2dp"
             android:padding="8dp"
-            app:srcCompat="@drawable/edit_black" />
+            app:srcCompat="@drawable/pencil"
+            android:foreground="?attr/selectableItemBackground"
+            android:theme="@style/AppTheme.ColorHighlight" />
     </LinearLayout>
 
     <android.support.v7.widget.CardView
@@ -43,7 +48,9 @@
         android:elevation="2dp"
         app:cardBackgroundColor="@color/colorText"
         app:cardCornerRadius="0dp"
-        app:cardElevation="2dp">
+        app:cardElevation="2dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:theme="@style/AppTheme.ColorHighlight">
 
         <!-- Surface View Start-->
 
@@ -64,6 +71,17 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/expansion_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:srcCompat="@drawable/under_the_pyramids" />
 
             <LinearLayout
                 android:id="@+id/linearLayout4"
@@ -178,17 +196,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingEnd="16dp"
                     android:textColor="@android:color/black"
-                    android:textSize="30sp"
+                    android:textSize="36sp"
                     tools:text="12" />
 
                 <ImageView
-                    android:id="@+id/imageView11"
+                    android:id="@+id/win_image_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/cup" />
+                    app:srcCompat="@drawable/stars" />
             </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
