@@ -2,10 +2,13 @@ package ru.mgusev.eldritchhorror.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -14,12 +17,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.jetbrains.annotations.NotNull;
 
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
 
-public class ResultGameFragment extends Fragment implements TextWatcher, CompoundButton.OnCheckedChangeListener {
+public class ResultGameFragment extends Fragment implements TextWatcher, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
@@ -36,6 +42,14 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
     Switch defeatByElimination;
     Switch defeatByMythosDeplition;
     Switch defeatByAwakenedAncientOne;
+
+    TableRow gatesCountRow;
+    TableRow monstersCountRow;
+    TableRow curseCountRow;
+    TableRow rumorsCountRow;
+    TableRow cluesCountRow;
+    TableRow blessedCountRow;
+    TableRow doomCountRow;
 
     EditText gatesCount;
     EditText monstersCount;
@@ -92,6 +106,13 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
         cluesCount.addTextChangedListener(this);
         blessedCount.addTextChangedListener(this);
         doomCount.addTextChangedListener(this);
+        gatesCountRow.setOnClickListener(this);
+        monstersCountRow.setOnClickListener(this);
+        curseCountRow.setOnClickListener(this);
+        rumorsCountRow.setOnClickListener(this);
+        cluesCountRow.setOnClickListener(this);
+        blessedCountRow.setOnClickListener(this);
+        doomCountRow.setOnClickListener(this);
     }
 
     private void initActivityElements() {
@@ -111,6 +132,13 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
         doomCount = (EditText) view.findViewById(R.id.doomCount);
         winImage = (ImageView) getActivity().findViewById(R.id.win_image);
         score = (TextView) getActivity().findViewById(R.id.score_pager);
+        gatesCountRow = (TableRow) view.findViewById(R.id.gatesCountRow);
+        monstersCountRow = (TableRow) view.findViewById(R.id.monstersCountRow);
+        curseCountRow = (TableRow) view.findViewById(R.id.curseCountRow);
+        rumorsCountRow = (TableRow) view.findViewById(R.id.rumorsCountRow);
+        cluesCountRow = (TableRow) view.findViewById(R.id.cluesCountRow);
+        blessedCountRow = (TableRow) view.findViewById(R.id.blessedCountRow);
+        doomCountRow = (TableRow) view.findViewById(R.id.doomCountRow);
     }
 
     public void addDataToGame() {
@@ -233,5 +261,45 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.gatesCountRow:
+                showSoftKeyboardOnView(gatesCount);
+                break;
+            case R.id.monstersCountRow:
+                showSoftKeyboardOnView(monstersCount);
+                break;
+            case R.id.curseCountRow:
+                showSoftKeyboardOnView(curseCount);
+                break;
+            case R.id.rumorsCountRow:
+                showSoftKeyboardOnView(rumorsCount);
+                break;
+            case R.id.cluesCountRow:
+                showSoftKeyboardOnView(cluesCount);
+                break;
+            case R.id.blessedCountRow:
+                showSoftKeyboardOnView(blessedCount);
+                break;
+            case R.id.doomCountRow:
+                showSoftKeyboardOnView(doomCount);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void showSoftKeyboardOnView(@NotNull final View view) {
+        (new Handler()).postDelayed(new Runnable() {
+            public void run() {
+                view.requestFocus();
+                // Yes, I know what you are thinking about that. If you knew something better by any chance it would be magnificent to have your idea here in code.
+                view.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
+                view.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+            }
+        }, 200);
     }
 }

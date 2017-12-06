@@ -199,9 +199,12 @@
                         </TableRow>
 
                         <TableRow
+                            android:id="@+id/gatesCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:theme="@style/AppTheme.ColorHighlight"
                             android:padding="8dp">
 
                             <TextView
@@ -228,9 +231,12 @@
                         </TableRow>
 
                         <TableRow
+                            android:id="@+id/monstersCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:theme="@style/AppTheme.ColorHighlight"
                             android:padding="8dp">
 
                             <TextView
@@ -257,9 +263,12 @@
                         </TableRow>
 
                         <TableRow
+                            android:id="@+id/curseCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:theme="@style/AppTheme.ColorHighlight"
                             android:padding="8dp">
 
                             <TextView
@@ -287,9 +296,12 @@
                         </TableRow>
 
                         <TableRow
+                            android:id="@+id/rumorsCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:theme="@style/AppTheme.ColorHighlight"
                             android:padding="8dp">
 
                             <TextView
@@ -316,9 +328,12 @@
                         </TableRow>
 
                         <TableRow
+                            android:id="@+id/cluesCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:theme="@style/AppTheme.ColorHighlight"
                             android:padding="8dp">
 
                             <TextView
@@ -345,9 +360,12 @@
                         </TableRow>
 
                         <TableRow
+                            android:id="@+id/blessedCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:theme="@style/AppTheme.ColorHighlight"
                             android:padding="8dp">
 
                             <TextView
@@ -374,9 +392,12 @@
                         </TableRow>
 
                         <TableRow
+                            android:id="@+id/doomCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:theme="@style/AppTheme.ColorHighlight"
                             android:padding="8dp">
 
                             <TextView
