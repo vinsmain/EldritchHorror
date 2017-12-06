@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.AncientOne;
+import ru.mgusev.eldritchhorror.model.Localization;
 
 public class AncientOneDAO  extends BaseDaoImpl {
     public AncientOneDAO(ConnectionSource connectionSource, Class dataClass) throws SQLException {
@@ -35,7 +36,7 @@ public class AncientOneDAO  extends BaseDaoImpl {
     public int getAncientOneIDByName(String name) throws SQLException {
         if (name.contains("'")) name = name.replace("'", "''");
         QueryBuilder<AncientOne, Integer> qb = this.queryBuilder();
-        if (Locale.getDefault().getLanguage().equals("ru")) qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_NAME_RU, name);
+        if (Localization.getInstance().isRusLocale()) qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_NAME_RU, name);
         else qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_NAME_EN, name);
         return qb.queryForFirst().id;
     }
@@ -61,7 +62,7 @@ public class AncientOneDAO  extends BaseDaoImpl {
     public AncientOne getAncientOneByName(String name) throws SQLException {
         if (name.contains("'")) name = name.replace("'", "''");
         QueryBuilder<AncientOne, Integer> qb = this.queryBuilder();
-        if (Locale.getDefault().getLanguage().equals("ru")) qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_NAME_RU, name);
+        if (Localization.getInstance().isRusLocale()) qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_NAME_RU, name);
         else qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_NAME_EN, name);
         return qb.queryForFirst();
     }

@@ -31,6 +31,7 @@ import ru.mgusev.eldritchhorror.adapter.RVAdapter;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
 import ru.mgusev.eldritchhorror.fragment.DonateDialogFragment;
+import ru.mgusev.eldritchhorror.fragment.RateDialogFragment;
 import ru.mgusev.eldritchhorror.model.Game;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
@@ -123,6 +124,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
         if (isAlert) deleteDialog();
         if (isAdvertisingDialog) showDonateDialog();
+
+        initRateDialog();
+    }
+
+    private void initRateDialog() {
+        RateDialogFragment rateDialogFragment = new RateDialogFragment();
+        rateDialogFragment.setActivity(this);
+        rateDialogFragment.show(getSupportFragmentManager(), "RateDialogFragment");
     }
 
     public void initGameList() {

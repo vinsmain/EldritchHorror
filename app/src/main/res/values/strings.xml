@@ -72,7 +72,11 @@
 
     <string name="authors_header">Created by</string>
     <string name="development_header">Developed by</string>
-    <string name="developer">ShishSmasloM</string>
+    <string name="developer">Argajasha</string>
     <string name="translation_header">Translated by</string>
     <string name="translator">lChebotaryova</string>
+
+    <string name="rate_title">Please rate app</string>
+    <string name="rate_massage">If you enjoy using Eldritch Horror Assistant, please take a moment to rate it.\nThanks for your support!</string>
+    <string name="rate_error">Error open app page</string>
 </resources>

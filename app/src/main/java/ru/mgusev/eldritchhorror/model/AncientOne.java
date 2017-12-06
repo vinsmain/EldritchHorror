@@ -34,7 +34,7 @@ public class AncientOne {
     }
 
     public String getName() {
-        if (Locale.getDefault().getLanguage().equals("ru")) return nameRU;
+        if (Localization.getInstance().isRusLocale()) return nameRU;
         else return nameEN;
     }
 }

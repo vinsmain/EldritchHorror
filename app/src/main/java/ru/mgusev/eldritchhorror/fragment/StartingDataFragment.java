@@ -149,7 +149,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.date_row:
-                Bundle args=new Bundle();
+                Bundle args = new Bundle();
                 args.putString("date", (String) dateField.getText());
                 DialogFragment dateDialog = new DatePicker();
                 dateDialog.setArguments(args);

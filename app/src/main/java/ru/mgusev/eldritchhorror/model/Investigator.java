@@ -112,12 +112,12 @@ public class Investigator implements Parcelable {
     }
 
     public String getName() {
-        if (Locale.getDefault().getLanguage().equals("ru")) return nameRU;
+        if (Localization.getInstance().isRusLocale()) return nameRU;
         else return nameEN;
     }
 
     public String getOccupation() {
-        if (Locale.getDefault().getLanguage().equals("ru")) return occupationRU;
+        if (Localization.getInstance().isRusLocale()) return occupationRU;
         else return occupationEN;
     }
 }
