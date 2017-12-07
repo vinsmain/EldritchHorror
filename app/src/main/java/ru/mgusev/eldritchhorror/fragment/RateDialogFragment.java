@@ -24,7 +24,7 @@ public class RateDialogFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.rate_title)
-                .setIcon(R.drawable.video)
+                .setIcon(R.drawable.rate_star)
                 .setMessage(R.string.rate_massage)
                 .setPositiveButton(R.string.messageOK, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -32,6 +32,8 @@ public class RateDialogFragment extends DialogFragment {
                         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                         try {
                             startActivity(goToMarket);
+                            System.out.println("123414");
+                            activity.getDateHelper().saveIsRate(true);
                         } catch (ActivityNotFoundException e) {
                             Toast.makeText(activity, R.string.rate_error, Toast.LENGTH_LONG).show();
                         }
@@ -40,6 +42,7 @@ public class RateDialogFragment extends DialogFragment {
                 })
                 .setNegativeButton(R.string.messageCancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        activity.getDateHelper().saveIsRate(false);
                         dialog.cancel();
                     }
                 });
@@ -47,6 +50,12 @@ public class RateDialogFragment extends DialogFragment {
         dialog.setCanceledOnTouchOutside(false);
         // Create the AlertDialog object and return it
         return dialog;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        activity.getDateHelper().saveIsRate(false);
+        super.onDismiss(dialog);
     }
 
     public void setActivity(MainActivity activity) {

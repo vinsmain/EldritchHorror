@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (isAlert) deleteDialog();
         if (isAdvertisingDialog) showDonateDialog();
 
-        initRateDialog();
+        if (dateHelper.isRate()) initRateDialog();
     }
 
     private void initRateDialog() {
@@ -303,6 +303,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gamesCount.setText(String.valueOf(adapter.getItemCount()));
         bestScore.setText(bestScoreValue);
         worstScore.setText(worstScoreValue);
+    }
+
+    public int getGamesCount() {
+        return adapter.getItemCount();
+    }
+
+    public DateHelper getDateHelper() {
+        return dateHelper;
     }
 
     //AdColonyTask
