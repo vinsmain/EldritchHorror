@@ -12,6 +12,7 @@ import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Investigator;
+import ru.mgusev.eldritchhorror.model.Localization;
 
 public class InvestigatorDAO extends BaseDaoImpl {
     public InvestigatorDAO(ConnectionSource connectionSource, Class dataClass) throws SQLException {
@@ -21,7 +22,7 @@ public class InvestigatorDAO extends BaseDaoImpl {
     public List<Investigator> getAllInvestigatorsLocal() throws SQLException{
         QueryBuilder<Investigator, Integer> qb = this.queryBuilder();
         qb.orderBy(Investigator.INVESTIGATOR_FIELD_EXPANSION_ID, true);
-        if (Locale.getDefault().getLanguage().equals("ru")) qb.orderBy(Investigator.INVESTIGATOR_FIELD_NAME_RU, true);
+        if (Localization.getInstance().isRusLocale()) qb.orderBy(Investigator.INVESTIGATOR_FIELD_NAME_RU, true);
         else qb.orderBy(Investigator.INVESTIGATOR_FIELD_NAME_EN, true);
         List<Investigator> list = qb.query();
         List<Investigator> investigatorList = new ArrayList<>();

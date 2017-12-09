@@ -31,6 +31,7 @@ import ru.mgusev.eldritchhorror.adapter.RVAdapter;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
 import ru.mgusev.eldritchhorror.fragment.DonateDialogFragment;
+import ru.mgusev.eldritchhorror.fragment.RateDialogFragment;
 import ru.mgusev.eldritchhorror.model.Game;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RVAdapter adapter;
     Game deletingGame;
     FloatingActionButton addPartyButton;
+    TextView messageStarting;
     String bestScoreValue = "";
     String worstScoreValue = "";
 
@@ -56,8 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean isAlert;
     boolean isAdvertisingDialog;
 
-    private DonateDialogFragment dialog;
-    private DateHelper dateHelper;
+    private DonateDialogFragment donateDialog;
+    private RateDialogFragment rateDialog;
+    private PrefHelper prefHelper;
 
     private AdColonyHelper helper;
     private AdColonyTask task;
@@ -68,10 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dateHelper = new DateHelper(this);
+        prefHelper = new PrefHelper(this);
 
-        dialog = new DonateDialogFragment();
-        dialog.setActivity(this);
+        initDonateDialog();
 
         if (savedInstanceState!= null) {
             gameList = savedInstanceState.getParcelableArrayList("gameList");
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gamesCount = (TextView) findViewById(R.id.gamesCount);
         bestScore = (TextView) findViewById(R.id.bestScore);
         worstScore = (TextView) findViewById(R.id.worstScore);
-
+        messageStarting = (TextView) findViewById(R.id.message_starting);
         recyclerView = (RecyclerView) findViewById(R.id.gameList);
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) columnsCount = 2;
@@ -119,10 +121,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.addOnScrollListener(onScrollListener);
 
         setScoreValues();
+        showMessageStarting();
 
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
         if (isAlert) deleteDialog();
         if (isAdvertisingDialog) showDonateDialog();
+
+        if (prefHelper.isRate()) initRateDialog();
+    }
+
+    private void initDonateDialog() {
+        donateDialog = new DonateDialogFragment();
+        donateDialog.setActivity(this);
+        donateDialog.setCancelable(false);
+    }
+
+    private void initRateDialog() {
+        rateDialog = new RateDialogFragment();
+        rateDialog.setActivity(this);
+        rateDialog.setCancelable(false);
+        rateDialog.show(getSupportFragmentManager(), "RateDialogFragment");
     }
 
     public void initGameList() {
@@ -174,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addPartyButton:
-                if (helper.isAdvertisingLoad() && dateHelper.isAdvertisingShow() && adapter.getItemCount() >= 5) {
+                if (helper.isAdvertisingLoad() && prefHelper.isAdvertisingShow() && adapter.getItemCount() >= 5) {
                     showDonateDialog();
                 }
                 else addGame();
@@ -186,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void showDonateDialog() {
         isAdvertisingDialog = true;
-        dialog.show(getSupportFragmentManager(), "DonateDialogFragment");
+        donateDialog.show(getSupportFragmentManager(), "DonateDialogFragment");
     }
 
     public void showAD() {
@@ -252,7 +270,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void deleteParty() {
-        System.out.println(deletingGame.ancientOneID);
         try {
             HelperFactory.getHelper().getGameDAO().delete(deletingGame);
             HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(deletingGame.id);
@@ -262,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initGameList();
         adapter.notifyDataSetChanged();
         setScoreValues();
+        showMessageStarting();
         Toast.makeText(this, R.string.success_deleting_message, Toast.LENGTH_SHORT).show();
     }
 
@@ -296,6 +314,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         worstScore.setText(worstScoreValue);
     }
 
+    public int getGamesCount() {
+        return adapter.getItemCount();
+    }
+
+    public PrefHelper getPrefHelper() {
+        return prefHelper;
+    }
+
+    private void showMessageStarting() {
+        System.out.println(adapter.getItemCount());
+        if (adapter.getItemCount() == 0) messageStarting.setText(R.string.message_starting);
+        else messageStarting.setText("");
+    }
+
     //AdColonyTask
     private class AdColonyTask extends AsyncTask {
 
@@ -312,7 +344,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 i++;
             }
-
             return null;
         }
 

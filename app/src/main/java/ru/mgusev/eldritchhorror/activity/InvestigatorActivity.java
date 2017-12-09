@@ -79,6 +79,7 @@ public class InvestigatorActivity extends Activity implements CompoundButton.OnC
         switchStartingGame.setChecked(investigator.isStarting);
         switchReplacement.setChecked(investigator.isReplacement);
         switchDead.setChecked(investigator.isDead);
+        if (!switchStartingGame.isChecked() && !switchReplacement.isChecked()) switchDead.setEnabled(false);
     }
 
     @Override
@@ -92,6 +93,11 @@ public class InvestigatorActivity extends Activity implements CompoundButton.OnC
                 break;
             default:
                 break;
+        }
+        if (switchStartingGame.isChecked() || switchReplacement.isChecked()) switchDead.setEnabled(true);
+        else {
+            switchDead.setChecked(false);
+            switchDead.setEnabled(false);
         }
     }
 

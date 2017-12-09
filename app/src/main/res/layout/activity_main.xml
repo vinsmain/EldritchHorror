@@ -132,6 +132,15 @@
         android:background="@color/colorPrimaryLight"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <TextView
+        android:id="@+id/message_starting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:text="@string/message_starting"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addPartyButton"
         android:layout_width="wrap_content"

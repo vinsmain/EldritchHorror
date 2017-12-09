@@ -17,11 +17,11 @@ public class AdColonyHelper {
     private boolean isAdvertisingLoad = false;
     private boolean isNotFilled = false;
     private boolean isOnReward = false;
-    private DateHelper dateHelper;
+    private PrefHelper prefHelper;
 
     private AdColonyHelper(final MainActivity activity) {
 
-        dateHelper = new DateHelper(activity);
+        prefHelper = new PrefHelper(activity);
 
         AdColonyAppOptions app_options = new AdColonyAppOptions().setUserID(Installation.id(activity));
 
@@ -39,7 +39,7 @@ public class AdColonyHelper {
                 Log.d( TAG, "onReward" );
                 isOnReward = true;
                 adc = null;
-                dateHelper.saveDate((new Date()).getTime());
+                prefHelper.saveDate((new Date()).getTime());
                 activity.addGame();
             }
         });
