@@ -26,23 +26,22 @@ public class RateDialogFragment extends DialogFragment {
         builder.setTitle(R.string.rate_title)
                 .setIcon(R.drawable.rate_star)
                 .setMessage(R.string.rate_massage)
-                .setPositiveButton(R.string.messageOK, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.message_rate, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Uri uri = Uri.parse("market://details?id=" + activity.getPackageName()); // Go to Android market
                         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                         try {
                             startActivity(goToMarket);
-                            System.out.println("123414");
-                            activity.getDateHelper().saveIsRate(true);
+                            activity.getPrefHelper().saveIsRate(true);
                         } catch (ActivityNotFoundException e) {
                             Toast.makeText(activity, R.string.rate_error, Toast.LENGTH_LONG).show();
                         }
                         dialog.cancel();
                     }
                 })
-                .setNegativeButton(R.string.messageCancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.message_later, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        activity.getDateHelper().saveIsRate(false);
+                        activity.getPrefHelper().saveIsRate(false);
                         dialog.cancel();
                     }
                 });
@@ -50,12 +49,6 @@ public class RateDialogFragment extends DialogFragment {
         dialog.setCanceledOnTouchOutside(false);
         // Create the AlertDialog object and return it
         return dialog;
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        activity.getDateHelper().saveIsRate(false);
-        super.onDismiss(dialog);
     }
 
     public void setActivity(MainActivity activity) {

@@ -20,7 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
 
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
@@ -292,7 +292,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
         }
     }
 
-    public static void showSoftKeyboardOnView(@NotNull final View view) {
+    public static void showSoftKeyboardOnView(@NonNull final View view) {
         (new Handler()).postDelayed(new Runnable() {
             public void run() {
                 view.requestFocus();

@@ -74,5 +74,13 @@
     <string name="development_header">Разработка</string>
     <string name="developer">Argajasha</string>
     <string name="translation_header">Перевод</string>
-    <string name="translator">lChebotaryova</string>
+    <string name="translator">brainstorm</string>
+
+    <string name="rate_title">Оцените приложение</string>
+    <string name="rate_massage">Если Вам понравилось приложение Древний Ужас Ассистент, пожалуйста уделите минутку чтобы оценить его.\nСпасибо за поддержку!</string>
+    <string name="rate_error">Ошибка при открытии страницы приложения</string>
+    <string name="message_rate">Оценить</string>
+    <string name="message_later">Напомнить позже</string>
+
+    <string name="message_starting">Пока что нет ни одного результата игры.\nЧтобы добавить результат игры, нажмите на большую оранжевую кнопку.</string>
 </resources>

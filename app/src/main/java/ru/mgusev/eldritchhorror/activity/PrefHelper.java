@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import java.util.Date;
 
-public class DateHelper {
+public class PrefHelper {
 
     private SharedPreferences sPref;
     private MainActivity activity;
@@ -15,7 +15,7 @@ public class DateHelper {
     private static final String SETTINGS_GAMES_COUNT = "settings_games_count";
     private static final long TWENTY_FOUR_HOURS = 86400000; //milliseconds
 
-    public DateHelper(MainActivity activity) {
+    public PrefHelper(MainActivity activity) {
         this.activity = activity;
     }
 

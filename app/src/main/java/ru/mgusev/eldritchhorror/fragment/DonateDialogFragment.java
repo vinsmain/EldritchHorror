@@ -40,12 +40,6 @@ public class DonateDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        activity.setAdvertisingDialog(false);
-        super.onDismiss(dialog);
-    }
-
     public void setActivity(MainActivity activity) {
         this.activity = activity;
     }

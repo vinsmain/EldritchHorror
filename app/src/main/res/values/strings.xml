@@ -74,9 +74,13 @@
     <string name="development_header">Developed by</string>
     <string name="developer">Argajasha</string>
     <string name="translation_header">Translated by</string>
-    <string name="translator">lChebotaryova</string>
+    <string name="translator">brainstorm</string>
 
     <string name="rate_title">Please rate app</string>
     <string name="rate_massage">If you enjoy using Eldritch Horror Assistant, please take a moment to rate it.\nThanks for your support!</string>
     <string name="rate_error">Error open app page</string>
+    <string name="message_rate">Rate now</string>
+    <string name="message_later">Remind Me Later</string>
+
+    <string name="message_starting">Пока что нет ни одного результата игры.\nЧтобы добавить результат игры, нажмите на большую оранжевую кнопку.</string>
 </resources>
