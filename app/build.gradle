@@ -7,8 +7,8 @@ android {
         applicationId "ru.mgusev.eldritchhorror"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 8
-        versionName "0.9.0"
+        versionCode 9
+        versionName "0.9.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

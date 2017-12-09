@@ -34,6 +34,7 @@ public class RateDialogFragment extends DialogFragment {
                             startActivity(goToMarket);
                             activity.getPrefHelper().saveIsRate(true);
                         } catch (ActivityNotFoundException e) {
+                            activity.getPrefHelper().saveIsRate(false);
                             Toast.makeText(activity, R.string.rate_error, Toast.LENGTH_LONG).show();
                         }
                         dialog.cancel();

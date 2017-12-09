@@ -82,5 +82,5 @@
     <string name="message_rate">Rate now</string>
     <string name="message_later">Remind Me Later</string>
 
-    <string name="message_starting">Пока что нет ни одного результата игры.\nЧтобы добавить результат игры, нажмите на большую оранжевую кнопку.</string>
+    <string name="message_starting">So far there are no results of the game.\nTo add the result of the game, click on the big orange button.</string>
 </resources>
