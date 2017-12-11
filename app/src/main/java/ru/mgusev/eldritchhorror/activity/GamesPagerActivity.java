@@ -179,8 +179,10 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                addDataToGame();
-                writeGameToDB();
+                if (((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).isStartingInvCountCorrect()) {
+                    addDataToGame();
+                    writeGameToDB();
+                } else ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).showStartingInvCountAlert();
                 return true;
             case R.id.action_clear:
                 isAlert = true;

@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 
@@ -168,20 +169,40 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
 
     }
 
+    private int getStartingInvCount() {
+        int count = 0;
+        for (Investigator investigator : investigatorList) {
+            if (investigator.isStarting) count++;
+        }
+        return count;
+    }
+
+    public boolean isStartingInvCountCorrect() {
+        return getStartingInvCount() <= activity.getGame().playersCount;
+    }
+
+    public void showStartingInvCountAlert() {
+        Toast.makeText(getContext(), "Превышено число стартовых сыщиков!", Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             Investigator investigatorUpdate = data.getParcelableExtra("investigator");
-            for (int i = 0; i < investigatorList.size(); i++) {
-                if (investigatorList.get(i).getName().equals(investigatorUpdate.getName())) {
-                    investigatorList.set(i, investigatorUpdate);
-                    addDataToGame();
+            if (!investigatorUpdate.isStarting || getStartingInvCount() < activity.getGame().playersCount) {
+                for (int i = 0; i < investigatorList.size(); i++) {
+                    if (investigatorList.get(i).getName().equals(investigatorUpdate.getName())) {
+                        investigatorList.set(i, investigatorUpdate);
+                        addDataToGame();
 
-                    initInvestigatorList();
-                    adapter.notifyDataSetChanged();
-                    break;
+                        initInvestigatorList();
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
                 }
+            } else {
+                showStartingInvCountAlert();
             }
         }
     }
@@ -224,7 +245,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
             try {
                 do {
                     j = (int) (Math.random() * investigatorList.size());
-                } while (investigatorList.get(j).isStarting && !HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(investigatorList.get(j).expansionID));
+                } while (investigatorList.get(j).isStarting || !HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(investigatorList.get(j).expansionID));
             } catch (SQLException e) {
                 e.printStackTrace();
             }

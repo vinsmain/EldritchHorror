@@ -323,7 +323,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showMessageStarting() {
-        System.out.println(adapter.getItemCount());
         if (adapter.getItemCount() == 0) messageStarting.setText(R.string.message_starting);
         else messageStarting.setText("");
     }
