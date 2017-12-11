@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -27,7 +28,7 @@ import ru.mgusev.eldritchhorror.fragment.ResultGameFragment;
 import ru.mgusev.eldritchhorror.fragment.StartingDataFragment;
 import ru.mgusev.eldritchhorror.model.Game;
 
-public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkOnObject {
+public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkOnObject, View.OnClickListener {
 
     static final String TAG = "myLogs";
     public static final int PAGE_COUNT = 3;
@@ -44,6 +45,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     int currentPosition = 0;
     int titleResource;
     boolean isAlert;
+    private FloatingActionButton randomButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         pager.setAdapter(pagerAdapter);
 
         score = (TextView) findViewById(R.id.score_pager);
+        randomButton = (FloatingActionButton) findViewById(R.id.random_button);
+        randomButton.setOnClickListener(this);
 
         if (game == null) game = (Game) getIntent().getParcelableExtra("editParty");
         if (game == null) game = new Game();
@@ -103,7 +107,9 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
-                }
+
+                    randomButton.setVisibility(View.VISIBLE);
+                } else randomButton.setVisibility(View.GONE);
             }
 
             @Override
@@ -255,5 +261,10 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
     public void setAlert(boolean alert) {
         isAlert = alert;
+    }
+
+    @Override
+    public void onClick(View view) {
+        ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).selectRandomInvestigators();
     }
 }

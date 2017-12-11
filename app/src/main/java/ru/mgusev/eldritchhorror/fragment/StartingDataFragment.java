@@ -178,12 +178,16 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            activity.getGame().playersCount = Integer.parseInt(playersCountArray[playersCountSpinner.getSelectedItemPosition()]);
+            activity.getGame().playersCount = getPlayersCount();
             activity.getGame().isSimpleMyths = isSimpleMyths.isChecked();
             activity.getGame().isNormalMyths = isNormalMyths.isChecked();
             activity.getGame().isHardMyths = isHardMyths.isChecked();
             activity.getGame().isStartingRumor = isStartingRumor.isChecked();
         }
+    }
+
+    public int getPlayersCount() {
+        return Integer.parseInt(playersCountArray[playersCountSpinner.getSelectedItemPosition()]);
     }
 
     public void setDataToFields() {
@@ -258,7 +262,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         playersCountSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                activity.getGame().playersCount = getPlayersCount();
             }
 
             @Override

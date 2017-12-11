@@ -74,8 +74,6 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_investigators_choice, null);
 
-
-
         invRecycleView = (RecyclerView) view.findViewById(R.id.invRecycleView);
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) columnsCount = 5;
@@ -217,5 +215,24 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
 
     public AlertDialog getAlert() {
         return alert;
+    }
+
+    public void selectRandomInvestigators() {
+        cleanInvList();
+        int j = 0;
+        for (int i = 0; i < activity.getGame().playersCount; i++) {
+            try {
+                do {
+                    j = (int) (Math.random() * investigatorList.size());
+                } while (investigatorList.get(j).isStarting && !HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(investigatorList.get(j).expansionID));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            investigatorList.get(j).isStarting = true;
+        }
+        addDataToGame();
+
+        initInvestigatorList();
+        adapter.notifyDataSetChanged();
     }
 }
