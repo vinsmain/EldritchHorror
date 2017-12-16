@@ -288,4 +288,26 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
                 break;
         }
     }
+
+    public void selectRandomAncientOne() {
+        int j = 0;
+        try {
+            do {
+                j = (int) (Math.random() * ancientOneList.size());
+            } while (!HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(getAncientOneExpansionID(ancientOneList.get(j))) || ancientOneSpinner.getSelectedItemPosition() == j);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ancientOneSpinner.setSelection(j);
+    }
+
+    private int getAncientOneExpansionID(String name) {
+        AncientOne ancientOne = new AncientOne();
+        try {
+            ancientOne = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneByName(name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ancientOne.expansionID;
+    }
 }

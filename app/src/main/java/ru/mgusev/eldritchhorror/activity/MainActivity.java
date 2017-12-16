@@ -38,7 +38,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
+    private static final int SORT_MODE_DATE_DOWN = 1;
+    private static final int SORT_MODE_DATE_UP = 2;
+    private static final int SORT_MODE_ANCIENT_ONE = 3;
+    private static final int SORT_MODE_SCORE_DOWN = 4;
+    private static final int SORT_MODE_SCORE_UP = 5;
+
     private int columnsCount = 1;
+    private int currentSortMode = SORT_MODE_DATE_UP;
+    private MenuItem sortItem;
 
     private List<Game> gameList;
     RecyclerView recyclerView;
@@ -72,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         prefHelper = new PrefHelper(this);
+        currentSortMode = prefHelper.loadSortMode();
 
         initDonateDialog();
 
@@ -147,13 +156,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (gameList == null) gameList = new ArrayList<>();
         try {
             gameList.clear();
-            gameList.addAll(HelperFactory.getHelper().getGameDAO().getAllGames());
+            gameList.addAll(getSortedGames());
             for (int i = 0; i < gameList.size(); i ++) {
                 gameList.get(i).invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(gameList.get(i).id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if (adapter != null) adapter.notifyDataSetChanged();
+    }
+
+    private List<Game> getSortedGames() {
+        try {
+            if (currentSortMode == SORT_MODE_DATE_UP) return HelperFactory.getHelper().getGameDAO().getGamesSortDateUp();
+            else if (currentSortMode == SORT_MODE_DATE_DOWN) return HelperFactory.getHelper().getGameDAO().getGamesSortDateDown();
+            else if (currentSortMode == SORT_MODE_ANCIENT_ONE) return HelperFactory.getHelper().getGameDAO().getGamesSortAncientOne();
+            else if (currentSortMode == SORT_MODE_SCORE_UP) return HelperFactory.getHelper().getGameDAO().getGamesSortScoreUp();
+            else if (currentSortMode == SORT_MODE_SCORE_DOWN) return HelperFactory.getHelper().getGameDAO().getGamesSortScoreDown();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Game>();
     }
 
     private void initRVListener() {
@@ -173,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        sortItem = menu.findItem(R.id.action_sort);
+        setSortItemIcon();
         return true;
     }
 
@@ -183,8 +208,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, DonateActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_sort:
+                if (currentSortMode != SORT_MODE_SCORE_UP) currentSortMode++;
+                else currentSortMode = SORT_MODE_DATE_DOWN;
+                prefHelper.saveSortMode(currentSortMode);
+                setSortItemIcon();
+                initGameList();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void setSortItemIcon() {
+        if (currentSortMode == SORT_MODE_DATE_UP) {
+            sortItem.setIcon(R.drawable.calendar_sort_up);
+            sortItem.setTitle(R.string.sort_mode_message_2);
+        } else if (currentSortMode == SORT_MODE_DATE_DOWN) {
+            sortItem.setIcon(R.drawable.calendar_sort_down);
+            sortItem.setTitle(R.string.sort_mode_message_1);
+        } else if (currentSortMode == SORT_MODE_ANCIENT_ONE) {
+            sortItem.setIcon(R.drawable.ancien_one_sort);
+            sortItem.setTitle(R.string.sort_mode_message_3);
+        } else if (currentSortMode == SORT_MODE_SCORE_UP) {
+            sortItem.setIcon(R.drawable.score_sort_up);
+            sortItem.setTitle(R.string.sort_mode_message_5);
+        } else if (currentSortMode == SORT_MODE_SCORE_DOWN) {
+            sortItem.setIcon(R.drawable.score_sort_down);
+            sortItem.setTitle(R.string.sort_mode_message_4);
         }
     }
 

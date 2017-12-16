@@ -13,8 +13,43 @@ public class GameDAO extends BaseDaoImpl {
         super(connectionSource, dataClass);
     }
 
-    public List<Game> getAllGames() throws SQLException{
+    public List<Game> getGamesSortDateUp() throws SQLException{
         QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.orderBy(Game.GAME_FIELD_DATE, true);
+        qb.orderBy(Game.GAME_FIELD_ID, true);
+        return qb.query();
+    }
+
+    public List<Game> getGamesSortDateDown() throws SQLException{
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.orderBy(Game.GAME_FIELD_DATE, false);
+        qb.orderBy(Game.GAME_FIELD_ID, false);
+        return qb.query();
+    }
+
+    public List<Game> getGamesSortAncientOne() throws SQLException{
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.orderBy(Game.GAME_FIELD_ANCIENT_ONE_ID, true);
+        qb.orderBy(Game.GAME_FIELD_WIN_GAME, false);
+        qb.orderBy(Game.GAME_FIELD_SCORE, true);
+        qb.orderBy(Game.GAME_FIELD_DATE, false);
+        qb.orderBy(Game.GAME_FIELD_ID, false);
+        return qb.query();
+    }
+
+    public List<Game> getGamesSortScoreUp() throws SQLException{
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.orderBy(Game.GAME_FIELD_WIN_GAME, true);
+        qb.orderBy(Game.GAME_FIELD_SCORE, false);
+        qb.orderBy(Game.GAME_FIELD_DATE, false);
+        qb.orderBy(Game.GAME_FIELD_ID, false);
+        return qb.query();
+    }
+
+    public List<Game> getGamesSortScoreDown() throws SQLException{
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.orderBy(Game.GAME_FIELD_WIN_GAME, false);
+        qb.orderBy(Game.GAME_FIELD_SCORE, true);
         qb.orderBy(Game.GAME_FIELD_DATE, false);
         qb.orderBy(Game.GAME_FIELD_ID, false);
         return qb.query();

@@ -150,6 +150,22 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sortList();
+    }
+
+    private void sortList() {
+        List<Investigator> sortList = new ArrayList<>();
+        for (int i = 0; i < investigatorList.size(); i++) {
+            if (investigatorList.get(i).isStarting) sortList.add(investigatorList.get(i));
+        }
+        for (int i = 0; i < investigatorList.size(); i++) {
+            if (investigatorList.get(i).isReplacement) sortList.add(investigatorList.get(i));
+        }
+        for (int i = 0; i < investigatorList.size(); i++) {
+            if (!investigatorList.get(i).isStarting && !investigatorList.get(i).isReplacement) sortList.add(investigatorList.get(i));
+        }
+        investigatorList.clear();
+        investigatorList.addAll(sortList);
     }
 
     @Override
@@ -182,7 +198,7 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     }
 
     public void showStartingInvCountAlert() {
-        Toast.makeText(getContext(), "Превышено число стартовых сыщиков!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), R.string.alert_investigators_limit, Toast.LENGTH_LONG).show();
     }
 
     @Override

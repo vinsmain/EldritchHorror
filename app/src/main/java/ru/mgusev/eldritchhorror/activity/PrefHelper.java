@@ -13,6 +13,7 @@ public class PrefHelper {
     private static final String SETTINGS_DATE = "settings_date";
     private static final String SETTINGS_IS_RATE = "settings_is_rate";
     private static final String SETTINGS_GAMES_COUNT = "settings_games_count";
+    private static final String SETTINGS_SORT_MODE = "settings_sort_mode";
     private static final long TWENTY_FOUR_HOURS = 86400000; //milliseconds
 
     public PrefHelper(MainActivity activity) {
@@ -58,5 +59,17 @@ public class PrefHelper {
     public boolean isRate() {
         System.out.println(!loadIsRate() + " " + (activity.getGamesCount() >= loadGamesCount()));
         return !loadIsRate() && activity.getGamesCount() >= loadGamesCount();
+    }
+
+    public void saveSortMode(int value) {
+        sPref = activity.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        Editor ed = sPref.edit();
+        ed.putInt(SETTINGS_SORT_MODE, value);
+        ed.apply();
+    }
+
+    public int loadSortMode() {
+        sPref = activity.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        return sPref.getInt(SETTINGS_SORT_MODE, 1);
     }
 }

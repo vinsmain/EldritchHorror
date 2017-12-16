@@ -175,7 +175,6 @@
                         android:id="@+id/winTable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         android:focusableInTouchMode="true"
                         android:shrinkColumns="*"
                         android:stretchColumns="*">
@@ -184,7 +183,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -205,7 +206,9 @@
                             android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
                             android:theme="@style/AppTheme.ColorHighlight"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp">
 
                             <TextView
                                 android:id="@+id/gatesCountHeader"
@@ -237,7 +240,9 @@
                             android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
                             android:theme="@style/AppTheme.ColorHighlight"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp">
 
                             <TextView
                                 android:id="@+id/monstersCountHeader"
@@ -269,7 +274,9 @@
                             android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
                             android:theme="@style/AppTheme.ColorHighlight"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp">
 
                             <TextView
                                 android:id="@+id/curseCountHeader"
@@ -302,7 +309,9 @@
                             android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
                             android:theme="@style/AppTheme.ColorHighlight"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp">
 
                             <TextView
                                 android:id="@+id/rumorsCountHeader"
@@ -334,7 +343,9 @@
                             android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
                             android:theme="@style/AppTheme.ColorHighlight"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp">
 
                             <TextView
                                 android:id="@+id/cluesCountHeader"
@@ -366,7 +377,9 @@
                             android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
                             android:theme="@style/AppTheme.ColorHighlight"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp">
 
                             <TextView
                                 android:id="@+id/blessedCountHeader"
@@ -398,7 +411,9 @@
                             android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
                             android:theme="@style/AppTheme.ColorHighlight"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp">
 
                             <TextView
                                 android:id="@+id/doomCountHeader"

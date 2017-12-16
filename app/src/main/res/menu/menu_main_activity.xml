@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_sort"
+        android:title="@string/sort_mode_message_2"
+        android:icon="@drawable/calendar_sort_up"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
         android:id="@+id/action_about"
-        android:title="@string/edit_expansion"
+        android:title="@string/about"
         android:icon="@drawable/about"
         app:showAsAction="always|collapseActionView" />
 

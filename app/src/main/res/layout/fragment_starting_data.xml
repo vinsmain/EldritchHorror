@@ -22,7 +22,6 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:shrinkColumns="*"
                 android:stretchColumns="*">
 
@@ -30,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:padding="8dp">
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -48,8 +47,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:gravity="center_vertical"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
                     android:foreground="?attr/selectableItemBackground"
                     android:theme="@style/AppTheme.ColorHighlight" >
 
@@ -91,6 +90,8 @@
                     android:layout_weight="2"
                     android:gravity="center_vertical"
                     android:padding="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
                     android:foreground="?attr/selectableItemBackground"
                     android:theme="@style/AppTheme.ColorHighlight" >
 
@@ -121,6 +122,8 @@
                     android:layout_weight="2"
                     android:gravity="center_vertical"
                     android:padding="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
                     android:foreground="?attr/selectableItemBackground"
                     android:theme="@style/AppTheme.ColorHighlight" >
 
@@ -149,7 +152,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp">
 
                     <TextView
                         android:id="@+id/textView4"
@@ -166,13 +171,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp">
 
                     <Switch
                         android:id="@+id/isSimpleMyths"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="32dp"
                         android:maxLines="1"
                         android:layout_span="3"
                         android:text="@string/simpleMyths"
@@ -185,13 +192,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp">
 
                     <Switch
                         android:id="@+id/isNormalMyths"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="32dp"
                         android:maxLines="1"
                         android:layout_span="3"
                         android:text="@string/normalMyths"
@@ -204,13 +213,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp">
 
                     <Switch
                         android:id="@+id/isHardMyths"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="32dp"
                         android:maxLines="1"
                         android:layout_span="3"
                         android:text="@string/hardMyths"
@@ -223,13 +234,15 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp">
 
                     <Switch
                         android:id="@+id/isStartingMyth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="32dp"
                         android:maxLines="1"
                         android:layout_span="3"
                         android:text="@string/startingRumor"
