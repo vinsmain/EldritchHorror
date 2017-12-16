@@ -147,14 +147,16 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
             activity.getGame().isDefeatByElimination = defeatByElimination.isChecked();
             activity.getGame().isDefeatByMythosDepletion = defeatByMythosDeplition.isChecked();
             activity.getGame().isDefeatByAwakenedAncientOne = defeatByAwakenedAncientOne.isChecked();
-            activity.getGame().gatesCount = getResultToField(gatesCount);
-            activity.getGame().monstersCount = getResultToField(monstersCount);
-            activity.getGame().curseCount = getResultToField(curseCount);
-            activity.getGame().rumorsCount = getResultToField(rumorsCount);
-            activity.getGame().cluesCount = getResultToField(cluesCount);
-            activity.getGame().blessedCount = getResultToField(blessedCount);
-            activity.getGame().doomCount = getResultToField(doomCount);
-            activity.getGame().score = getScore();
+            if (resultGameSwitch.isChecked()) {
+                activity.getGame().gatesCount = getResultToField(gatesCount);
+                activity.getGame().monstersCount = getResultToField(monstersCount);
+                activity.getGame().curseCount = getResultToField(curseCount);
+                activity.getGame().rumorsCount = getResultToField(rumorsCount);
+                activity.getGame().cluesCount = getResultToField(cluesCount);
+                activity.getGame().blessedCount = getResultToField(blessedCount);
+                activity.getGame().doomCount = getResultToField(doomCount);
+                activity.getGame().score = getScore();
+            } else cleanEditText();
         }
     }
 
@@ -261,6 +263,17 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
             default:
                 break;
         }
+    }
+
+    private void cleanEditText() {
+        activity.getGame().gatesCount = 0;
+        activity.getGame().monstersCount = 0;
+        activity.getGame().curseCount = 0;
+        activity.getGame().rumorsCount = 0;
+        activity.getGame().cluesCount = 0;
+        activity.getGame().blessedCount = 0;
+        activity.getGame().doomCount = 0;
+        activity.getGame().score = 0;
     }
 
     @Override

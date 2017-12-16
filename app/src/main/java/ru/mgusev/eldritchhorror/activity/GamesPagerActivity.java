@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -36,6 +37,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     public Game game;
 
     private MenuItem clearItem;
+    private MenuItem randomItem;
 
     ViewPager pager;
     EHFragmentPagerAdapter pagerAdapter;
@@ -103,7 +105,9 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
-                }
+
+                    randomItem.setVisible(true);
+                } else randomItem.setVisible(false);
             }
 
             @Override
@@ -166,6 +170,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_games_pager_activity, menu);
         clearItem = menu.findItem(R.id.action_clear);
+        randomItem = menu.findItem(R.id.action_random);
         return true;
     }
 
@@ -173,12 +178,18 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                addDataToGame();
-                writeGameToDB();
+                if (((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).isStartingInvCountCorrect()) {
+                    addDataToGame();
+                    writeGameToDB();
+                } else ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).showStartingInvCountAlert();
                 return true;
             case R.id.action_clear:
                 isAlert = true;
                 ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).cleanDialog();
+                return true;
+            case R.id.action_random:
+                if (currentPosition == 1) ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).selectRandomInvestigators();
+                else if (currentPosition == 0) ((StartingDataFragment) pagerAdapter.getItem(0)).selectRandomAncientOne();
                 return true;
             case R.id.action_edit_expansion:
                 Intent intent = new Intent(this, ExpansionChoiceActivity.class);

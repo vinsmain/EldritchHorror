@@ -83,4 +83,12 @@
     <string name="message_later">Remind Me Later</string>
 
     <string name="message_starting">So far there are no results of the game.\nTo add the result of the game, click on the big orange button.</string>
+
+    <string name="random_button_header">Random selection</string>
+    <string name="alert_investigators_limit">"Number of initial investigators exceeded!"</string>
+    <string name="sort_mode_message_1">"Sort by date descending"</string>
+    <string name="sort_mode_message_2">"Sort by date ascending"</string>
+    <string name="sort_mode_message_3">"Sort by Ancient One"</string>
+    <string name="sort_mode_message_4">"Sort by score descending"</string>
+    <string name="sort_mode_message_5">"Sort by score ascending"</string>
 </resources>

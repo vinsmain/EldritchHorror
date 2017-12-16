@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 
@@ -73,8 +74,6 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_investigators_choice, null);
-
-
 
         invRecycleView = (RecyclerView) view.findViewById(R.id.invRecycleView);
 
@@ -151,6 +150,22 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sortList();
+    }
+
+    private void sortList() {
+        List<Investigator> sortList = new ArrayList<>();
+        for (int i = 0; i < investigatorList.size(); i++) {
+            if (investigatorList.get(i).isStarting) sortList.add(investigatorList.get(i));
+        }
+        for (int i = 0; i < investigatorList.size(); i++) {
+            if (investigatorList.get(i).isReplacement) sortList.add(investigatorList.get(i));
+        }
+        for (int i = 0; i < investigatorList.size(); i++) {
+            if (!investigatorList.get(i).isStarting && !investigatorList.get(i).isReplacement) sortList.add(investigatorList.get(i));
+        }
+        investigatorList.clear();
+        investigatorList.addAll(sortList);
     }
 
     @Override
@@ -170,20 +185,40 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
 
     }
 
+    private int getStartingInvCount() {
+        int count = 0;
+        for (Investigator investigator : investigatorList) {
+            if (investigator.isStarting) count++;
+        }
+        return count;
+    }
+
+    public boolean isStartingInvCountCorrect() {
+        return getStartingInvCount() <= activity.getGame().playersCount;
+    }
+
+    public void showStartingInvCountAlert() {
+        Toast.makeText(getContext(), R.string.alert_investigators_limit, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             Investigator investigatorUpdate = data.getParcelableExtra("investigator");
-            for (int i = 0; i < investigatorList.size(); i++) {
-                if (investigatorList.get(i).getName().equals(investigatorUpdate.getName())) {
-                    investigatorList.set(i, investigatorUpdate);
-                    addDataToGame();
+            if (!investigatorUpdate.isStarting || getStartingInvCount() < activity.getGame().playersCount) {
+                for (int i = 0; i < investigatorList.size(); i++) {
+                    if (investigatorList.get(i).getName().equals(investigatorUpdate.getName())) {
+                        investigatorList.set(i, investigatorUpdate);
+                        addDataToGame();
 
-                    initInvestigatorList();
-                    adapter.notifyDataSetChanged();
-                    break;
+                        initInvestigatorList();
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
                 }
+            } else {
+                showStartingInvCountAlert();
             }
         }
     }
@@ -217,5 +252,24 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
 
     public AlertDialog getAlert() {
         return alert;
+    }
+
+    public void selectRandomInvestigators() {
+        cleanInvList();
+        int j = 0;
+        for (int i = 0; i < activity.getGame().playersCount; i++) {
+            try {
+                do {
+                    j = (int) (Math.random() * investigatorList.size());
+                } while (investigatorList.get(j).isStarting || !HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(investigatorList.get(j).expansionID));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            investigatorList.get(j).isStarting = true;
+        }
+        addDataToGame();
+
+        initInvestigatorList();
+        adapter.notifyDataSetChanged();
     }
 }
