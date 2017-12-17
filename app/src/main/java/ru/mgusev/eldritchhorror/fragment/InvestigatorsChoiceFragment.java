@@ -206,12 +206,11 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             Investigator investigatorUpdate = data.getParcelableExtra("investigator");
-            if (!investigatorUpdate.isStarting || getStartingInvCount() < activity.getGame().playersCount) {
+            if (!investigatorUpdate.isStarting || getStartingInvCount() < activity.getGame().playersCount || isAlreadySelected(investigatorUpdate)) {
                 for (int i = 0; i < investigatorList.size(); i++) {
                     if (investigatorList.get(i).getName().equals(investigatorUpdate.getName())) {
                         investigatorList.set(i, investigatorUpdate);
                         addDataToGame();
-
                         initInvestigatorList();
                         adapter.notifyDataSetChanged();
                         break;
@@ -221,6 +220,15 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
                 showStartingInvCountAlert();
             }
         }
+    }
+
+    private boolean isAlreadySelected(Investigator checkedInvestigator) {
+        for (int i = 0; i < investigatorList.size(); i++) {
+            if (investigatorList.get(i).getName().equals(checkedInvestigator.getName())) {
+                return investigatorList.get(i).isStarting && checkedInvestigator.isStarting;
+            }
+        }
+        return false;
     }
 
     public void addDataToGame() {
