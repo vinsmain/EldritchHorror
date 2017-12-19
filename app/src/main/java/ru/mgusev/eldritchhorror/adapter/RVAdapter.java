@@ -119,7 +119,9 @@ public class RVAdapter extends RecyclerSwipeAdapter<RVAdapter.GameViewHolder> {
             holder.score.setText(String.valueOf(gameList.get(position).score));
             holder.score.setVisibility(View.VISIBLE);
         } else {
-            holder.winImage.setImageResource(R.drawable.skull);
+            if (gameList.get(position).isDefeatByAwakenedAncientOne) holder.winImage.setImageResource(R.drawable.skull);
+            else if (gameList.get(position).isDefeatByElimination) holder.winImage.setImageResource(R.drawable.inestigators_out);
+            else if (gameList.get(position).isDefeatByMythosDepletion) holder.winImage.setImageResource(R.drawable.mythos_empty);
             holder.score.setVisibility(View.GONE);
         }
 

@@ -188,8 +188,10 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
             winCardView.setVisibility(View.VISIBLE);
             defeatCardView.setVisibility(View.GONE);
         } else {
+            if (game.isDefeatByAwakenedAncientOne) winImage.setImageResource(R.drawable.skull);
+            else if (game.isDefeatByElimination) winImage.setImageResource(R.drawable.inestigators_out);
+            else if (game.isDefeatByMythosDepletion) winImage.setImageResource(R.drawable.mythos_empty);
             score.setVisibility(View.GONE);
-            winImage.setImageResource(R.drawable.skull);
             defeatCardView.setVisibility(View.VISIBLE);
             winCardView.setVisibility(View.GONE);
         }

@@ -144,9 +144,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
     public void addDataToGame() {
         if (view != null) {
             activity.getGame().isWinGame = resultGameSwitch.isChecked();
-            activity.getGame().isDefeatByElimination = defeatByElimination.isChecked();
-            activity.getGame().isDefeatByMythosDepletion = defeatByMythosDeplition.isChecked();
-            activity.getGame().isDefeatByAwakenedAncientOne = defeatByAwakenedAncientOne.isChecked();
+            addDefeatReasonsToGame();
             if (resultGameSwitch.isChecked()) {
                 activity.getGame().gatesCount = getResultToField(gatesCount);
                 activity.getGame().monstersCount = getResultToField(monstersCount);
@@ -229,10 +227,12 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
                     score.setVisibility(View.VISIBLE);
                 }
                 else {
+                    if (activity.getGame().isDefeatByAwakenedAncientOne) winImage.setImageResource(R.drawable.skull);
+                    else if (activity.getGame().isDefeatByElimination) winImage.setImageResource(R.drawable.inestigators_out);
+                    else if (activity.getGame().isDefeatByMythosDepletion) winImage.setImageResource(R.drawable.mythos_empty);
                     resultGameText.setText(R.string.defeat_header);
                     defeatTable.setVisibility(View.VISIBLE);
                     winTable.setVisibility(View.GONE);
-                    winImage.setImageResource(R.drawable.skull);
                     score.setVisibility(View.GONE);
 
                     View view = getActivity().getCurrentFocus();
@@ -246,23 +246,35 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
                 if (b) {
                     defeatByMythosDeplition.setChecked(false);
                     defeatByAwakenedAncientOne.setChecked(false);
+                    winImage.setImageResource(R.drawable.inestigators_out);
+                    addDefeatReasonsToGame();
                 }
                 break;
             case R.id.defeatByMythosDeplition:
                 if (b) {
                     defeatByElimination.setChecked(false);
                     defeatByAwakenedAncientOne.setChecked(false);
+                    winImage.setImageResource(R.drawable.mythos_empty);
+                    addDefeatReasonsToGame();
                 }
                 break;
             case R.id.defeatByAwakenedAncientOne:
                 if (b) {
                     defeatByElimination.setChecked(false);
                     defeatByMythosDeplition.setChecked(false);
+                    winImage.setImageResource(R.drawable.skull);
+                    addDefeatReasonsToGame();
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private void addDefeatReasonsToGame() {
+        activity.getGame().isDefeatByElimination = defeatByElimination.isChecked();
+        activity.getGame().isDefeatByMythosDepletion = defeatByMythosDeplition.isChecked();
+        activity.getGame().isDefeatByAwakenedAncientOne = defeatByAwakenedAncientOne.isChecked();
     }
 
     private void cleanEditText() {
