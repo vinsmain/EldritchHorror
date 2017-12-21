@@ -14,6 +14,8 @@ import java.util.List;
 @DatabaseTable(tableName = "games")
 public class Game implements Parcelable {
 
+    public static final String GAME_TABLE_NAME = "games";
+
     public static final String GAME_FIELD_ID = "_id";
     public static final String GAME_FIELD_DATE = "date";
     public static final String GAME_FIELD_ANCIENT_ONE_ID = "ancient_one_id";
@@ -34,6 +36,8 @@ public class Game implements Parcelable {
     public static final String GAME_FIELD_BLESSED_COUNT = "blessed_count";
     public static final String GAME_FIELD_DOOM_COUNT = "doom_count";
     public static final String GAME_FIELD_SCORE = "score";
+    public static final String GAME_FIELD_PRELUDE_ID = "prelude_id";
+    public static final String GAME_FIELD_SOLVED_MYSTERIES_COUNT = "solved_mysteries_count";
 
     @DatabaseField(generatedId = true, columnName = GAME_FIELD_ID)
     public int id;
@@ -95,6 +99,12 @@ public class Game implements Parcelable {
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_SCORE)
     public int score;
 
+    @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_PRELUDE_ID)
+    public int preludeID;
+
+    @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_SOLVED_MYSTERIES_COUNT)
+    public int solvedMysteriesCount;
+
     public List<Investigator> invList;
 
     public Game() {
@@ -118,6 +128,8 @@ public class Game implements Parcelable {
         blessedCount = 0;
         doomCount = 0;
         score = 0;
+        preludeID = 0;
+        solvedMysteriesCount = 3;
         invList = new ArrayList<>();
     }
 

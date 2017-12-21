@@ -21,7 +21,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
@@ -47,7 +47,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource, Game.class);
             TableUtils.createTable(connectionSource, Investigator.class);
-            System.out.println("Create DB");
+            Log.e(TAG, "Create DB");
         } catch (SQLException e){
             Log.e(TAG, "Error creating DB " + DATABASE_NAME);
             throw new RuntimeException(e);
@@ -58,9 +58,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, Investigator.class, true);
-            TableUtils.createTable(connectionSource, Investigator.class);
-            System.out.println("Update DB");
+            helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_PRELUDE_ID + " INTEGER DEFAULT 0;");
+            helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_SOLVED_MYSTERIES_COUNT + " INTEGER DEFAULT 3;");
+            Log.e(TAG, "Update DB");
         } catch (SQLException e){
             Log.e(TAG, "Error upgrading db " + DATABASE_NAME + " from ver " + oldVersion);
             throw new RuntimeException(e);
