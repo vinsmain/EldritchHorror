@@ -12,9 +12,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -36,6 +39,8 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
 
     TableLayout winTable;
     TableLayout defeatTable;
+    Spinner mysteriesSpinner;
+    String[] mysteriesCountArray;
 
     TextView resultGameText;
     Switch resultGameSwitch;
@@ -85,7 +90,8 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_result_game, null);
-
+        mysteriesCountArray = getResources().getStringArray(R.array.mysteriesCountArray);
+        initMysteriesSpinner();
         initActivityElements();
         setListeners();
 
@@ -144,6 +150,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
     public void addDataToGame() {
         if (view != null) {
             activity.getGame().isWinGame = resultGameSwitch.isChecked();
+            activity.getGame().solvedMysteriesCount = getMysteriesCount();
             addDefeatReasonsToGame();
             if (resultGameSwitch.isChecked()) {
                 activity.getGame().gatesCount = getResultToField(gatesCount);
@@ -160,6 +167,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
 
     private void addGameValuesToFields() {
         resultGameSwitch.setChecked(activity.getGame().isWinGame);
+        mysteriesSpinner.setSelection(getItemIndexInArray(mysteriesCountArray, String.valueOf(activity.getGame().solvedMysteriesCount)));
         defeatByElimination.setChecked(activity.getGame().isDefeatByElimination);
         defeatByMythosDeplition.setChecked(activity.getGame().isDefeatByMythosDepletion);
         defeatByAwakenedAncientOne.setChecked(activity.getGame().isDefeatByAwakenedAncientOne);
@@ -184,6 +192,15 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
 
         i = activity.getGame().doomCount;
         doomCount.setText(i == 0 ? "" : String.valueOf(i));
+    }
+
+    private int getItemIndexInArray(String[] array, String value) {
+        for (int i = 0; i < array.length; i++) {
+            if(array[i].equals(value)) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     private int getScore() {
@@ -213,6 +230,30 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
 
     private void refreshScore() {
         score.setText(String.valueOf(getScore()));
+    }
+
+    private void initMysteriesSpinner() {
+        ArrayAdapter<String> mysteriesCountAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner, mysteriesCountArray);
+        mysteriesCountAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        mysteriesSpinner = (Spinner) view.findViewById(R.id.mysteries_spinner);
+        mysteriesSpinner.setAdapter(mysteriesCountAdapter);
+
+        mysteriesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                activity.getGame().solvedMysteriesCount = getMysteriesCount();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private int getMysteriesCount() {
+        return Integer.parseInt(mysteriesCountArray[mysteriesSpinner.getSelectedItemPosition()]);
     }
 
     @Override

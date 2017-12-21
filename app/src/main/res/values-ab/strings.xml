@@ -91,4 +91,6 @@
     <string name="sort_mode_message_3">"Результаты сгруппированы по Древнему"</string>
     <string name="sort_mode_message_4">"Лучший счет в начале списка"</string>
     <string name="sort_mode_message_5">"Лучший счет в конце списка"</string>
+
+    <string name="solved_mysteries_header">"Число разгаданных тайн"</string>
 </resources>

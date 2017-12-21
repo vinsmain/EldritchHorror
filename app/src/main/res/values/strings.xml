@@ -91,4 +91,6 @@
     <string name="sort_mode_message_3">"Sort by Ancient One"</string>
     <string name="sort_mode_message_4">"Sort by score descending"</string>
     <string name="sort_mode_message_5">"Sort by score ascending"</string>
+
+    <string name="solved_mysteries_header">"Number of solved mysteries"</string>
 </resources>
