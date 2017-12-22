@@ -154,6 +154,8 @@ public class Game implements Parcelable {
         blessedCount = in.readInt();
         doomCount = in.readInt();
         score = in.readInt();
+        preludeID = in.readInt();
+        solvedMysteriesCount = in.readInt();
         invList = in.createTypedArrayList(Investigator.CREATOR);
     }
 
@@ -196,6 +198,8 @@ public class Game implements Parcelable {
         parcel.writeInt(blessedCount);
         parcel.writeInt(doomCount);
         parcel.writeInt(score);
+        parcel.writeInt(preludeID);
+        parcel.writeInt(solvedMysteriesCount);
         parcel.writeTypedList(invList);
     }
 }
