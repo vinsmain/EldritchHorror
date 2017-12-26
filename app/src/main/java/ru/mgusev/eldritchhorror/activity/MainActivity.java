@@ -3,6 +3,15 @@ package ru.mgusev.eldritchhorror.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -21,6 +30,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,6 +44,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int columnsCount = 1;
     private int currentSortMode = SORT_MODE_DATE_UP;
     private MenuItem sortItem;
+    private MenuItem authItem;
 
     private List<Game> gameList;
     RecyclerView recyclerView;
@@ -93,8 +106,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser currentUser;
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 100;
+    private Drawable d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,10 +180,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + currentUser.getUid());
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -188,9 +203,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        System.out.println(currentUser);
-        //updateUI(currentUser);
+        currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) setPhoto(currentUser);
     }
 
     @Override
@@ -204,6 +218,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void signOut() {
+        mAuth.signOut();
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        authItem.setIcon(R.drawable.google_icon);
+                        currentUser = null;
+                    }
+                });
     }
 
     @Override
@@ -227,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        authItem.setIcon(R.drawable.google_signed_in);
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -236,18 +263,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            System.out.println(user);
+                            currentUser = mAuth.getCurrentUser();
+                            setPhoto(currentUser);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Snackbar.make(findViewById(R.id.score), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            System.out.println("null");
+                            currentUser = null;
+                            d = null;
+                            authItem.setIcon(R.drawable.google_icon);
+                            Toast.makeText(getApplicationContext(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         }
 
                         // ...
                     }
                 });
+    }
+
+    private void setPhoto(FirebaseUser user) {
+        if (d != null) authItem.setIcon(d);
+        else new AsyncTask<String, Void, Bitmap>() {
+
+                @Override
+                protected Bitmap doInBackground(String... params) {
+                    try {
+                        URL url = new URL(params[0]);
+                        InputStream in = url.openStream();
+                        return BitmapFactory.decodeStream(in);
+                    } catch (Exception e) {
+                            /* TODO log error */
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap bitmap) {
+                    Drawable d = new BitmapDrawable(getResources(), BitmapCircle.getCircleBitmap(bitmap, 96));
+                    authItem.setIcon(d);
+                }
+            }.execute(user.getPhotoUrl().toString());
     }
 
     private void initDonateDialog() {
@@ -308,6 +361,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);
         sortItem = menu.findItem(R.id.action_sort);
+        authItem = menu.findItem(R.id.action_auth);
+        if (currentUser == null) authItem.setIcon(R.drawable.google_icon);
         setSortItemIcon();
         return true;
     }
@@ -316,9 +371,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_about:
-                //Intent intent = new Intent(this, DonateActivity.class);
-                //startActivity(intent);
-                signIn();
+                Intent intent = new Intent(this, DonateActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_auth:
+                System.out.println("currentUSER " + currentUser);
+                if (currentUser != null) signOut();
+                else signIn();
                 return true;
             case R.id.action_sort:
                 if (currentSortMode != SORT_MODE_SCORE_UP) currentSortMode++;
