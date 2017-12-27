@@ -43,6 +43,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -110,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 100;
     private Drawable d;
+
+    private FirebaseDatabase database;
+    private DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (currentUser != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + currentUser.getUid());
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -321,8 +327,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             gameList.clear();
             gameList.addAll(getSortedGames());
+            database = FirebaseDatabase.getInstance();
+            ref = database.getReference();
             for (int i = 0; i < gameList.size(); i ++) {
                 gameList.get(i).invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(gameList.get(i).id);
+                if (ref != null && currentUser != null) {
+                    System.out.println(ref);
+                    ref.child("users").child(currentUser.getUid()).child("games").child(String.valueOf(gameList.get(i).id)).setValue(gameList.get(i));
+                    for (int j = 0; j < gameList.get(i).invList.size(); j ++) {
+                        ref.child("users").child(currentUser.getUid()).child("investigators").child(String.valueOf(gameList.get(i).invList.get(j).id)).setValue(gameList.get(i).invList.get(j));
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
