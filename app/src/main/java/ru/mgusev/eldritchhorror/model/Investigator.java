@@ -24,11 +24,11 @@ public class Investigator implements Parcelable {
     public static final String INVESTIGATOR_FIELD_IS_DEAD = "is_dead";
     public static final String INVESTIGATOR_FIELD_EXPANSION_ID = "expansion_id";
 
-    @DatabaseField(dataType = DataType.INTEGER, generatedId = true, columnName = INVESTIGATOR_FIELD_ID)
-    public int id;
+    @DatabaseField(id = true, dataType = DataType.LONG, columnName = INVESTIGATOR_FIELD_ID)
+    public long id;
 
-    @DatabaseField(dataType = DataType.INTEGER, columnName = INVESTIGATOR_FIELD_GAME_ID)
-    public int gameId;
+    @DatabaseField(dataType = DataType.LONG, columnName = INVESTIGATOR_FIELD_GAME_ID)
+    public long gameId;
 
     @DatabaseField(dataType = DataType.STRING, columnName = INVESTIGATOR_FIELD_IMAGE_RESOURCE)
     public String imageResource;
@@ -64,8 +64,8 @@ public class Investigator implements Parcelable {
     }
 
     protected Investigator(Parcel in) {
-        id = in.readInt();
-        gameId = in.readInt();
+        id = in.readLong();
+        gameId = in.readLong();
         imageResource = in.readString();
         isMale = in.readByte() != 0;
         nameEN = in.readString();
@@ -97,8 +97,8 @@ public class Investigator implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeInt(gameId);
+        parcel.writeLong(id);
+        parcel.writeLong(gameId);
         parcel.writeString(imageResource);
         parcel.writeByte((byte) (isMale ? 1 : 0));
         parcel.writeString(nameEN);

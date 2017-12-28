@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.EHFragmentPagerAdapter;
@@ -213,10 +214,12 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
     private void writeGameToDB() {
         try {
-            int id = HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
-            HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(id);
+            if (game.id == -1) game.id = (new Date()).getTime();
+            HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
+            HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(game.id);
             for (int i = 0; i < game.invList.size(); i++) {
-                game.invList.get(i).gameId = id;
+                game.invList.get(i).gameId = game.id;
+                game.invList.get(i).id = (new Date()).getTime();
                 HelperFactory.getHelper().getInvestigatorDAO().create(game.invList.get(i));
             }
 

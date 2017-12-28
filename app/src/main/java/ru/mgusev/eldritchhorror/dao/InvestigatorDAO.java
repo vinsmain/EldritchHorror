@@ -32,13 +32,13 @@ public class InvestigatorDAO extends BaseDaoImpl {
         return investigatorList;
     }
 
-    public List<Investigator> getInvestigatorsListByGameID(int gameID) throws SQLException {
+    public List<Investigator> getInvestigatorsListByGameID(long gameID) throws SQLException {
         QueryBuilder<Investigator, Integer> qb = this.queryBuilder();
         qb.where().eq(Investigator.INVESTIGATOR_FIELD_GAME_ID, gameID);
         return qb.query();
     }
 
-    public void deleteInvestigatorsByGameID(int id) throws SQLException {
+    public void deleteInvestigatorsByGameID(long id) throws SQLException {
         DeleteBuilder<Investigator, Integer> db = this.deleteBuilder();
         db.where().eq(Investigator.INVESTIGATOR_FIELD_GAME_ID, id);
         db.delete();

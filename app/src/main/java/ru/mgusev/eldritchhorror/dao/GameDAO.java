@@ -62,9 +62,9 @@ public class GameDAO extends BaseDaoImpl {
         return qb.queryForFirst();
     }
 
-    public int writeGameToDB(Game game) throws SQLException {
+    public void writeGameToDB(Game game) throws SQLException {
         this.createOrUpdate(game);
-        if (game.id == -1) game.id = (int) this.queryRawValue("SELECT MAX(" + Game.GAME_FIELD_ID + ") from games");
-        return game.id;
+        //if (game.id == -1) game.id = this.queryRawValue("SELECT MAX(" + Game.GAME_FIELD_ID + ") from games");
+        //return game.id;
     }
 }
