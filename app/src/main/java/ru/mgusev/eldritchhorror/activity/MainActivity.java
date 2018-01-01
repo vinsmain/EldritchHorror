@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     System.out.println(ref);
                     ref.child("users").child(currentUser.getUid()).child("games").child(String.valueOf(gameList.get(i).id)).setValue(gameList.get(i));
                     for (int j = 0; j < gameList.get(i).invList.size(); j ++) {
-                        ref.child("users").child(currentUser.getUid()).child("investigators").child(String.valueOf(gameList.get(i).invList.get(j).id)).setValue(gameList.get(i).invList.get(j));
+                        ref.child("users").child(currentUser.getUid()).child("games").child(String.valueOf(gameList.get(i).id)).child(String.valueOf(gameList.get(i).invList.get(j).id)).setValue(gameList.get(i).invList.get(j));
                     }
                 }
             }
