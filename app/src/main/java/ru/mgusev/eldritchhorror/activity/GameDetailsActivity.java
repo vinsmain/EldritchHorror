@@ -183,7 +183,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
 
         if (game.isWinGame) {
             score.setText(String.valueOf(game.score));
-            score.setVisibility(View.VISIBLE);
+
             winImage.setImageResource(R.drawable.stars);
             winCardView.setVisibility(View.VISIBLE);
             defeatCardView.setVisibility(View.GONE);

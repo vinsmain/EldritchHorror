@@ -21,7 +21,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
@@ -61,7 +61,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             //helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_PRELUDE_ID + " INTEGER DEFAULT 0;");
             //helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_SOLVED_MYSTERIES_COUNT + " INTEGER DEFAULT 3;");
 
-            String queryGamesUpgrade = "PRAGMA foreign_keys = 0;\n" +
+            /*String queryGamesUpgrade = "PRAGMA foreign_keys = 0;\n" +
                     "\n" +
                     "CREATE TABLE games_temp_table AS SELECT *\n" +
                     "                                          FROM games;\n" +
@@ -200,9 +200,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                     "PRAGMA foreign_keys = 1;";
 
             helper.getGameDAO().queryRaw(queryGamesUpgrade);
-            helper.getInvestigatorDAO().queryRaw(queryInvUpgrade);
+            helper.getInvestigatorDAO().queryRaw(queryInvUpgrade);*/
 
-
+            helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_USER_ID + " STRING DEFAULT null;");
 
             Log.e(TAG, "Update DB");
         } catch (SQLException e){

@@ -43,8 +43,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -57,6 +61,7 @@ import java.util.concurrent.TimeUnit;
 
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.RVAdapter;
+import ru.mgusev.eldritchhorror.database.FirebaseHelper;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
 import ru.mgusev.eldritchhorror.fragment.DonateDialogFragment;
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
-    private static final String TAG = "Firebase";
+    private static final String TAG = "FIREBASE";
 
     private static final int SORT_MODE_DATE_DOWN = 1;
     private static final int SORT_MODE_DATE_UP = 2;
@@ -111,10 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser currentUser;
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 100;
-    private Drawable d;
-
-    private FirebaseDatabase database;
-    private DatabaseReference ref;
+    private UserPhoto userPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         prefHelper = new PrefHelper(this);
         currentSortMode = prefHelper.loadSortMode();
+
+        FirebaseHelper.setMainActivity(this);
+        userPhoto = UserPhoto.initUserPhoto();
 
         initDonateDialog();
 
@@ -171,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initRVListener();
         recyclerView.addOnScrollListener(onScrollListener);
 
-        setScoreValues();
         showMessageStarting();
 
         if (getIntent().getBooleanExtra("refreshGameList", false)) initGameList();
@@ -188,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentUser = firebaseAuth.getCurrentUser();
                 if (currentUser != null) {
                     // User is signed in
+                    FirebaseHelper.getReference(currentUser);
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + currentUser.getUid());
 
                 } else {
@@ -210,7 +215,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onStart() {
         super.onStart();
         currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) setPhoto(currentUser);
+        if (currentUser != null) Log.d(TAG, "CURRENT USER: signed_in: " + currentUser.getUid());
+        if (currentUser != null) {
+            setPhoto();
+            FirebaseHelper.getReference(currentUser);
+            initGameList();
+        }
     }
 
     @Override
@@ -234,8 +244,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<Void> task) {
                         authItem.setIcon(R.drawable.google_icon);
                         currentUser = null;
+                        userPhoto.clearPhoto();
                     }
                 });
+        try {
+            HelperFactory.getHelper().getGameDAO().clearTable();
+            HelperFactory.getHelper().getInvestigatorDAO().clearTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        initGameList();
     }
 
     @Override
@@ -270,12 +288,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             currentUser = mAuth.getCurrentUser();
-                            setPhoto(currentUser);
+                            setPhoto();
+                            FirebaseHelper.getReference(currentUser);
+                            initGameList();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             currentUser = null;
-                            d = null;
                             authItem.setIcon(R.drawable.google_icon);
                             Toast.makeText(getApplicationContext(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         }
@@ -285,28 +304,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
-    private void setPhoto(FirebaseUser user) {
-        if (d != null) authItem.setIcon(d);
-        else new AsyncTask<String, Void, Bitmap>() {
-
-                @Override
-                protected Bitmap doInBackground(String... params) {
-                    try {
-                        URL url = new URL(params[0]);
-                        InputStream in = url.openStream();
-                        return BitmapFactory.decodeStream(in);
-                    } catch (Exception e) {
-                            /* TODO log error */
-                    }
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Bitmap bitmap) {
-                    Drawable d = new BitmapDrawable(getResources(), BitmapCircle.getCircleBitmap(bitmap, 96));
-                    authItem.setIcon(d);
-                }
-            }.execute(user.getPhotoUrl().toString());
+    private void setPhoto() {
+        if (authItem != null) authItem.setIcon(userPhoto.getPhoto(currentUser));
     }
 
     private void initDonateDialog() {
@@ -327,22 +326,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             gameList.clear();
             gameList.addAll(getSortedGames());
-            database = FirebaseDatabase.getInstance();
-            ref = database.getReference();
             for (int i = 0; i < gameList.size(); i ++) {
                 gameList.get(i).invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(gameList.get(i).id);
-                if (ref != null && currentUser != null) {
-                    System.out.println(ref);
-                    ref.child("users").child(currentUser.getUid()).child("games").child(String.valueOf(gameList.get(i).id)).setValue(gameList.get(i));
-                    for (int j = 0; j < gameList.get(i).invList.size(); j ++) {
-                        ref.child("users").child(currentUser.getUid()).child("games").child(String.valueOf(gameList.get(i).id)).child(String.valueOf(gameList.get(i).invList.get(j).id)).setValue(gameList.get(i).invList.get(j));
-                    }
+                if (currentUser != null && gameList.get(i).userID == null) {
+                    Log.w(TAG, "addGame " + gameList.get(i).ancientOneID);
+                    gameList.get(i).userID = currentUser.getUid();
+                    FirebaseHelper.addGame(gameList.get(i));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (adapter != null) adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+            setScoreValues();
+            showMessageStarting();
+        }
     }
 
     private List<Game> getSortedGames() {
@@ -378,6 +377,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sortItem = menu.findItem(R.id.action_sort);
         authItem = menu.findItem(R.id.action_auth);
         if (currentUser == null) authItem.setIcon(R.drawable.google_icon);
+        else setPhoto();
         setSortItemIcon();
         return true;
     }
@@ -390,7 +390,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 return true;
             case R.id.action_auth:
-                System.out.println("currentUSER " + currentUser);
                 if (currentUser != null) signOut();
                 else signIn();
                 return true;
@@ -490,7 +489,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setPositiveButton(getResources().getString(R.string.messageOK),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                deleteParty();
+                                deleteParty(deletingGame);
                                 dialog.cancel();
                                 isAlert = false;
                             }
@@ -506,7 +505,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alert.show();
     }
 
-    private void deleteParty() {
+    public void deleteParty(Game deletingGame) {
         try {
             HelperFactory.getHelper().getGameDAO().delete(deletingGame);
             HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(deletingGame.id);
@@ -514,10 +513,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
         initGameList();
-        adapter.notifyDataSetChanged();
-        setScoreValues();
-        showMessageStarting();
         Toast.makeText(this, R.string.success_deleting_message, Toast.LENGTH_SHORT).show();
+        FirebaseHelper.removeGame(deletingGame);
     }
 
     public void setAdvertisingDialog(boolean advertisingDialog) {

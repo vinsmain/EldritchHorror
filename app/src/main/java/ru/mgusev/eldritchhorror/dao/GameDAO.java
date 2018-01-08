@@ -65,4 +65,14 @@ public class GameDAO extends BaseDaoImpl {
     public void writeGameToDB(Game game) throws SQLException {
         this.createOrUpdate(game);
     }
+
+    public boolean hasGame(Game game) throws SQLException {
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.where().eq(Game.GAME_FIELD_ID, game.id);
+        return qb.query().size() != 0;
+    }
+
+    public void clearTable() throws SQLException {
+        queryRaw("DELETE FROM " + Game.GAME_TABLE_NAME);
+    }
 }

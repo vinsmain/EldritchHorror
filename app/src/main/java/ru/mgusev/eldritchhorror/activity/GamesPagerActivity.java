@@ -22,6 +22,7 @@ import java.util.Date;
 
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.EHFragmentPagerAdapter;
+import ru.mgusev.eldritchhorror.database.FirebaseHelper;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.fragment.InvestigatorsChoiceFragment;
@@ -222,7 +223,6 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 game.invList.get(i).id = (new Date()).getTime();
                 HelperFactory.getHelper().getInvestigatorDAO().create(game.invList.get(i));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -231,6 +231,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         intent.putExtra("refreshGameList", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        FirebaseHelper.addGame(game);
     }
 
     @Override

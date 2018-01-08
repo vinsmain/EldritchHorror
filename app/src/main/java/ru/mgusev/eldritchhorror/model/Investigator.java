@@ -11,6 +11,9 @@ import java.util.Locale;
 
 @DatabaseTable(tableName = "investigators")
 public class Investigator implements Parcelable {
+
+    public static final String INVESTIGATOR_TABLE_NAME = "investigators";
+
     public static final String INVESTIGATOR_FIELD_ID = "_id";
     public static final String INVESTIGATOR_FIELD_GAME_ID = "game_id";
     public static final String INVESTIGATOR_FIELD_IMAGE_RESOURCE = "image_resource";
