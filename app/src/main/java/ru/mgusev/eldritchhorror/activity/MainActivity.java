@@ -35,6 +35,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -313,6 +314,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (currentUser != null && gameList.get(i).userID == null) {
                     Log.w(TAG, "addGame " + gameList.get(i).ancientOneID);
                     gameList.get(i).userID = currentUser.getUid();
+                    gameList.get(i).lastModified = (new Date()).getTime();
                     FirebaseHelper.addGame(gameList.get(i));
                 }
             }
