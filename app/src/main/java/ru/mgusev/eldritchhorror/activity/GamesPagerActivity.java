@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -216,6 +215,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     private void writeGameToDB() {
         try {
             if (game.id == -1) game.id = (new Date()).getTime();
+            game.lastModified = (new Date()).getTime();
             HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
             HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(game.id);
             for (int i = 0; i < game.invList.size(); i++) {

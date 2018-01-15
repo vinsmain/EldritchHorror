@@ -6,6 +6,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.List;
 
+import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Game;
 
 public class GameDAO extends BaseDaoImpl {
@@ -73,6 +74,17 @@ public class GameDAO extends BaseDaoImpl {
     }
 
     public void clearTable() throws SQLException {
-        queryRaw("DELETE FROM " + Game.GAME_TABLE_NAME);
+        for (Game game : getGamesSortScoreUp()) {
+            if (game.userID != null) {
+                HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(game.id);
+                delete(game);
+            }
+        }
+    }
+
+    public Game getGameByID(Game game) throws SQLException {
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.where().eq(Game.GAME_FIELD_ID, game.id);
+        return qb.queryForFirst();
     }
 }

@@ -6,9 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-
 import com.google.firebase.auth.FirebaseUser;
-
 import java.io.InputStream;
 import java.net.URL;
 
@@ -16,6 +14,7 @@ public class UserPhoto {
 
     private static UserPhoto userPhoto;
     private static Drawable drawablePhoto;
+    private MainActivity main;
 
     public static UserPhoto initUserPhoto() {
         if (userPhoto == null) {
@@ -43,6 +42,7 @@ public class UserPhoto {
                 @Override
                 protected void onPostExecute(Bitmap bitmap) {
                     drawablePhoto = new BitmapDrawable(Resources.getSystem(), BitmapCircle.getCircleBitmap(bitmap, 96));
+                    main.setPhoto();
                 }
             }.execute(user.getPhotoUrl().toString());
         }
@@ -51,5 +51,9 @@ public class UserPhoto {
 
     public void clearPhoto() {
         drawablePhoto = null;
+    }
+
+    public void setMain(MainActivity main) {
+        this.main = main;
     }
 }

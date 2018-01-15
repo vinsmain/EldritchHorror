@@ -3,20 +3,11 @@ package ru.mgusev.eldritchhorror.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,8 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -43,22 +32,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.io.InputStream;
-import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
-
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.RVAdapter;
 import ru.mgusev.eldritchhorror.database.FirebaseHelper;
@@ -86,22 +65,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MenuItem authItem;
 
     private List<Game> gameList;
-    RecyclerView recyclerView;
-    RecyclerView.OnScrollListener onScrollListener;
-    RVAdapter adapter;
-    Game deletingGame;
-    FloatingActionButton addPartyButton;
-    TextView messageStarting;
-    String bestScoreValue = "";
-    String worstScoreValue = "";
+    private RecyclerView recyclerView;
+    private RecyclerView.OnScrollListener onScrollListener;
+    private RVAdapter adapter;
+    private Game deletingGame;
+    private FloatingActionButton addPartyButton;
+    private TextView messageStarting;
+    private String bestScoreValue = "";
+    private String worstScoreValue = "";
 
-    TextView gamesCount;
-    TextView bestScore;
-    TextView worstScore;
+    private TextView gamesCount;
+    private TextView bestScore;
+    private TextView worstScore;
 
-    AlertDialog alert;
-    boolean isAlert;
-    boolean isAdvertisingDialog;
+    private AlertDialog alert;
+    private boolean isAlert;
+    private boolean isAdvertisingDialog;
 
     private DonateDialogFragment donateDialog;
     private RateDialogFragment rateDialog;
@@ -115,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser currentUser;
     private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseHelper fbHelper;
     private int RC_SIGN_IN = 100;
     private UserPhoto userPhoto;
 
@@ -126,8 +106,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         prefHelper = new PrefHelper(this);
         currentSortMode = prefHelper.loadSortMode();
 
-        FirebaseHelper.setMainActivity(this);
+        fbHelper = FirebaseHelper.getInstance();
+        fbHelper.setMainActivity(this);
         userPhoto = UserPhoto.initUserPhoto();
+        userPhoto.setMain(this);
 
         initDonateDialog();
 
@@ -192,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentUser = firebaseAuth.getCurrentUser();
                 if (currentUser != null) {
                     // User is signed in
-                    FirebaseHelper.getReference(currentUser);
+                    fbHelper.getReference(currentUser);
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + currentUser.getUid());
 
                 } else {
@@ -218,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (currentUser != null) Log.d(TAG, "CURRENT USER: signed_in: " + currentUser.getUid());
         if (currentUser != null) {
             setPhoto();
-            FirebaseHelper.getReference(currentUser);
+            fbHelper.getReference(currentUser);
             initGameList();
         }
     }
@@ -249,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
         try {
             HelperFactory.getHelper().getGameDAO().clearTable();
-            HelperFactory.getHelper().getInvestigatorDAO().clearTable();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -277,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-        authItem.setIcon(R.drawable.google_signed_in);
+        if (authItem != null) authItem.setIcon(R.drawable.google_signed_in);
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -289,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.d(TAG, "signInWithCredential:success");
                             currentUser = mAuth.getCurrentUser();
                             setPhoto();
-                            FirebaseHelper.getReference(currentUser);
+                            fbHelper.getReference(currentUser);
                             initGameList();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -304,8 +285,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
-    private void setPhoto() {
-        if (authItem != null) authItem.setIcon(userPhoto.getPhoto(currentUser));
+    public void setPhoto() {
+        Drawable icon = userPhoto.getPhoto(currentUser);
+        if (authItem != null && icon != null) authItem.setIcon(icon);
     }
 
     private void initDonateDialog() {

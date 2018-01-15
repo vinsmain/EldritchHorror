@@ -43,8 +43,4 @@ public class InvestigatorDAO extends BaseDaoImpl {
         db.where().eq(Investigator.INVESTIGATOR_FIELD_GAME_ID, id);
         db.delete();
     }
-
-    public void clearTable() throws SQLException {
-        queryRaw("DELETE FROM " + Investigator.INVESTIGATOR_TABLE_NAME);
-    }
 }

@@ -7,6 +7,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
+import java.util.Date;
 
 import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.dao.GameDAO;
@@ -21,7 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 7;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
@@ -202,7 +203,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             helper.getGameDAO().queryRaw(queryGamesUpgrade);
             helper.getInvestigatorDAO().queryRaw(queryInvUpgrade);*/
 
-            helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_USER_ID + " STRING DEFAULT null;");
+
+            //helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_USER_ID + " STRING DEFAULT null;");
+
+
+            //helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_LAST_MODIFIED + " BIGINT DEFAULT 0;");
+            Date currentDate = new Date();
+            helper.getGameDAO().executeRaw("UPDATE '" + Game.GAME_TABLE_NAME + "' SET " + Game.GAME_FIELD_LAST_MODIFIED + " = " + currentDate.getTime() + ";");
 
             Log.e(TAG, "Update DB");
         } catch (SQLException e){

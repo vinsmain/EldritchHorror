@@ -15,20 +15,28 @@ import ru.mgusev.eldritchhorror.model.Game;
 import ru.mgusev.eldritchhorror.model.Investigator;
 
 public class FirebaseHelper {
+    private static FirebaseHelper helper;
     private static FirebaseDatabase mDatabase;
-    public static DatabaseReference reference;
-    private static MainActivity mainActivity;
+    private static DatabaseReference reference;
+    private MainActivity mainActivity;
 
-    public static FirebaseDatabase getDatabase() {
+    public static FirebaseHelper getInstance() {
+        if (helper == null) {
+            helper = new FirebaseHelper();
+        }
+        initDatabase();
+        return helper;
+    }
+
+    public static void initDatabase() {
         if (mDatabase == null) {
             mDatabase = FirebaseDatabase.getInstance();
             mDatabase.setPersistenceEnabled(true);
         }
-        return mDatabase;
     }
 
-    public static void getReference(FirebaseUser user) {
-        reference = FirebaseHelper.getDatabase().getReference().child("users").child(user.getUid()).child("games");
+    public void getReference(FirebaseUser user) {
+        reference = mDatabase.getReference().child("users").child(user.getUid()).child("games");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -40,7 +48,6 @@ public class FirebaseHelper {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Game changingGame = dataSnapshot.getValue(Game.class);
                 changeGame(changingGame);
-                //addGame(changingGame);
             }
 
             @Override
@@ -73,26 +80,28 @@ public class FirebaseHelper {
         });
     }
 
-    private static void changeGame(Game game) {
+    private void changeGame(Game game) {
+        if (game.id == -1) game.id = (new Date()).getTime();
         try {
-            if (game.id == -1) game.id = (new Date()).getTime();
-            HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
-            HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(game.id);
-            for (Investigator investigator : game.invList) {
-                if (investigator != null) {
-                    investigator.gameId = game.id;
-                    investigator.id = (new Date()).getTime();
-                    HelperFactory.getHelper().getInvestigatorDAO().create(investigator);
+            if (!(HelperFactory.getHelper().getGameDAO().hasGame(game) && game.lastModified == HelperFactory.getHelper().getGameDAO().getGameByID(game).lastModified) ) {
+                HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
+                HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(game.id);
+                for (Investigator investigator : game.invList) {
+                    if (investigator != null) {
+                        investigator.gameId = game.id;
+                        investigator.id = (new Date()).getTime();
+                        HelperFactory.getHelper().getInvestigatorDAO().create(investigator);
+                    }
                 }
+                mainActivity.initGameList();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        mainActivity.initGameList();
     }
 
-    public static void setMainActivity(MainActivity mainActivity) {
-        FirebaseHelper.mainActivity = mainActivity;
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     public static void addGame(Game game) {
@@ -102,5 +111,4 @@ public class FirebaseHelper {
     public static void removeGame(Game game) throws NullPointerException {
         if (reference != null) reference.child(String.valueOf(game.id)).removeValue();
     }
-
 }

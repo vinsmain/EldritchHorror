@@ -39,6 +39,7 @@ public class Game implements Parcelable {
     public static final String GAME_FIELD_PRELUDE_ID = "prelude_id";
     public static final String GAME_FIELD_SOLVED_MYSTERIES_COUNT = "solved_mysteries_count";
     public static final String GAME_FIELD_USER_ID = "user_id";
+    public static final String GAME_FIELD_LAST_MODIFIED = "last_modified";
 
     @DatabaseField(id = true, dataType = DataType.LONG, columnName = GAME_FIELD_ID)
     public long id;
@@ -109,6 +110,9 @@ public class Game implements Parcelable {
     @DatabaseField(dataType = DataType.STRING, columnName = GAME_FIELD_USER_ID)
     public String userID;
 
+    @DatabaseField(dataType = DataType.LONG, columnName = GAME_FIELD_LAST_MODIFIED)
+    public long lastModified;
+
     public List<Investigator> invList;
 
     public Game() {
@@ -135,6 +139,7 @@ public class Game implements Parcelable {
         preludeID = 0;
         solvedMysteriesCount = 3;
         userID = null;
+        lastModified = 0;
         invList = new ArrayList<>();
     }
 
@@ -162,6 +167,7 @@ public class Game implements Parcelable {
         preludeID = in.readInt();
         solvedMysteriesCount = in.readInt();
         userID = in.readString();
+        lastModified = in.readLong();
         invList = in.createTypedArrayList(Investigator.CREATOR);
     }
 
@@ -207,6 +213,7 @@ public class Game implements Parcelable {
         parcel.writeInt(preludeID);
         parcel.writeInt(solvedMysteriesCount);
         parcel.writeString(userID);
+        parcel.writeLong(lastModified);
         parcel.writeTypedList(invList);
     }
 }
