@@ -93,4 +93,6 @@
     <string name="sort_mode_message_5">"Лучший счет в конце списка"</string>
 
     <string name="solved_mysteries_header">"Число разгаданных тайн"</string>
+
+    <string name="sign_out_menu_header">Выйти</string>
 </resources>

@@ -93,4 +93,6 @@
     <string name="sort_mode_message_5">"Sort by score ascending"</string>
 
     <string name="solved_mysteries_header">"Number of solved mysteries"</string>
+
+    <string name="sign_out_menu_header">Sign Out</string>
 </resources>

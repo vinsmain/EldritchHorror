@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -32,6 +33,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +49,7 @@ import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
 import ru.mgusev.eldritchhorror.fragment.DonateDialogFragment;
 import ru.mgusev.eldritchhorror.fragment.RateDialogFragment;
+import ru.mgusev.eldritchhorror.fragment.SignOutDialogFragment;
 import ru.mgusev.eldritchhorror.model.Game;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private DonateDialogFragment donateDialog;
     private RateDialogFragment rateDialog;
+    private SignOutDialogFragment signOutDialog;
     private PrefHelper prefHelper;
 
     private AdColonyHelper helper;
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseHelper fbHelper;
     private int RC_SIGN_IN = 100;
     private UserPhoto userPhoto;
+    private boolean isConnecting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +126,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             isAlert = savedInstanceState.getBoolean("DIALOG");
             isAdvertisingDialog = savedInstanceState.getBoolean("DIALOG_ADVERTISING");
             isLock = savedInstanceState.getBoolean("LOCK");
+            isConnecting = savedInstanceState.getBoolean("CONNECTING");
         }
+
+        System.out.println("onCreate " + isConnecting);
 
         helper = AdColonyHelper.getInstance(this);
         if (!isLock && !helper.isAdvertisingLoad()) {
@@ -166,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (isAdvertisingDialog) showDonateDialog();
 
         if (prefHelper.isRate()) initRateDialog();
+        //initSignOutDialog();
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -204,6 +214,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fbHelper.getReference(currentUser);
             initGameList();
         }
+        System.out.println("onStart " + isConnecting);
+        if (isConnecting) signIn();
     }
 
     @Override
@@ -219,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void signOut() {
+    public void signOut() {
         mAuth.signOut();
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
@@ -228,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         authItem.setIcon(R.drawable.google_icon);
                         currentUser = null;
                         userPhoto.clearPhoto();
+                        isConnecting = false;
                     }
                 });
         try {
@@ -244,6 +257,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
+            isConnecting = true;
+            System.out.println("onActivityResult " + isConnecting);
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
@@ -272,12 +287,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             currentUser = mAuth.getCurrentUser();
                             setPhoto();
                             fbHelper.getReference(currentUser);
+                            isConnecting = false;
                             initGameList();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             currentUser = null;
                             authItem.setIcon(R.drawable.google_icon);
+                            isConnecting = false;
                             Toast.makeText(getApplicationContext(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         }
 
@@ -302,6 +319,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rateDialog.setActivity(this);
         rateDialog.setCancelable(false);
         rateDialog.show(getSupportFragmentManager(), "RateDialogFragment");
+    }
+
+    private void initSignOutDialog() {
+        signOutDialog = new SignOutDialogFragment();
+        signOutDialog.setActivity(this);
+        signOutDialog.show(getSupportFragmentManager(), "SignOutDialogFragment");
     }
 
     public void initGameList() {
@@ -374,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 return true;
             case R.id.action_auth:
-                if (currentUser != null) signOut();
+                if (currentUser != null) showPopupMenu(findViewById(R.id.action_auth));
                 else signIn();
                 return true;
             case R.id.action_sort:
@@ -510,6 +533,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         outState.putBoolean("DIALOG", isAlert);
         outState.putBoolean("DIALOG_ADVERTISING", isAdvertisingDialog);
         outState.putBoolean("LOCK", isLock);
+        outState.putBoolean("CONNECTING", isConnecting);
         outState.putParcelableArrayList("gameList", (ArrayList<? extends Parcelable>) gameList);
         outState.putParcelable("deletingGame", deletingGame);
         if (alert != null) alert.cancel();
@@ -543,6 +567,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void showMessageStarting() {
         if (adapter.getItemCount() == 0) messageStarting.setText(R.string.message_starting);
         else messageStarting.setText("");
+    }
+
+    private void showPopupMenu(View v) {
+        PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu.inflate(R.menu.menu_logout); // Для Android 4.0
+
+        Object menuHelper;
+        Class[] argTypes;
+        try {
+            Field fMenuHelper = PopupMenu.class.getDeclaredField("mPopup");
+            fMenuHelper.setAccessible(true);
+            menuHelper = fMenuHelper.get(popupMenu);
+            argTypes = new Class[] { boolean.class };
+            menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
+        } catch (Exception e) {
+            Log.w(TAG, "error forcing menu icons to show", e);
+            popupMenu.show();
+            return;
+        }
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // Toast.makeText(PopupMenuDemoActivity.this,
+                        // item.toString(), Toast.LENGTH_LONG).show();
+                        // return true;
+                        switch (item.getItemId()) {
+
+                            case R.id.menu_sign_out:
+                                signOut();
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+
+        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+
+            @Override
+            public void onDismiss(PopupMenu menu) {
+            }
+        });
+        popupMenu.show();
     }
 
     //AdColonyTask

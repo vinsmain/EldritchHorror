@@ -138,7 +138,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     @Override
     public void onPause() {
         try {
-            activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString());
+            activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString()).getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -169,7 +169,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     public void addDataToGame() {
         if (view != null) {
             try {
-                activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString());
+                activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString()).getTime();
             } catch (ParseException e) {
                 e.printStackTrace();
             }

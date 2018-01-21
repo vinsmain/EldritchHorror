@@ -22,7 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
@@ -213,6 +213,96 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
             if (oldVersion == 4 && newVersion == 7) {
                 helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_LAST_MODIFIED + " BIGINT DEFAULT 0;");
+                Date currentDate = new Date();
+                helper.getGameDAO().executeRaw("UPDATE '" + Game.GAME_TABLE_NAME + "' SET " + Game.GAME_FIELD_LAST_MODIFIED + " = " + currentDate.getTime() + ";");
+            }
+
+            if (oldVersion == 7 && newVersion == 8) {
+                String queryGamesUpgradeV8 = "PRAGMA foreign_keys = 0;\n" +
+                        "\n" +
+                        "CREATE TABLE games_temp_table AS SELECT *\n" +
+                        "                                          FROM games;\n" +
+                        "\n" +
+                        "DROP TABLE games;\n" +
+                        "\n" +
+                        "CREATE TABLE games (\n" +
+                        "    ancient_one_id                 INTEGER,\n" +
+                        "    blessed_count                  INTEGER,\n" +
+                        "    clues_count                    INTEGER,\n" +
+                        "    curse_count                    INTEGER,\n" +
+                        "    date                           BIGINT,\n" +
+                        "    doom_count                     INTEGER,\n" +
+                        "    gates_count                    INTEGER,\n" +
+                        "    _id                            BIGINT     PRIMARY KEY,\n" +
+                        "    defeat_by_awakened_ancient_one SMALLINT,\n" +
+                        "    defeat_by_elimination          SMALLINT,\n" +
+                        "    defeat_by_mythos_depletion     SMALLINT,\n" +
+                        "    hard_myths                     SMALLINT,\n" +
+                        "    normal_myths                   SMALLINT,\n" +
+                        "    simple_myths                   SMALLINT,\n" +
+                        "    starting_rumor                 SMALLINT,\n" +
+                        "    win_game                       SMALLINT,\n" +
+                        "    monsters_count                 INTEGER,\n" +
+                        "    players_count                  INTEGER,\n" +
+                        "    prelude_id                     INTEGER,\n" +
+                        "    rumors_count                   INTEGER,\n" +
+                        "    score                          INTEGER,\n" +
+                        "    solved_mysteries_count         INTEGER\n" +
+                        ");\n" +
+                        "\n" +
+                        "INSERT INTO games (\n" +
+                        "                      ancient_one_id,\n" +
+                        "                      blessed_count,\n" +
+                        "                      clues_count,\n" +
+                        "                      curse_count,\n" +
+                        "                      date,\n" +
+                        "                      doom_count,\n" +
+                        "                      gates_count,\n" +
+                        "                      _id,\n" +
+                        "                      defeat_by_awakened_ancient_one,\n" +
+                        "                      defeat_by_elimination,\n" +
+                        "                      defeat_by_mythos_depletion,\n" +
+                        "                      hard_myths,\n" +
+                        "                      normal_myths,\n" +
+                        "                      simple_myths,\n" +
+                        "                      starting_rumor,\n" +
+                        "                      win_game,\n" +
+                        "                      monsters_count,\n" +
+                        "                      players_count,\n" +
+                        "                      prelude_id,\n" +
+                        "                      rumors_count,\n" +
+                        "                      score,\n" +
+                        "                      solved_mysteries_count\n" +
+                        "                  )\n" +
+                        "                  SELECT ancient_one_id,\n" +
+                        "                         blessed_count,\n" +
+                        "                         clues_count,\n" +
+                        "                         curse_count,\n" +
+                        "                         date,\n" +
+                        "                         doom_count,\n" +
+                        "                         gates_count,\n" +
+                        "                         _id,\n" +
+                        "                         defeat_by_awakened_ancient_one,\n" +
+                        "                         defeat_by_elimination,\n" +
+                        "                         defeat_by_mythos_depletion,\n" +
+                        "                         hard_myths,\n" +
+                        "                         normal_myths,\n" +
+                        "                         simple_myths,\n" +
+                        "                         starting_rumor,\n" +
+                        "                         win_game,\n" +
+                        "                         monsters_count,\n" +
+                        "                         players_count,\n" +
+                        "                         prelude_id,\n" +
+                        "                         rumors_count,\n" +
+                        "                         score,\n" +
+                        "                         solved_mysteries_count\n" +
+                        "                    FROM games_temp_table;\n" +
+                        "\n" +
+                        "DROP TABLE games_temp_table;\n" +
+                        "\n" +
+                        "PRAGMA foreign_keys = 1;";
+
+                helper.getGameDAO().queryRaw(queryGamesUpgradeV8);
                 Date currentDate = new Date();
                 helper.getGameDAO().executeRaw("UPDATE '" + Game.GAME_TABLE_NAME + "' SET " + Game.GAME_FIELD_LAST_MODIFIED + " = " + currentDate.getTime() + ";");
             }
