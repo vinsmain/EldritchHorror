@@ -12,12 +12,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -39,8 +37,10 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
 
     TableLayout winTable;
     TableLayout defeatTable;
-    Spinner mysteriesSpinner;
-    String[] mysteriesCountArray;
+    RadioButton mystery0;
+    RadioButton mystery1;
+    RadioButton mystery2;
+    RadioButton mystery3;
 
     TextView resultGameText;
     Switch resultGameSwitch;
@@ -90,8 +90,8 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_result_game, null);
-        mysteriesCountArray = getResources().getStringArray(R.array.mysteriesCountArray);
-        initMysteriesSpinner();
+
+        initMysteriesRadioGroup();
         initActivityElements();
         setListeners();
 
@@ -167,7 +167,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
 
     private void addGameValuesToFields() {
         resultGameSwitch.setChecked(activity.getGame().isWinGame);
-        mysteriesSpinner.setSelection(getItemIndexInArray(mysteriesCountArray, String.valueOf(activity.getGame().solvedMysteriesCount)));
+        setMystery();
         defeatByElimination.setChecked(activity.getGame().isDefeatByElimination);
         defeatByMythosDeplition.setChecked(activity.getGame().isDefeatByMythosDepletion);
         defeatByAwakenedAncientOne.setChecked(activity.getGame().isDefeatByAwakenedAncientOne);
@@ -194,13 +194,12 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
         doomCount.setText(i == 0 ? "" : String.valueOf(i));
     }
 
-    private int getItemIndexInArray(String[] array, String value) {
-        for (int i = 0; i < array.length; i++) {
-            if(array[i].equals(value)) {
-                return i;
-            }
-        }
-        return 0;
+    private void setMystery() {
+        int mystery = activity.getGame().solvedMysteriesCount;
+        if (mystery == 0) mystery0.setChecked(true);
+        else if (mystery == 1) mystery1.setChecked(true);
+        else if (mystery == 2) mystery2.setChecked(true);
+        else mystery3.setChecked(true);
     }
 
     private int getScore() {
@@ -232,28 +231,20 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
         score.setText(String.valueOf(getScore()));
     }
 
-    private void initMysteriesSpinner() {
-        ArrayAdapter<String> mysteriesCountAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner, mysteriesCountArray);
-        mysteriesCountAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        mysteriesSpinner = (Spinner) view.findViewById(R.id.mysteries_spinner);
-        mysteriesSpinner.setAdapter(mysteriesCountAdapter);
-
-        mysteriesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                activity.getGame().solvedMysteriesCount = getMysteriesCount();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+    private void initMysteriesRadioGroup() {
+        mystery0 = view.findViewById(R.id.radioButton0);
+        mystery1 = view.findViewById(R.id.radioButton1);
+        mystery2 = view.findViewById(R.id.radioButton2);
+        mystery3 = view.findViewById(R.id.radioButton3);
     }
 
     private int getMysteriesCount() {
-        return Integer.parseInt(mysteriesCountArray[mysteriesSpinner.getSelectedItemPosition()]);
+        int mysteriesCount;
+        if (mystery0.isChecked()) mysteriesCount = 0;
+        else if (mystery1.isChecked()) mysteriesCount = 1;
+        else if (mystery2.isChecked()) mysteriesCount = 2;
+        else mysteriesCount = 3;
+        return mysteriesCount;
     }
 
     @Override

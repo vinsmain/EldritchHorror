@@ -95,4 +95,8 @@
     <string name="solved_mysteries_header">"Число разгаданных тайн"</string>
 
     <string name="sign_out_menu_header">Выйти</string>
+
+    <string name="prelude_header">Прелюдия</string>
+
+    <string name="auth_error">Ошибка авторизации</string>
 </resources>

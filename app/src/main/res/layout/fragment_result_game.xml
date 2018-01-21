@@ -116,13 +116,55 @@
                                 android:textColor="@color/colorSecondaryText"
                                 android:textSize="14sp" />
 
-                            <Spinner
-                                android:id="@+id/mysteries_spinner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
                         </TableRow>
                     </TableLayout>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingStart="16dp"
+                        android:theme="@style/AppTheme.ColorHighlight">
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioButton0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/zero"
+                                android:textSize="14sp" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/one" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/two" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/three" />
+                        </RadioGroup>
+
+                    </TableRow>
 
                     <TableLayout
                         android:id="@+id/defeatTable"

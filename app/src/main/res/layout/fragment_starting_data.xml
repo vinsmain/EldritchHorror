@@ -116,6 +116,38 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/prelude_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:theme="@style/AppTheme.ColorHighlight">
+
+                    <TextView
+                        android:id="@+id/preludeHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/prelude_header"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="14sp" />
+
+                    <Spinner
+                        android:id="@+id/preludeSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_span="2"
+                        android:layout_weight="1"
+                        android:dropDownWidth="match_parent"
+                        android:gravity="start" />
+
+                </TableRow>
+
+                <TableRow
                     android:id="@+id/players_count_row"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

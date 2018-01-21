@@ -49,7 +49,6 @@ import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.OnItemClicked;
 import ru.mgusev.eldritchhorror.fragment.DonateDialogFragment;
 import ru.mgusev.eldritchhorror.fragment.RateDialogFragment;
-import ru.mgusev.eldritchhorror.fragment.SignOutDialogFragment;
 import ru.mgusev.eldritchhorror.model.Game;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClicked {
@@ -89,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private DonateDialogFragment donateDialog;
     private RateDialogFragment rateDialog;
-    private SignOutDialogFragment signOutDialog;
     private PrefHelper prefHelper;
 
     private AdColonyHelper helper;
@@ -295,10 +293,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             currentUser = null;
                             authItem.setIcon(R.drawable.google_icon);
                             isConnecting = false;
-                            Toast.makeText(getApplicationContext(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.auth_error, Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
@@ -319,12 +315,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rateDialog.setActivity(this);
         rateDialog.setCancelable(false);
         rateDialog.show(getSupportFragmentManager(), "RateDialogFragment");
-    }
-
-    private void initSignOutDialog() {
-        signOutDialog = new SignOutDialogFragment();
-        signOutDialog.setActivity(this);
-        signOutDialog.show(getSupportFragmentManager(), "SignOutDialogFragment");
     }
 
     public void initGameList() {
@@ -591,9 +581,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        // Toast.makeText(PopupMenuDemoActivity.this,
-                        // item.toString(), Toast.LENGTH_LONG).show();
-                        // return true;
                         switch (item.getItemId()) {
 
                             case R.id.menu_sign_out:

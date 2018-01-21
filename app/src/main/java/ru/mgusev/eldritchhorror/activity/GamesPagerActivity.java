@@ -190,7 +190,10 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 return true;
             case R.id.action_random:
                 if (currentPosition == 1) ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).selectRandomInvestigators();
-                else if (currentPosition == 0) ((StartingDataFragment) pagerAdapter.getItem(0)).selectRandomAncientOne();
+                else if (currentPosition == 0) {
+                    ((StartingDataFragment) pagerAdapter.getItem(0)).selectRandomAncientOne();
+                    ((StartingDataFragment) pagerAdapter.getItem(0)).selectRandomPrelude();
+                }
                 return true;
             case R.id.action_edit_expansion:
                 Intent intent = new Intent(this, ExpansionChoiceActivity.class);
@@ -250,7 +253,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
             pagerAdapter.getItem(1).onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == REQUEST_CODE_EXPANSION) {
-            refreshAncientOneSpinner();
+            refreshStartingFragmentSpinners();
             refreshInvestigatorsList();
         }
     }
@@ -261,10 +264,12 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter.notifyDataSetChanged();
     }
 
-    private void refreshAncientOneSpinner() {
+    private void refreshStartingFragmentSpinners() {
         ((StartingDataFragment) pagerAdapter.getItem(0)).addDataToGame();
         ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneArray();
         ((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter.notifyDataSetChanged();
+        ((StartingDataFragment) pagerAdapter.getItem(0)).initPreludeArray();
+        ((StartingDataFragment) pagerAdapter.getItem(0)).preludeAdapter.notifyDataSetChanged();
         ((StartingDataFragment) pagerAdapter.getItem(0)).setDataToFields();
     }
 

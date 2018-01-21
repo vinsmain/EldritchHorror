@@ -16,6 +16,12 @@ INSERT INTO preludes (
                          _id
                      )
                      VALUES (
+                         1,
+                         'Не выбрана',
+                         'None',
+                         0
+                     ),
+                     (
                          3,
                          'Rumors from the North',
                          'Rumors from the North',
@@ -53,61 +59,61 @@ INSERT INTO preludes (
                      ),
                      (
                          5,
-                         'Ghost from The Past',
+                         'Призрак из прошлого',
                          'Ghost from The Past',
                          7
                      ),
                      (
                          5,
-                         'Drastic Measures',
+                         'Решительные меры',
                          'Drastic Measures',
                          8
                      ),
                      (
                          5,
-                         'Call of Cthulhu',
+                         'Зов Ктулху',
                          'Call of Cthulhu',
                          9
                      ),
                      (
                          5,
-                         'Litany of Secrets',
+                         'Литания секретов',
                          'Litany of Secrets',
                          10
                      ),
                      (
                          5,
-                         'Epidemic',
+                         'Эпидемия',
                          'Epidemic',
                          11
                      ),
                      (
                          5,
-                         'Under the Pyramids',
+                         'Под пирамидами',
                          'Under the Pyramids',
                          12
                      ),
                      (
                          6,
-                         'Weakness to Strength',
+                         'Претворить слабость в силу',
                          'Weakness to Strength',
                          13
                      ),
                      (
                          6,
-                         'Sins of the Past',
+                         'Грехи прошлого',
                          'Sins of the Past',
                          14
                      ),
                      (
                          6,
-                         'Silver Twilight Stockpile',
+                         'Сокровища Серебряных Сумерек',
                          'Silver Twilight Stockpile',
                          15
                      ),
                      (
                          6,
-                         'The King in Yellow',
+                         'Король в желтом',
                          'The King in Yellow',
                          16
                      ),
