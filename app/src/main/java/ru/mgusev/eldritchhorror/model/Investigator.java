@@ -7,8 +7,6 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.Locale;
-
 @DatabaseTable(tableName = "investigators")
 public class Investigator implements Parcelable {
 
@@ -26,6 +24,7 @@ public class Investigator implements Parcelable {
     public static final String INVESTIGATOR_FIELD_IS_REPLACEMENT = "is_replacement";
     public static final String INVESTIGATOR_FIELD_IS_DEAD = "is_dead";
     public static final String INVESTIGATOR_FIELD_EXPANSION_ID = "expansion_id";
+    public static final String INVESTIGATOR_FIELD_SPECIALIZATION_ID = "specialization_id";
 
     @DatabaseField(id = true, dataType = DataType.LONG, columnName = INVESTIGATOR_FIELD_ID)
     public long id;
@@ -63,6 +62,9 @@ public class Investigator implements Parcelable {
     @DatabaseField(dataType = DataType.INTEGER, columnName = INVESTIGATOR_FIELD_EXPANSION_ID)
     public int expansionID;
 
+    @DatabaseField(dataType = DataType.INTEGER, columnName = INVESTIGATOR_FIELD_SPECIALIZATION_ID)
+    public int specialization;
+
     public Investigator() {
     }
 
@@ -79,6 +81,7 @@ public class Investigator implements Parcelable {
         isReplacement = in.readByte() != 0;
         isDead = in.readByte() != 0;
         expansionID = in.readInt();
+        specialization = in.readInt();
     }
 
     public static final Creator<Investigator> CREATOR = new Creator<Investigator>() {
@@ -112,6 +115,7 @@ public class Investigator implements Parcelable {
         parcel.writeByte((byte) (isReplacement ? 1 : 0));
         parcel.writeByte((byte) (isDead ? 1 : 0));
         parcel.writeInt(expansionID);
+        parcel.writeInt(specialization);
     }
 
     public String getName() {

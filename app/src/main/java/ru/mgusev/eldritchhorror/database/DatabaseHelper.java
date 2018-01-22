@@ -307,6 +307,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 helper.getGameDAO().executeRaw("UPDATE '" + Game.GAME_TABLE_NAME + "' SET " + Game.GAME_FIELD_LAST_MODIFIED + " = " + currentDate.getTime() + ";");
             }
 
+            if (oldVersion == 8 && newVersion == 9) {
+                helper.getInvestigatorDAO().executeRaw("ALTER TABLE '" + Investigator.INVESTIGATOR_TABLE_NAME + "' ADD COLUMN " + Investigator.INVESTIGATOR_FIELD_SPECIALIZATION_ID + " INTEGER DEFAULT 0;");
+
+            }
+
             Log.e(TAG, "Update DB");
         } catch (SQLException e){
             Log.e(TAG, "Error upgrading db " + DATABASE_NAME + " from ver " + oldVersion);
