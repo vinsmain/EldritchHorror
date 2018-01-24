@@ -310,6 +310,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             }
 
             if (oldVersion == 8 && newVersion == 9) {
+                helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_ADVENTURE_ID + " BIGINT DEFAULT 0;");
                 helper.getInvestigatorDAO().executeRaw("ALTER TABLE '" + Investigator.INVESTIGATOR_TABLE_NAME + "' ADD COLUMN " + Investigator.INVESTIGATOR_FIELD_SPECIALIZATION_ID + " INTEGER DEFAULT 0;");
                 List<Investigator> invList = HelperFactory.getStaticHelper().getInvestigatorDAO().getAllInvestigatorsLocal();
                 for (Investigator investigator : invList) {
