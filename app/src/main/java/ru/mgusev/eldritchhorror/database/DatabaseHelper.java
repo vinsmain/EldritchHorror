@@ -7,7 +7,9 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.dao.GameDAO;
@@ -309,7 +311,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
             if (oldVersion == 8 && newVersion == 9) {
                 helper.getInvestigatorDAO().executeRaw("ALTER TABLE '" + Investigator.INVESTIGATOR_TABLE_NAME + "' ADD COLUMN " + Investigator.INVESTIGATOR_FIELD_SPECIALIZATION_ID + " INTEGER DEFAULT 0;");
-
+                List<Investigator> invList = HelperFactory.getStaticHelper().getInvestigatorDAO().getAllInvestigatorsLocal();
+                for (Investigator investigator : invList) {
+                    helper.getInvestigatorDAO().executeRaw("UPDATE '" + Investigator.INVESTIGATOR_TABLE_NAME + "' SET " + Investigator.INVESTIGATOR_FIELD_SPECIALIZATION_ID + " = " + investigator.specialization +
+                            " WHERE " + Investigator.INVESTIGATOR_FIELD_ID + " = " + investigator.id + ";");
+                }
             }
 
             Log.e(TAG, "Update DB");
