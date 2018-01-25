@@ -1,3 +1,5 @@
+ALTER TABLE 'investigators' ADD COLUMN specialization_id INTEGER DEFAULT 0;
+
 UPDATE 'investigators' SET specialization_id = 3 WHERE _id = 1;
 UPDATE 'investigators' SET specialization_id = 4 WHERE _id = 2;
 UPDATE 'investigators' SET specialization_id = 7 WHERE _id = 3;

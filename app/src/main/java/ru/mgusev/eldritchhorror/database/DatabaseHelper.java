@@ -4,8 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,17 +27,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
     private InvestigatorDAO investigatorDAO = null;
     private static DatabaseHelper helper = null;
-    private Context context;
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
     }
 
     public static synchronized DatabaseHelper getHelper(Context context) {
@@ -61,12 +62,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            if (oldVersion == 1 && newVersion == 2) {
+            System.out.println(oldVersion + "    " + newVersion);
+            if (oldVersion < 2) {
+                Log.e(TAG, "Update 1 - 2");
+                System.out.println("Update 1 - 2");
                 helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_PRELUDE_ID + " INTEGER DEFAULT 0;");
                 helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_SOLVED_MYSTERIES_COUNT + " INTEGER DEFAULT 3;");
+                Log.e(TAG, "Finish update 1 - 2");
             }
 
-            if (oldVersion == 2 && newVersion == 3) {
+            if (oldVersion < 3) {
+                Log.e(TAG, "Update 2 - 3");
                 String queryGamesUpgrade = "PRAGMA foreign_keys = 0;\n" +
                         "\n" +
                         "CREATE TABLE games_temp_table AS SELECT *\n" +
@@ -207,19 +213,25 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
                 helper.getGameDAO().queryRaw(queryGamesUpgrade);
                 helper.getInvestigatorDAO().queryRaw(queryInvUpgrade);
+                Log.e(TAG, "Finish update 2 - 3");
             }
 
-            if (oldVersion == 3 && newVersion == 4) {
+            if (oldVersion < 4) {
+                Log.e(TAG, "Update 3 - 4");
                 helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_USER_ID + " STRING DEFAULT null;");
+                Log.e(TAG, "Finish update 3 - 4");
             }
 
-            if (oldVersion == 4 && newVersion == 7) {
+            if (oldVersion < 7) {
+                Log.e(TAG, "Update 4 - 7");
                 helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_LAST_MODIFIED + " BIGINT DEFAULT 0;");
                 Date currentDate = new Date();
                 helper.getGameDAO().executeRaw("UPDATE '" + Game.GAME_TABLE_NAME + "' SET " + Game.GAME_FIELD_LAST_MODIFIED + " = " + currentDate.getTime() + ";");
+                Log.e(TAG, "Finish update 4 - 7");
             }
 
-            if (oldVersion == 7 && newVersion == 8) {
+            if (oldVersion < 8) {
+                Log.e(TAG, "Update 7 - 8");
                 String queryGamesUpgradeV8 = "PRAGMA foreign_keys = 0;\n" +
                         "\n" +
                         "CREATE TABLE games_temp_table AS SELECT *\n" +
@@ -304,19 +316,45 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                         "\n" +
                         "PRAGMA foreign_keys = 1;";
 
+                // return the orders with the sum of their amounts per account
+                GenericRawResults<String[]> rawResults = helper.getGameDAO().queryRaw("SELECT " + Game.GAME_FIELD_ID + ", " + Game.GAME_FIELD_DATE + " FROM '" + Game.GAME_TABLE_NAME + "';");
+                // page through the results
+                for (String[] resultArray : rawResults) {
+                    System.out.println("Game-id " + resultArray[0] + ", date " + resultArray[1]);
+
+                    //1-26 22:18:55.305 25952-25952/ru.mgusev.eldritchhorror.debug I/System.out: Game-id 1, date 2018-01-26 00:00:00.000000
+                    //01-26 22:18:55.305 25952-25952/ru.mgusev.eldritchhorror.debug I/System.out: Game-id 2, date 2018-01-19 00:00:00.000000
+                    //01-26 22:18:55.305 25952-25952/ru.mgusev.eldritchhorror.debug I/System.out: Game-id 3, date 2018-01-12 00:00:00.000000
+                    //01-26 22:18:55.305 25952-25952/ru.mgusev.eldritchhorror.debug I/System.out: Game-id 4, date 2018-01-03 00:00:00.000000
+                    //date = MainActivity.formatter.parse(dateField.getText().toString());
+
+                    //dateField.setText(MainActivity.formatter.format(activity.getGame().date));
+
+                    //public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+
+                }
+                try {
+                    rawResults.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 helper.getGameDAO().queryRaw(queryGamesUpgradeV8);
                 Date currentDate = new Date();
                 helper.getGameDAO().executeRaw("UPDATE '" + Game.GAME_TABLE_NAME + "' SET " + Game.GAME_FIELD_LAST_MODIFIED + " = " + currentDate.getTime() + ";");
+                Log.e(TAG, "Finish update 7 - 8");
             }
 
-            if (oldVersion == 8 && newVersion == 9) {
-                helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_ADVENTURE_ID + " BIGINT DEFAULT 0;");
+            if (oldVersion < 9) {
+                Log.e(TAG, "Update 8 - 9");
+                helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_ADVENTURE_ID + " INTEGER DEFAULT 0;");
                 helper.getInvestigatorDAO().executeRaw("ALTER TABLE '" + Investigator.INVESTIGATOR_TABLE_NAME + "' ADD COLUMN " + Investigator.INVESTIGATOR_FIELD_SPECIALIZATION_ID + " INTEGER DEFAULT 0;");
                 List<Investigator> invList = HelperFactory.getStaticHelper().getInvestigatorDAO().getAllInvestigatorsLocal();
                 for (Investigator investigator : invList) {
                     helper.getInvestigatorDAO().executeRaw("UPDATE '" + Investigator.INVESTIGATOR_TABLE_NAME + "' SET " + Investigator.INVESTIGATOR_FIELD_SPECIALIZATION_ID + " = " + investigator.specialization +
                             " WHERE " + Investigator.INVESTIGATOR_FIELD_ID + " = " + investigator.id + ";");
                 }
+                Log.e(TAG, "Finish update 8 - 9");
             }
 
             Log.e(TAG, "Update DB");
