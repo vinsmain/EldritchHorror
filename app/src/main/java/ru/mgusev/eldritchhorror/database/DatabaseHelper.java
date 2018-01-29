@@ -10,9 +10,11 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.dao.GameDAO;
@@ -319,19 +321,18 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 // return the orders with the sum of their amounts per account
                 GenericRawResults<String[]> rawResults = helper.getGameDAO().queryRaw("SELECT " + Game.GAME_FIELD_ID + ", " + Game.GAME_FIELD_DATE + " FROM '" + Game.GAME_TABLE_NAME + "';");
                 // page through the results
+                long date;
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 for (String[] resultArray : rawResults) {
-                    System.out.println("Game-id " + resultArray[0] + ", date " + resultArray[1]);
+                    try {
+                        helper.getGameDAO().queryRaw("UPDATE '" + Game.GAME_TABLE_NAME + "' SET " + Game.GAME_FIELD_DATE + " = " + formatter.parse(resultArray[1]).getTime() + " WHERE " + Game.GAME_FIELD_ID + " = " + resultArray[0] + ";");
 
-                    //1-26 22:18:55.305 25952-25952/ru.mgusev.eldritchhorror.debug I/System.out: Game-id 1, date 2018-01-26 00:00:00.000000
-                    //01-26 22:18:55.305 25952-25952/ru.mgusev.eldritchhorror.debug I/System.out: Game-id 2, date 2018-01-19 00:00:00.000000
-                    //01-26 22:18:55.305 25952-25952/ru.mgusev.eldritchhorror.debug I/System.out: Game-id 3, date 2018-01-12 00:00:00.000000
-                    //01-26 22:18:55.305 25952-25952/ru.mgusev.eldritchhorror.debug I/System.out: Game-id 4, date 2018-01-03 00:00:00.000000
-                    //date = MainActivity.formatter.parse(dateField.getText().toString());
-
-                    //dateField.setText(MainActivity.formatter.format(activity.getGame().date));
-
-                    //public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-
+                        date = (new Date()).getTime();
+                        helper.getInvestigatorDAO().queryRaw("UPDATE '" + Investigator.INVESTIGATOR_TABLE_NAME + "' SET " + Investigator.INVESTIGATOR_FIELD_GAME_ID + " = " + date + " WHERE " + Investigator.INVESTIGATOR_FIELD_GAME_ID + " = " + resultArray[0] + ";");
+                        helper.getGameDAO().queryRaw("UPDATE '" + Game.GAME_TABLE_NAME + "' SET " + Game.GAME_FIELD_ID + " = " + date + " WHERE " + Game.GAME_FIELD_ID + " = " + resultArray[0] + ";");
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
                 try {
                     rawResults.close();

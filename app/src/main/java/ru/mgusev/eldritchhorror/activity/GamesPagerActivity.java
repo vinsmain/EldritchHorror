@@ -239,11 +239,12 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         addDataToGame();
         outState.putBoolean("DIALOG", isAlert);
         outState.putParcelable("game", game);
         outState.putInt("position", currentPosition);
-        if (((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).getAlert() != null) ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).getAlert().cancel();
+        if (((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).getAlert() != null) ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).getAlert().cancel();
     }
 
     @Override

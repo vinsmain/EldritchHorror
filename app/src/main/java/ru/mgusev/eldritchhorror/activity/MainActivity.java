@@ -127,8 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             isConnecting = savedInstanceState.getBoolean("CONNECTING");
         }
 
-        System.out.println("onCreate " + isConnecting);
-
         helper = AdColonyHelper.getInstance(this);
         if (!isLock && !helper.isAdvertisingLoad()) {
             task = new AdColonyTask();
@@ -162,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new RVAdapter(this.getApplicationContext(), gameList);
         recyclerView.setAdapter(adapter);
         adapter.setOnClick(this);
-
+        setScoreValues();
         initRVListener();
         recyclerView.addOnScrollListener(onScrollListener);
 
@@ -212,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fbHelper.getReference(currentUser);
             initGameList();
         }
-        System.out.println("onStart " + isConnecting);
         if (isConnecting) signIn();
     }
 
@@ -256,7 +253,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             isConnecting = true;
-            System.out.println("onActivityResult " + isConnecting);
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
@@ -323,6 +319,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             gameList.clear();
             gameList.addAll(getSortedGames());
             for (int i = 0; i < gameList.size(); i ++) {
+                System.out.println("gameID " + gameList.get(i).id);
                 gameList.get(i).invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(gameList.get(i).id);
                 if (currentUser != null && gameList.get(i).userID == null) {
                     Log.w(TAG, "addGame " + gameList.get(i).ancientOneID);
@@ -436,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void showDonateDialog() {
-        isAdvertisingDialog = true;
+        setAdvertisingDialog(true);
         donateDialog.show(getSupportFragmentManager(), "DonateDialogFragment");
     }
 
@@ -520,6 +517,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putBoolean("DIALOG", isAlert);
         outState.putBoolean("DIALOG_ADVERTISING", isAdvertisingDialog);
         outState.putBoolean("LOCK", isLock);
