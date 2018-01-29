@@ -261,15 +261,15 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     public void refreshInvestigatorsList() {
         ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).addDataToGame();
         ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).initInvestigatorList();
-        ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter.notifyDataSetChanged();
+        if (((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter != null)((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter.notifyDataSetChanged();
     }
 
     private void refreshStartingFragmentSpinners() {
         ((StartingDataFragment) pagerAdapter.getItem(0)).addDataToGame();
         ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneArray();
-        ((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter.notifyDataSetChanged();
+        if (((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter != null)((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter.notifyDataSetChanged();
         ((StartingDataFragment) pagerAdapter.getItem(0)).initPreludeArray();
-        ((StartingDataFragment) pagerAdapter.getItem(0)).preludeAdapter.notifyDataSetChanged();
+        if (((StartingDataFragment) pagerAdapter.getItem(0)).preludeAdapter != null)((StartingDataFragment) pagerAdapter.getItem(0)).preludeAdapter.notifyDataSetChanged();
         ((StartingDataFragment) pagerAdapter.getItem(0)).setDataToFields();
     }
 

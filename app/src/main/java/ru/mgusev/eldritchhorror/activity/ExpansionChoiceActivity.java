@@ -48,7 +48,7 @@ public class ExpansionChoiceActivity extends Activity {
     }
 
     @Override
-    public void finish() {
+    protected void onPause() {
         expansionList = adapter.getListStorage();
         for (int i = 0; i < expansionList.size(); i++) {
             try {
@@ -59,6 +59,6 @@ public class ExpansionChoiceActivity extends Activity {
         }
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
-        super.finish();
+        super.onPause();
     }
 }
