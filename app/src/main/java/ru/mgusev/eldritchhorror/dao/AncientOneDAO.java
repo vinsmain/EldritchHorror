@@ -59,6 +59,12 @@ public class AncientOneDAO  extends BaseDaoImpl {
         return qb.queryForFirst().expansionID;
     }
 
+    public AncientOne getAncienOneByID(int ID) throws SQLException {
+        QueryBuilder<AncientOne, Integer> qb = this.queryBuilder();
+        qb.where().eq(AncientOne.ANCIENT_ONE_FIELD_ID, ID);
+        return qb.queryForFirst();
+    }
+
     public AncientOne getAncientOneByName(String name) throws SQLException {
         if (name.contains("'")) name = name.replace("'", "''");
         QueryBuilder<AncientOne, Integer> qb = this.queryBuilder();

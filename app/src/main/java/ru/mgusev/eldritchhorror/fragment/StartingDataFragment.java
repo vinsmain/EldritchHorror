@@ -288,6 +288,7 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
                 addDataToGame();
                 initAncientOneArray();
                 ancientOneAdapter.notifyDataSetChanged();
+                ((ResultGameFragment)activity.getPagerAdapter().getItem(2)).setVisibilityRadioButtons();
             }
 
             @Override

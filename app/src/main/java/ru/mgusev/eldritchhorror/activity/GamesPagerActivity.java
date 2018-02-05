@@ -1,5 +1,6 @@
 package ru.mgusev.eldritchhorror.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -97,8 +98,8 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 Log.d(TAG, "onPageSelected, position = " + position);
                 currentPosition = position;
 
-                if (position == 1) clearItem.setVisible(true);
-                else clearItem.setVisible(false);
+                if (position == 1 && clearItem != null) clearItem.setVisible(true);
+                else if (clearItem != null) clearItem.setVisible(false);
 
                 if (position != 2) {
                     View view = getCurrentFocus();
@@ -107,8 +108,8 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
 
-                    randomItem.setVisible(true);
-                } else randomItem.setVisible(false);
+                    if (randomItem != null) randomItem.setVisible(true);
+                } else if (randomItem != null) randomItem.setVisible(false);
             }
 
             @Override
@@ -209,6 +210,11 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         return game;
     }
 
+    @Override
+    public EHFragmentPagerAdapter getPagerAdapter() {
+        return pagerAdapter;
+    }
+
     private void addDataToGame() {
         ((StartingDataFragment)pagerAdapter.getItem(0)).addDataToGame();
         ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).addDataToGame();
@@ -237,9 +243,9 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         FirebaseHelper.addGame(game);
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         addDataToGame();
         outState.putBoolean("DIALOG", isAlert);
         outState.putParcelable("game", game);

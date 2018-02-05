@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,10 +24,13 @@ import android.widget.TextView;
 
 import android.support.annotation.NonNull;
 
+import java.sql.SQLException;
+
+import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
 
-public class ResultGameFragment extends Fragment implements TextWatcher, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class ResultGameFragment extends Fragment implements TextWatcher, CompoundButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
@@ -41,6 +45,8 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
     RadioButton mystery1;
     RadioButton mystery2;
     RadioButton mystery3;
+    RadioButton mystery4;
+    RadioButton mystery5;
 
     TextView resultGameText;
     Switch resultGameSwitch;
@@ -199,7 +205,9 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
         if (mystery == 0) mystery0.setChecked(true);
         else if (mystery == 1) mystery1.setChecked(true);
         else if (mystery == 2) mystery2.setChecked(true);
-        else mystery3.setChecked(true);
+        else if (mystery == 3) mystery3.setChecked(true);
+        else if (mystery == 4) mystery4.setChecked(true);
+        else mystery5.setChecked(true);
     }
 
     private int getScore() {
@@ -232,10 +240,15 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
     }
 
     private void initMysteriesRadioGroup() {
+        RadioGroup rg = view.findViewById(R.id.mysteries_radio_group);
+        rg.setOnCheckedChangeListener(this);
+
         mystery0 = view.findViewById(R.id.radioButton0);
         mystery1 = view.findViewById(R.id.radioButton1);
         mystery2 = view.findViewById(R.id.radioButton2);
         mystery3 = view.findViewById(R.id.radioButton3);
+        mystery4 = view.findViewById(R.id.radioButton4);
+        mystery5 = view.findViewById(R.id.radioButton5);
     }
 
     private int getMysteriesCount() {
@@ -243,7 +256,9 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
         if (mystery0.isChecked()) mysteriesCount = 0;
         else if (mystery1.isChecked()) mysteriesCount = 1;
         else if (mystery2.isChecked()) mysteriesCount = 2;
-        else mysteriesCount = 3;
+        else if (mystery3.isChecked()) mysteriesCount = 3;
+        else if (mystery4.isChecked()) mysteriesCount = 4;
+        else mysteriesCount = 5;
         return mysteriesCount;
     }
 
@@ -320,6 +335,34 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
         activity.getGame().score = 0;
     }
 
+    public void setVisibilityRadioButtons() {
+        int maxMysteries = 3;
+        try {
+            maxMysteries = HelperFactory.getStaticHelper().getAncientOneDAO().getAncienOneByID(activity.getGame().ancientOneID).maxMysteries;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        switch (maxMysteries) {
+            case 5:
+                mystery4.setVisibility(View.VISIBLE);
+                mystery5.setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                mystery4.setVisibility(View.VISIBLE);
+                mystery5.setVisibility(View.GONE);
+                break;
+            case 3:
+                mystery4.setVisibility(View.GONE);
+                mystery5.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+        System.out.println(activity.getGame().solvedMysteriesCount);
+        System.out.println(maxMysteries);
+        if (activity.getGame().solvedMysteriesCount > maxMysteries) mystery3.setChecked(true);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -358,5 +401,10 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
                 view.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
             }
         }, 200);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        activity.getGame().solvedMysteriesCount = getMysteriesCount();
     }
 }

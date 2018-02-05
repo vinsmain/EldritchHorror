@@ -25,7 +25,7 @@ public class DatabaseLocalHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="EHLocalDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private InvestigatorDAO investigatorDAO = null;
