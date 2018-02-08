@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EldritchHorror.iml" filepath="$PROJECT_DIR$/EldritchHorror.iml" />
+      <module fileurl="file://E:\Develop\EldritchHorror\EldritchHorror.git.iml" filepath="E:\Develop\EldritchHorror\EldritchHorror.git.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
