@@ -6,6 +6,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.List;
 
+import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Game;
 
 public class GameDAO extends BaseDaoImpl {
@@ -62,9 +63,28 @@ public class GameDAO extends BaseDaoImpl {
         return qb.queryForFirst();
     }
 
-    public int writeGameToDB(Game game) throws SQLException {
+    public void writeGameToDB(Game game) throws SQLException {
         this.createOrUpdate(game);
-        if (game.id == -1) game.id = (int) this.queryRawValue("SELECT MAX(" + Game.GAME_FIELD_ID + ") from games");
-        return game.id;
+    }
+
+    public boolean hasGame(Game game) throws SQLException {
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.where().eq(Game.GAME_FIELD_ID, game.id);
+        return qb.query().size() != 0;
+    }
+
+    public void clearTable() throws SQLException {
+        for (Game game : getGamesSortScoreUp()) {
+            if (game.userID != null) {
+                HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(game.id);
+                delete(game);
+            }
+        }
+    }
+
+    public Game getGameByID(Game game) throws SQLException {
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.where().eq(Game.GAME_FIELD_ID, game.id);
+        return qb.queryForFirst();
     }
 }

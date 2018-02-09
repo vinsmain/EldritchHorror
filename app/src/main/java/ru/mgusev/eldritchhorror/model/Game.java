@@ -14,6 +14,8 @@ import java.util.List;
 @DatabaseTable(tableName = "games")
 public class Game implements Parcelable {
 
+    public static final String GAME_TABLE_NAME = "games";
+
     public static final String GAME_FIELD_ID = "_id";
     public static final String GAME_FIELD_DATE = "date";
     public static final String GAME_FIELD_ANCIENT_ONE_ID = "ancient_one_id";
@@ -34,12 +36,17 @@ public class Game implements Parcelable {
     public static final String GAME_FIELD_BLESSED_COUNT = "blessed_count";
     public static final String GAME_FIELD_DOOM_COUNT = "doom_count";
     public static final String GAME_FIELD_SCORE = "score";
+    public static final String GAME_FIELD_PRELUDE_ID = "prelude_id";
+    public static final String GAME_FIELD_SOLVED_MYSTERIES_COUNT = "solved_mysteries_count";
+    public static final String GAME_FIELD_USER_ID = "user_id";
+    public static final String GAME_FIELD_LAST_MODIFIED = "last_modified";
+    public static final String GAME_FIELD_ADVENTURE_ID = "adventure_id";
 
-    @DatabaseField(generatedId = true, columnName = GAME_FIELD_ID)
-    public int id;
+    @DatabaseField(id = true, dataType = DataType.LONG, columnName = GAME_FIELD_ID)
+    public long id;
 
-    @DatabaseField(dataType = DataType.DATE_STRING, columnName = GAME_FIELD_DATE)
-    public Date date;
+    @DatabaseField(dataType = DataType.LONG, columnName = GAME_FIELD_DATE)
+    public long date;
 
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_ANCIENT_ONE_ID)
     public int ancientOneID;
@@ -95,11 +102,26 @@ public class Game implements Parcelable {
     @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_SCORE)
     public int score;
 
+    @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_PRELUDE_ID)
+    public int preludeID;
+
+    @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_SOLVED_MYSTERIES_COUNT)
+    public int solvedMysteriesCount;
+
+    @DatabaseField(dataType = DataType.STRING, columnName = GAME_FIELD_USER_ID)
+    public String userID;
+
+    @DatabaseField(dataType = DataType.LONG, columnName = GAME_FIELD_LAST_MODIFIED)
+    public long lastModified;
+
+    @DatabaseField(dataType = DataType.INTEGER, columnName = GAME_FIELD_ADVENTURE_ID)
+    public int adventureID;
+
     public List<Investigator> invList;
 
     public Game() {
         id = -1;
-        date = new Date();
+        date = (new Date()).getTime();
         ancientOneID = -1;
         playersCount = 1;
         isSimpleMyths = true;
@@ -118,12 +140,17 @@ public class Game implements Parcelable {
         blessedCount = 0;
         doomCount = 0;
         score = 0;
+        preludeID = 0;
+        solvedMysteriesCount = 3;
+        userID = null;
+        lastModified = 0;
+        adventureID = 0;
         invList = new ArrayList<>();
     }
 
     protected Game(Parcel in) {
-        id = in.readInt();
-        date = new Date(in.readLong());
+        id = in.readLong();
+        date = in.readLong();
         ancientOneID = in.readInt();
         playersCount = in.readInt();
         isSimpleMyths = in.readByte() != 0;
@@ -142,6 +169,11 @@ public class Game implements Parcelable {
         blessedCount = in.readInt();
         doomCount = in.readInt();
         score = in.readInt();
+        preludeID = in.readInt();
+        solvedMysteriesCount = in.readInt();
+        userID = in.readString();
+        lastModified = in.readLong();
+        adventureID = in.readInt();
         invList = in.createTypedArrayList(Investigator.CREATOR);
     }
 
@@ -164,8 +196,8 @@ public class Game implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeLong(date.getTime());
+        parcel.writeLong(id);
+        parcel.writeLong(date);
         parcel.writeInt(ancientOneID);
         parcel.writeInt(playersCount);
         parcel.writeByte((byte) (isSimpleMyths ? 1 : 0));
@@ -184,6 +216,11 @@ public class Game implements Parcelable {
         parcel.writeInt(blessedCount);
         parcel.writeInt(doomCount);
         parcel.writeInt(score);
+        parcel.writeInt(preludeID);
+        parcel.writeInt(solvedMysteriesCount);
+        parcel.writeString(userID);
+        parcel.writeLong(lastModified);
+        parcel.writeInt(adventureID);
         parcel.writeTypedList(invList);
     }
 }

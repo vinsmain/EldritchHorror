@@ -1,10 +1,10 @@
 package ru.mgusev.eldritchhorror.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -18,9 +18,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.EHFragmentPagerAdapter;
+import ru.mgusev.eldritchhorror.database.FirebaseHelper;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.fragment.InvestigatorsChoiceFragment;
@@ -96,8 +98,8 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 Log.d(TAG, "onPageSelected, position = " + position);
                 currentPosition = position;
 
-                if (position == 1) clearItem.setVisible(true);
-                else clearItem.setVisible(false);
+                if (position == 1 && clearItem != null) clearItem.setVisible(true);
+                else if (clearItem != null) clearItem.setVisible(false);
 
                 if (position != 2) {
                     View view = getCurrentFocus();
@@ -106,8 +108,8 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
 
-                    randomItem.setVisible(true);
-                } else randomItem.setVisible(false);
+                    if (randomItem != null) randomItem.setVisible(true);
+                } else if (randomItem != null) randomItem.setVisible(false);
             }
 
             @Override
@@ -189,7 +191,10 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
                 return true;
             case R.id.action_random:
                 if (currentPosition == 1) ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).selectRandomInvestigators();
-                else if (currentPosition == 0) ((StartingDataFragment) pagerAdapter.getItem(0)).selectRandomAncientOne();
+                else if (currentPosition == 0) {
+                    ((StartingDataFragment) pagerAdapter.getItem(0)).selectRandomAncientOne();
+                    ((StartingDataFragment) pagerAdapter.getItem(0)).selectRandomPrelude();
+                }
                 return true;
             case R.id.action_edit_expansion:
                 Intent intent = new Intent(this, ExpansionChoiceActivity.class);
@@ -205,6 +210,11 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         return game;
     }
 
+    @Override
+    public EHFragmentPagerAdapter getPagerAdapter() {
+        return pagerAdapter;
+    }
+
     private void addDataToGame() {
         ((StartingDataFragment)pagerAdapter.getItem(0)).addDataToGame();
         ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).addDataToGame();
@@ -213,13 +223,15 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
 
     private void writeGameToDB() {
         try {
-            int id = HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
-            HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(id);
+            if (game.id == -1) game.id = (new Date()).getTime();
+            game.lastModified = (new Date()).getTime();
+            HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
+            HelperFactory.getHelper().getInvestigatorDAO().deleteInvestigatorsByGameID(game.id);
             for (int i = 0; i < game.invList.size(); i++) {
-                game.invList.get(i).gameId = id;
+                game.invList.get(i).gameId = game.id;
+                game.invList.get(i).id = (new Date()).getTime();
                 HelperFactory.getHelper().getInvestigatorDAO().create(game.invList.get(i));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -228,15 +240,17 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
         intent.putExtra("refreshGameList", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        FirebaseHelper.addGame(game);
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         addDataToGame();
         outState.putBoolean("DIALOG", isAlert);
         outState.putParcelable("game", game);
         outState.putInt("position", currentPosition);
-        if (((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).getAlert() != null) ((InvestigatorsChoiceFragment)pagerAdapter.getItem(1)).getAlert().cancel();
+        if (((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).getAlert() != null) ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).getAlert().cancel();
     }
 
     @Override
@@ -246,7 +260,7 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
             pagerAdapter.getItem(1).onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == REQUEST_CODE_EXPANSION) {
-            refreshAncientOneSpinner();
+            refreshStartingFragmentSpinners();
             refreshInvestigatorsList();
         }
     }
@@ -254,13 +268,15 @@ public class GamesPagerActivity extends AppCompatActivity implements PassMeLinkO
     public void refreshInvestigatorsList() {
         ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).addDataToGame();
         ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).initInvestigatorList();
-        ((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter.notifyDataSetChanged();
+        if (((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter != null)((InvestigatorsChoiceFragment) pagerAdapter.getItem(1)).adapter.notifyDataSetChanged();
     }
 
-    private void refreshAncientOneSpinner() {
+    private void refreshStartingFragmentSpinners() {
         ((StartingDataFragment) pagerAdapter.getItem(0)).addDataToGame();
         ((StartingDataFragment) pagerAdapter.getItem(0)).initAncientOneArray();
-        ((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter.notifyDataSetChanged();
+        if (((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter != null)((StartingDataFragment) pagerAdapter.getItem(0)).ancientOneAdapter.notifyDataSetChanged();
+        ((StartingDataFragment) pagerAdapter.getItem(0)).initPreludeArray();
+        if (((StartingDataFragment) pagerAdapter.getItem(0)).preludeAdapter != null)((StartingDataFragment) pagerAdapter.getItem(0)).preludeAdapter.notifyDataSetChanged();
         ((StartingDataFragment) pagerAdapter.getItem(0)).setDataToFields();
     }
 

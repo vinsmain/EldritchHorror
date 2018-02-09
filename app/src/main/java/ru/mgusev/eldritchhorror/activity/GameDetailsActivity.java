@@ -35,11 +35,14 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
     Toolbar toolbar;
     TextView dateField;
     TextView ancientOne;
+    TextView prelude;
     TextView playersCount;
     TableRow isSimpleMyths;
     TableRow isNormalMyths;
     TableRow isHardMyths;
     TableRow isStartingRumor;
+    TextView mysteriesCount;
+    TextView mysteriesCountDefeat;
     TextView gatesCount;
     TextView monstersCount;
     TextView curseCount;
@@ -76,11 +79,14 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
 
         dateField = (TextView) findViewById(R.id.dataDetail);
         ancientOne = (TextView) findViewById(R.id.ancientOneDetail);
+        prelude = (TextView) findViewById(R.id.preludeDetail);
         playersCount = (TextView) findViewById(R.id.playersCountDetail);
         isSimpleMyths = (TableRow) findViewById(R.id.simpleMythsDetail);
         isNormalMyths = (TableRow) findViewById(R.id.normalMythsDetail);
         isHardMyths = (TableRow) findViewById(R.id.hardMythsDetail);
         isStartingRumor = (TableRow) findViewById(R.id.startingRumorDetail);
+        mysteriesCount = (TextView) findViewById(R.id.mysteriesCountDetail);
+        mysteriesCountDefeat = (TextView) findViewById(R.id.mysteriesCountDefeatDetail);
         gatesCount = (TextView) findViewById(R.id.gatesCountDetail);
         monstersCount = (TextView) findViewById(R.id.monstersCountDetail);
         curseCount = (TextView) findViewById(R.id.curseCountDetail);
@@ -157,6 +163,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         dateField.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(game.date));
         try {
             ancientOne.setText(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(game.ancientOneID));
+            prelude.setText(HelperFactory.getStaticHelper().getPreludeDAO().getPreludeNameByID(game.preludeID));
             final int resourceId;
             Resources resources = this.getResources();
             resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneImageResourceByID(game.ancientOneID), "drawable", this.getPackageName());
@@ -169,6 +176,8 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         if (!game.isNormalMyths) isNormalMyths.setVisibility(View.GONE);
         if (!game.isHardMyths) isHardMyths.setVisibility(View.GONE);
         if (!game.isStartingRumor) isStartingRumor.setVisibility(View.GONE);
+        mysteriesCount.setText(String.valueOf(game.solvedMysteriesCount));
+        mysteriesCountDefeat.setText(String.valueOf(game.solvedMysteriesCount));
         gatesCount.setText(String.valueOf(game.gatesCount));
         monstersCount.setText(String.valueOf(game.monstersCount));
         curseCount.setText(String.valueOf(game.curseCount));
@@ -183,13 +192,15 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
 
         if (game.isWinGame) {
             score.setText(String.valueOf(game.score));
-            score.setVisibility(View.VISIBLE);
+
             winImage.setImageResource(R.drawable.stars);
             winCardView.setVisibility(View.VISIBLE);
             defeatCardView.setVisibility(View.GONE);
         } else {
+            if (game.isDefeatByAwakenedAncientOne) winImage.setImageResource(R.drawable.skull);
+            else if (game.isDefeatByElimination) winImage.setImageResource(R.drawable.inestigators_out);
+            else if (game.isDefeatByMythosDepletion) winImage.setImageResource(R.drawable.mythos_empty);
             score.setVisibility(View.GONE);
-            winImage.setImageResource(R.drawable.skull);
             defeatCardView.setVisibility(View.VISIBLE);
             winCardView.setVisibility(View.GONE);
         }

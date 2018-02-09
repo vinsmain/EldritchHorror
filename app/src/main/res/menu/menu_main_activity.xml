@@ -13,4 +13,10 @@
         android:icon="@drawable/about"
         app:showAsAction="always|collapseActionView" />
 
+    <item
+        android:id="@+id/action_auth"
+        android:title="@string/about"
+        android:icon="@drawable/google_icon"
+        app:showAsAction="always|collapseActionView" />
+
 </menu>

@@ -28,6 +28,7 @@ import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.eh_interface.PassMeLinkOnObject;
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.model.AncientOne;
+import ru.mgusev.eldritchhorror.model.Prelude;
 
 public class StartingDataFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -41,18 +42,23 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
     TableRow dateRow;
     TableRow ancientOneRow;
+    TableRow preludeRow;
     TableRow playersCountRow;
     TextView dateField;
     Spinner ancientOneSpinner;
     public ArrayAdapter<String> ancientOneAdapter;
+    Spinner preludeSpinner;
+    public ArrayAdapter<String> preludeAdapter;
     Spinner playersCountSpinner;
     Switch isSimpleMyths;
     Switch isNormalMyths;
     Switch isHardMyths;
     Switch isStartingRumor;
     List <String> ancientOneList;
+    List <String> preludeList;
     String[] playersCountArray;
     String currentAncientOneName;
+    String currentPreludeName;
 
     public void setActivity(PassMeLinkOnObject activity) {
         this.activity = activity;
@@ -86,9 +92,11 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
 
         dateRow = (TableRow) view.findViewById(R.id.date_row);
         ancientOneRow = (TableRow) view.findViewById(R.id.ancient_one_row);
+        preludeRow = (TableRow) view.findViewById(R.id.prelude_row);
         playersCountRow = (TableRow) view.findViewById(R.id.players_count_row);
         dateRow.setOnClickListener(this);
         ancientOneRow.setOnClickListener(this);
+        preludeRow.setOnClickListener(this);
         playersCountRow.setOnClickListener(this);
 
         dateField = (TextView) view.findViewById(R.id.dateField);
@@ -103,9 +111,11 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         isHardMyths.setOnCheckedChangeListener(this);
 
         initAncientOneArray();
+        initPreludeArray();
         playersCountArray = getResources().getStringArray(R.array.playersCountArray);
 
         initAncientOneSpinner();
+        initPreludeSpinner();
         initPlayersCountSpinner();
         setDataToFields();
 
@@ -135,10 +145,34 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    public void initPreludeArray() {
+        try {
+            if (preludeList == null) preludeList = new ArrayList<>();
+            boolean flag = false;
+            preludeList.clear();
+            preludeList.addAll(HelperFactory.getStaticHelper().getPreludeDAO().getPreludeNameList());
+            for (String name : preludeList) {
+                if (name.equals(HelperFactory.getStaticHelper().getPreludeDAO().getPreludeNameByID(activity.getGame().preludeID))) {
+                    currentPreludeName = name;
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                preludeList.add(HelperFactory.getStaticHelper().getPreludeDAO().getPreludeNameByID(activity.getGame().preludeID));
+                Collections.sort(preludeList);
+            }
+            preludeList.remove(HelperFactory.getStaticHelper().getPreludeDAO().getPreludeNameByID(0));
+            preludeList.add(0, HelperFactory.getStaticHelper().getPreludeDAO().getPreludeNameByID(0));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onPause() {
         try {
-            activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString());
+            activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString()).getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -158,6 +192,9 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
             case R.id.ancient_one_row:
                 ancientOneSpinner.performClick();
                 break;
+            case R.id.prelude_row:
+                preludeSpinner.performClick();
+                break;
             case R.id.players_count_row:
                 playersCountSpinner.performClick();
                 break;
@@ -169,12 +206,17 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
     public void addDataToGame() {
         if (view != null) {
             try {
-                activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString());
+                activity.getGame().date = MainActivity.formatter.parse(dateField.getText().toString()).getTime();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             try {
                 activity.getGame().ancientOneID = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(ancientOneSpinner.getSelectedItemPosition()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                activity.getGame().preludeID = HelperFactory.getStaticHelper().getPreludeDAO().getPreludeIDByName(preludeList.get(preludeSpinner.getSelectedItemPosition()));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -195,6 +237,9 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         try {
             ancientOneSpinner.setSelection(getItemIndexInArray(ancientOneList.toArray(new String[ancientOneList.size()]),
                     HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(activity.getGame().ancientOneID)));
+
+            preludeSpinner.setSelection(getItemIndexInArray(preludeList.toArray(new String[preludeList.size()]),
+                    HelperFactory.getStaticHelper().getPreludeDAO().getPreludeNameByID(activity.getGame().preludeID)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -243,6 +288,29 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
                 addDataToGame();
                 initAncientOneArray();
                 ancientOneAdapter.notifyDataSetChanged();
+                ((ResultGameFragment)activity.getPagerAdapter().getItem(2)).setVisibilityRadioButtons();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    public void initPreludeSpinner() {
+        preludeAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner, preludeList);
+        preludeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        preludeSpinner = (Spinner) view.findViewById(R.id.preludeSpinner);
+        preludeSpinner.setAdapter(preludeAdapter);
+
+        preludeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                addDataToGame();
+                initPreludeArray();
+                preludeAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -301,6 +369,21 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
         ancientOneSpinner.setSelection(j);
     }
 
+    public void selectRandomPrelude() {
+        if (preludeList.size() > 2) {
+            int j = 0;
+            try {
+                do {
+                    j = (int) (Math.random() * preludeList.size());
+                }
+                while (!HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(getPreludeExpansionID(preludeList.get(j))) || preludeSpinner.getSelectedItemPosition() == j || j == 0);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            preludeSpinner.setSelection(j);
+        }
+    }
+
     private int getAncientOneExpansionID(String name) {
         AncientOne ancientOne = new AncientOne();
         try {
@@ -309,5 +392,15 @@ public class StartingDataFragment extends Fragment implements View.OnClickListen
             e.printStackTrace();
         }
         return ancientOne.expansionID;
+    }
+
+    private int getPreludeExpansionID(String name) {
+        Prelude prelude = new Prelude();
+        try {
+            prelude = HelperFactory.getStaticHelper().getPreludeDAO().getPreludeByName(name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return prelude.expansionID;
     }
 }

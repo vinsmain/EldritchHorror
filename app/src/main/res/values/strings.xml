@@ -36,6 +36,11 @@
     <string name="activity_add_party_header">Initial data</string>
     <string name="activity_investigators_choice_header">Investigators</string>
     <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
     <string name="starting_game">Initial team</string>
     <string name="replacement">Replacement</string>
     <string name="dead">Out of the game</string>
@@ -91,4 +96,12 @@
     <string name="sort_mode_message_3">"Sort by Ancient One"</string>
     <string name="sort_mode_message_4">"Sort by score descending"</string>
     <string name="sort_mode_message_5">"Sort by score ascending"</string>
+
+    <string name="solved_mysteries_header">"Number of solved mysteries"</string>
+
+    <string name="sign_out_menu_header">Sign Out</string>
+
+    <string name="prelude_header">Prelude</string>
+
+    <string name="auth_error">Authentication failed</string>
 </resources>

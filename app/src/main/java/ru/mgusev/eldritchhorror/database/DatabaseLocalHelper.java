@@ -9,11 +9,13 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 
 import ru.mgusev.eldritchhorror.dao.ExpansionDAO;
+import ru.mgusev.eldritchhorror.dao.PreludeDAO;
 import ru.mgusev.eldritchhorror.model.Expansion;
 import ru.mgusev.eldritchhorror.model.Investigator;
 import ru.mgusev.eldritchhorror.dao.AncientOneDAO;
 import ru.mgusev.eldritchhorror.dao.InvestigatorDAO;
 import ru.mgusev.eldritchhorror.model.AncientOne;
+import ru.mgusev.eldritchhorror.model.Prelude;
 
 public class DatabaseLocalHelper extends OrmLiteSqliteOpenHelper {
 
@@ -23,18 +25,17 @@ public class DatabaseLocalHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="EHLocalDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 5;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private InvestigatorDAO investigatorDAO = null;
     private AncientOneDAO ancientOneDAO = null;
     private ExpansionDAO expansionDAO = null;
+    private PreludeDAO preludeDAO = null;
     private static DatabaseLocalHelper helper = null;
-    private Context context;
 
     public DatabaseLocalHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
         new LocalDBAssetHelper(context).getWritableDatabase();
     }
 
@@ -84,6 +85,14 @@ public class DatabaseLocalHelper extends OrmLiteSqliteOpenHelper {
         return expansionDAO;
     }
 
+    //синглтон для PreludeDAO
+    public PreludeDAO getPreludeDAO() throws SQLException{
+        if(preludeDAO == null){
+            preludeDAO = new PreludeDAO(getConnectionSource(), Prelude.class);
+        }
+        return preludeDAO;
+    }
+
     //выполняется при закрытии приложения
     @Override
     public void close(){
@@ -91,5 +100,6 @@ public class DatabaseLocalHelper extends OrmLiteSqliteOpenHelper {
         investigatorDAO = null;
         ancientOneDAO = null;
         expansionDAO = null;
+        preludeDAO = null;
     }
 }

@@ -263,17 +263,19 @@ public class InvestigatorsChoiceFragment extends Fragment implements OnItemClick
     }
 
     public void selectRandomInvestigators() {
+        List<Integer> specList = new ArrayList<>();
         cleanInvList();
         int j = 0;
         for (int i = 0; i < activity.getGame().playersCount; i++) {
             try {
                 do {
                     j = (int) (Math.random() * investigatorList.size());
-                } while (investigatorList.get(j).isStarting || !HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(investigatorList.get(j).expansionID));
+                } while (investigatorList.get(j).isStarting || !HelperFactory.getStaticHelper().getExpansionDAO().isEnableByID(investigatorList.get(j).expansionID) || (specList.contains(investigatorList.get(j).specialization) && specList.size() < 7));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             investigatorList.get(j).isStarting = true;
+            specList.add(investigatorList.get(j).specialization);
         }
         addDataToGame();
 

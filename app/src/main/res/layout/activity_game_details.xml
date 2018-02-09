@@ -199,6 +199,29 @@
                                 android:layout_weight="1"
                                 android:gravity="end"
                                 android:textColor="@color/colorSecondaryText" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/preludeDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/prelude_header"
+                                android:textColor="@color/colorSecondaryText" />
+
+                            <TextView
+                                android:id="@+id/preludeDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:textColor="@color/colorSecondaryText" />
                         </TableRow>
 
                         <TableRow
@@ -434,6 +457,29 @@
                         </TableRow>
 
                         <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/mysteriesCountDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/solved_mysteries_header"
+                                android:textColor="@color/colorSecondaryText" />
+
+                            <TextView
+                                android:id="@+id/mysteriesCountDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:minWidth="100dp"
+                                android:textColor="@color/colorSecondaryText" />
+                        </TableRow>
+
+                        <TableRow
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:padding="8dp">
@@ -639,10 +685,33 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_span="2"
                                 android:gravity="center_horizontal"
                                 android:text="@string/defeat_table_header"
                                 android:textColor="@color/colorPrimaryText"
                                 android:textSize="16sp" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/mysteriesCountDefeatDetailRow"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/mysteriesCountDefeatDetailHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/solved_mysteries_header" />
+
+                            <TextView
+                                android:id="@+id/mysteriesCountDefeatDetail"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end" />
 
                         </TableRow>
 
@@ -655,6 +724,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_span="2"
                                 android:text="@string/defeat_by_elimination" />
 
                         </TableRow>
@@ -668,6 +738,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_span="2"
                                 android:text="@string/defeat_by_mythos_depletion" />
 
                         </TableRow>
@@ -681,6 +752,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_span="2"
                                 android:text="@string/defeat_by_awakened_ancient_one" />
 
                         </TableRow>

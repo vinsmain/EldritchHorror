@@ -29,7 +29,6 @@
                     <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         android:shrinkColumns="*"
                         android:stretchColumns="*">
 
@@ -37,17 +36,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:padding="8dp">
+                            android:padding="16dp">
 
                             <TextView
                                 android:id="@+id/activityResultHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_span="3"
+                                android:layout_span="2"
                                 android:layout_weight="1"
-                                android:gravity="center_horizontal"
-                                android:focusableInTouchMode="true"
                                 android:focusable="true"
+                                android:focusableInTouchMode="false"
+                                android:gravity="center_horizontal"
                                 android:text="@string/win_or_defeat_header"
                                 android:textColor="@color/colorPrimaryText"
                                 android:textSize="16sp" />
@@ -58,12 +57,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:padding="8dp">
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp">
 
                             <android.support.constraint.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_span="3"
                                 android:layout_weight="1">
 
                                 <TextView
@@ -95,16 +95,100 @@
                             </android.support.constraint.ConstraintLayout>
 
                         </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:padding="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingStart="16dp"
+                            android:theme="@style/AppTheme.ColorHighlight">
+
+                            <TextView
+                                android:id="@+id/mysteriesCountHeader"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:text="@string/solved_mysteries_header"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="14sp" />
+
+                        </TableRow>
                     </TableLayout>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingStart="16dp"
+                        android:theme="@style/AppTheme.ColorHighlight">
+
+                        <RadioGroup
+                            android:id="@+id/mysteries_radio_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioButton0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/zero"
+                                android:textSize="14sp" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/one" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/two" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/three" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/four" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/five" />
+                        </RadioGroup>
+
+                    </TableRow>
 
                     <TableLayout
                         android:id="@+id/defeatTable"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:shrinkColumns="*"
-                        android:stretchColumns="*">
+                        android:stretchColumns="*"
+                        android:visibility="gone">
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -175,22 +259,20 @@
                         android:id="@+id/winTable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusableInTouchMode="true"
+                        android:focusableInTouchMode="false"
                         android:shrinkColumns="*"
                         android:stretchColumns="*">
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:padding="8dp"
-                            android:paddingEnd="16dp"
-                            android:paddingStart="16dp">
+                            android:padding="16dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_span="3"
+                                android:layout_span="2"
                                 android:layout_weight="1"
                                 android:gravity="center_horizontal"
                                 android:text="@string/win_table_header"
@@ -203,12 +285,12 @@
                             android:id="@+id/gatesCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
-                            android:theme="@style/AppTheme.ColorHighlight"
+                            android:gravity="center_vertical"
                             android:padding="8dp"
                             android:paddingEnd="16dp"
-                            android:paddingStart="16dp">
+                            android:paddingStart="16dp"
+                            android:theme="@style/AppTheme.ColorHighlight">
 
                             <TextView
                                 android:id="@+id/gatesCountHeader"
@@ -237,12 +319,12 @@
                             android:id="@+id/monstersCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
-                            android:theme="@style/AppTheme.ColorHighlight"
+                            android:gravity="center_vertical"
                             android:padding="8dp"
                             android:paddingEnd="16dp"
-                            android:paddingStart="16dp">
+                            android:paddingStart="16dp"
+                            android:theme="@style/AppTheme.ColorHighlight">
 
                             <TextView
                                 android:id="@+id/monstersCountHeader"
@@ -271,12 +353,12 @@
                             android:id="@+id/curseCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
-                            android:theme="@style/AppTheme.ColorHighlight"
+                            android:gravity="center_vertical"
                             android:padding="8dp"
                             android:paddingEnd="16dp"
-                            android:paddingStart="16dp">
+                            android:paddingStart="16dp"
+                            android:theme="@style/AppTheme.ColorHighlight">
 
                             <TextView
                                 android:id="@+id/curseCountHeader"
@@ -306,12 +388,12 @@
                             android:id="@+id/rumorsCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
-                            android:theme="@style/AppTheme.ColorHighlight"
+                            android:gravity="center_vertical"
                             android:padding="8dp"
                             android:paddingEnd="16dp"
-                            android:paddingStart="16dp">
+                            android:paddingStart="16dp"
+                            android:theme="@style/AppTheme.ColorHighlight">
 
                             <TextView
                                 android:id="@+id/rumorsCountHeader"
@@ -340,12 +422,12 @@
                             android:id="@+id/cluesCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
-                            android:theme="@style/AppTheme.ColorHighlight"
+                            android:gravity="center_vertical"
                             android:padding="8dp"
                             android:paddingEnd="16dp"
-                            android:paddingStart="16dp">
+                            android:paddingStart="16dp"
+                            android:theme="@style/AppTheme.ColorHighlight">
 
                             <TextView
                                 android:id="@+id/cluesCountHeader"
@@ -374,12 +456,12 @@
                             android:id="@+id/blessedCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
-                            android:theme="@style/AppTheme.ColorHighlight"
+                            android:gravity="center_vertical"
                             android:padding="8dp"
                             android:paddingEnd="16dp"
-                            android:paddingStart="16dp">
+                            android:paddingStart="16dp"
+                            android:theme="@style/AppTheme.ColorHighlight">
 
                             <TextView
                                 android:id="@+id/blessedCountHeader"
@@ -408,12 +490,12 @@
                             android:id="@+id/doomCountRow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
                             android:foreground="?attr/selectableItemBackground"
-                            android:theme="@style/AppTheme.ColorHighlight"
+                            android:gravity="center_vertical"
                             android:padding="8dp"
                             android:paddingEnd="16dp"
-                            android:paddingStart="16dp">
+                            android:paddingStart="16dp"
+                            android:theme="@style/AppTheme.ColorHighlight">
 
                             <TextView
                                 android:id="@+id/doomCountHeader"
