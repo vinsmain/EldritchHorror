@@ -394,6 +394,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setSortItemIcon();
                 initGameList();
                 return true;
+            case R.id.action_statistics:
+                Intent intentStatistics = new Intent(this, StatisticsActivity.class);
+                intentStatistics.putParcelableArrayListExtra("gameList", (ArrayList<? extends Parcelable>) gameList);
+                startActivity(intentStatistics);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
