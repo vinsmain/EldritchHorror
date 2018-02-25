@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.mgusev.eldritchhorror.database.HelperFactory;
@@ -114,13 +115,20 @@ public class GameDAO extends BaseDaoImpl {
         return qb.queryRaw();
     }
 
-    public GenericRawResults<String[]> getDefeatReasonCount(int ancientOneID) throws SQLException {
+    public List<Float> getDefeatReasonCount(int ancientOneID) throws SQLException {
+        List<Float> results = new ArrayList<>();
         QueryBuilder<Game, Integer> qb = this.queryBuilder();
-        qb.selectRaw(Game.GAME_FIELD_SCORE);
-        qb.selectRaw("COUNT (" + Game.GAME_FIELD_SCORE + ")");
-        if (ancientOneID == 0) qb.where().eq(Game.GAME_FIELD_WIN_GAME, true);
-        else qb.where().eq(Game.GAME_FIELD_WIN_GAME, true).and().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID);
-        qb.groupBy(Game.GAME_FIELD_SCORE);
-        return qb.queryRaw();
+        if (ancientOneID == 0) {
+            results.add((float) qb.where().eq(Game.GAME_FIELD_WIN_GAME, false).query().size());
+            results.add((float) qb.where().eq(Game.GAME_FIELD_WIN_GAME, false).and().eq(Game.GAME_FIELD_DEFEAT_BY_AWAKENED_ANCIENT_ONE, true).query().size());
+            results.add((float) qb.where().eq(Game.GAME_FIELD_WIN_GAME, false).and().eq(Game.GAME_FIELD_DEFEAT_BY_ELIMINATION, true).query().size());
+            results.add((float) qb.where().eq(Game.GAME_FIELD_WIN_GAME, false).and().eq(Game.GAME_FIELD_DEFEAT_BY_MYTHOS_DEPLETION, true).query().size());
+        } else {
+            results.add((float) qb.where().eq(Game.GAME_FIELD_WIN_GAME, false).and().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID).query().size());
+            results.add((float) qb.where().eq(Game.GAME_FIELD_WIN_GAME, false).and().eq(Game.GAME_FIELD_DEFEAT_BY_AWAKENED_ANCIENT_ONE, true).and().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID).query().size());
+            results.add((float) qb.where().eq(Game.GAME_FIELD_WIN_GAME, false).and().eq(Game.GAME_FIELD_DEFEAT_BY_ELIMINATION, true).and().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID).query().size());
+            results.add((float) qb.where().eq(Game.GAME_FIELD_WIN_GAME, false).and().eq(Game.GAME_FIELD_DEFEAT_BY_MYTHOS_DEPLETION, true).and().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID).query().size());
+        }
+        return results;
     }
 }
