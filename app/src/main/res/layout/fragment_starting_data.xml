@@ -46,11 +46,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
+                    android:foreground="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:paddingEnd="16dp"
                     android:paddingStart="16dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:theme="@style/AppTheme.ColorHighlight" >
+                    android:theme="@style/AppTheme.ColorHighlight">
 
                     <TextView
                         android:id="@+id/textView"
@@ -88,12 +88,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:foreground="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:padding="8dp"
                     android:paddingEnd="16dp"
                     android:paddingStart="16dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:theme="@style/AppTheme.ColorHighlight" >
+                    android:theme="@style/AppTheme.ColorHighlight">
 
                     <TextView
                         android:id="@+id/textView3"
@@ -152,12 +152,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:foreground="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:padding="8dp"
                     android:paddingEnd="16dp"
                     android:paddingStart="16dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:theme="@style/AppTheme.ColorHighlight" >
+                    android:theme="@style/AppTheme.ColorHighlight">
 
                     <TextView
                         android:id="@+id/textView2"
@@ -192,9 +192,9 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_span="3"
                         android:gravity="center_horizontal"
                         android:text="@string/additionalRules"
-                        android:layout_span="3"
                         android:textColor="@color/colorPrimaryText" />
                 </TableRow>
 
@@ -212,8 +212,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="32dp"
-                        android:maxLines="1"
                         android:layout_span="3"
+                        android:maxLines="1"
                         android:text="@string/simpleMyths"
                         android:textColor="@color/colorSecondaryText" />
 
@@ -233,8 +233,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="32dp"
-                        android:maxLines="1"
                         android:layout_span="3"
+                        android:maxLines="1"
                         android:text="@string/normalMyths"
                         android:textColor="@color/colorSecondaryText" />
 
@@ -254,8 +254,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="32dp"
-                        android:maxLines="1"
                         android:layout_span="3"
+                        android:maxLines="1"
                         android:text="@string/hardMyths"
                         android:textColor="@color/colorSecondaryText" />
 
@@ -275,8 +275,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="32dp"
-                        android:maxLines="1"
                         android:layout_span="3"
+                        android:maxLines="1"
                         android:text="@string/startingRumor"
                         android:textColor="@color/colorSecondaryText" />
 

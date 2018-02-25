@@ -1,6 +1,7 @@
 package ru.mgusev.eldritchhorror.dao;
 
 import com.j256.ormlite.dao.BaseDaoImpl;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
@@ -86,5 +87,40 @@ public class GameDAO extends BaseDaoImpl {
         QueryBuilder<Game, Integer> qb = this.queryBuilder();
         qb.where().eq(Game.GAME_FIELD_ID, game.id);
         return qb.queryForFirst();
+    }
+
+    public List<Game> getGamesByAncientOne(String ancientOneName) throws SQLException{
+        int ancientOneID = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneName);
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.where().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID);
+        return qb.query();
+    }
+
+    public GenericRawResults<String[]> getAncientOneCount() throws SQLException {
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.selectRaw(Game.GAME_FIELD_ANCIENT_ONE_ID);
+        qb.selectRaw("COUNT (" + Game.GAME_FIELD_ADVENTURE_ID + ")");
+        qb.groupBy(Game.GAME_FIELD_ANCIENT_ONE_ID);
+        return qb.queryRaw();
+    }
+
+    public GenericRawResults<String[]> getScoreCount(int ancientOneID) throws SQLException {
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.selectRaw(Game.GAME_FIELD_SCORE);
+        qb.selectRaw("COUNT (" + Game.GAME_FIELD_SCORE + ")");
+        if (ancientOneID == 0) qb.where().eq(Game.GAME_FIELD_WIN_GAME, true);
+        else qb.where().eq(Game.GAME_FIELD_WIN_GAME, true).and().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID);
+        qb.groupBy(Game.GAME_FIELD_SCORE);
+        return qb.queryRaw();
+    }
+
+    public GenericRawResults<String[]> getDefeatReasonCount(int ancientOneID) throws SQLException {
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        qb.selectRaw(Game.GAME_FIELD_SCORE);
+        qb.selectRaw("COUNT (" + Game.GAME_FIELD_SCORE + ")");
+        if (ancientOneID == 0) qb.where().eq(Game.GAME_FIELD_WIN_GAME, true);
+        else qb.where().eq(Game.GAME_FIELD_WIN_GAME, true).and().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID);
+        qb.groupBy(Game.GAME_FIELD_SCORE);
+        return qb.queryRaw();
     }
 }

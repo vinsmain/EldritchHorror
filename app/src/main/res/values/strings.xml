@@ -104,4 +104,12 @@
     <string name="prelude_header">Prelude</string>
 
     <string name="auth_error">Authentication failed</string>
+
+    <string name="statistics_header">Статистика</string>
+    <string name="statistics_none">Данные отсутствуют</string>
+    <string name="win_defeat_stat_description">Победы/Поражения</string>
+    <string name="win_stat_label">Победы</string>
+    <string name="defeat_stat_label">Поражения</string>
+
+    <string name="all_results">Все результаты</string>
 </resources>

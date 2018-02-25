@@ -99,4 +99,8 @@
     <string name="prelude_header">Прелюдия</string>
 
     <string name="auth_error">Ошибка авторизации</string>
+
+    <string name="win_defeat_stat_description">Победы/Поражения</string>
+    <string name="win_stat_label">Победы</string>
+    <string name="defeat_stat_label">Поражения</string>
 </resources>
