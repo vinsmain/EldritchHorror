@@ -1,6 +1,7 @@
 package ru.mgusev.eldritchhorror.dao;
 
 import com.j256.ormlite.dao.BaseDaoImpl;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
@@ -8,7 +9,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Investigator;
@@ -42,5 +42,19 @@ public class InvestigatorDAO extends BaseDaoImpl {
         DeleteBuilder<Investigator, Integer> db = this.deleteBuilder();
         db.where().eq(Investigator.INVESTIGATOR_FIELD_GAME_ID, id);
         db.delete();
+    }
+
+    public GenericRawResults<String[]> getInvestigatorsCount(int ancientOneID) throws SQLException {
+        QueryBuilder<Investigator, Integer> qb = this.queryBuilder();
+        String field;
+        if (Localization.getInstance().isRusLocale()) field = Investigator.INVESTIGATOR_FIELD_NAME_RU;
+        else field = Investigator.INVESTIGATOR_FIELD_NAME_EN;
+        qb.selectRaw(field);
+        qb.selectRaw("COUNT (" + field + ")");
+        //if (ancientOneID == 0) qb.where().eq(Game.GAME_FIELD_WIN_GAME, true);
+        //else qb.where().eq(Game.GAME_FIELD_WIN_GAME, true).and().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID);
+        qb.groupBy(field);
+        qb.orderByRaw("COUNT (" + field + ") DESC");
+        return qb.queryRaw();
     }
 }

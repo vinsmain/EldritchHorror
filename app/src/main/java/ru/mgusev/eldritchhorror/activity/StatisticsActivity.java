@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +15,6 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,15 +34,18 @@ public class StatisticsActivity extends AppCompatActivity {
     private CardView ancientOneCard;
     private CardView scoreCard;
     private CardView defeatReasonCard;
+    private CardView investigatorsCard;
     private ArrayAdapter<String> ancientOneAdapter;
     private List <String> ancientOneList;
     private List<String[]> scoreResults;
+    private List<String[]> investigatorsResults;
     private List<Float> defeatReasonResults;
 
     private TextView winDefeatHeader;
     private TextView ancientOneHeader;
     private TextView scoreHeader;
     private TextView defeatReasonHeader;
+    private TextView investigatorsHeader;
 
     private EHChart winDefeatChart;
     private List<Float> winDefeatValues;
@@ -59,6 +60,7 @@ public class StatisticsActivity extends AppCompatActivity {
     private List<String> scoreLabels;
 
     private EHChart defeatReasonChart;
+    private EHChart investigatorsChart;
 
 
     @Override
@@ -72,16 +74,18 @@ public class StatisticsActivity extends AppCompatActivity {
         ancientOneCard = (CardView) findViewById(R.id.ancient_one_stat_card);
         scoreCard = (CardView) findViewById(R.id.score_stat_card);
         defeatReasonCard = (CardView) findViewById(R.id.defeat_reason_stat_card);
+        investigatorsCard = (CardView) findViewById(R.id.investigators_stat_card);
 
         winDefeatHeader = findViewById(R.id.win_defeat_stat_header);
         ancientOneHeader = findViewById(R.id.ancient_one_stat_header);
         scoreHeader = findViewById(R.id.score_stat_header);
         defeatReasonHeader = findViewById(R.id.defeat_reason_stat_header);
+        investigatorsHeader = findViewById(R.id.investigators_stat_header);
 
         try {
             scoreResults = HelperFactory.getHelper().getGameDAO().getScoreCount(0).getResults();
             defeatReasonResults = HelperFactory.getHelper().getGameDAO().getDefeatReasonCount(0);
-            System.out.println("555555 " + defeatReasonResults);
+            investigatorsResults = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsCount(0).getResults();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,6 +101,7 @@ public class StatisticsActivity extends AppCompatActivity {
         initAncientOneChart();
         initScoreChart();
         initDefeatReasonChart();
+        initInvestigatorsChart();
     }
 
     private void initToolbar() {
@@ -124,7 +129,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
         for (int i = 0; i < winDefeatValues.size(); i++) {
             entries.add(new PieEntry(getPercent(winDefeatValues.get(i), gameList.size(), DEN), winDefeatLabels.get(i)));
-            //System.out.println(winDefeatValues.get(i) + " " + winDefeatLabels.get(i));
         }
 
         winDefeatChart.setData(entries, getResources().getString(R.string.win_defeat_stat_description), winDefeatLabels, winDefeatValues, gameList.size(), winDefeatHeader);
@@ -174,7 +178,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
         for (int i = 0; i < ancienOneValues.size(); i++) {
             entries.add(new PieEntry(getPercent(ancienOneValues.get(i), gameList.size(), DEN), ancienOneLabels.get(i)));
-            System.out.println(ancienOneValues.get(i) + " " + ancienOneLabels.get(i));
         }
 
         ancientOneChart.setData(entries, getResources().getString(R.string.ancientOne), ancienOneLabels, ancienOneValues, gameList.size(), ancientOneHeader);
@@ -196,29 +199,9 @@ public class StatisticsActivity extends AppCompatActivity {
 
         for (int i = 0; i < scoreValues.size(); i++) {
             entries.add(new PieEntry(getPercent(scoreValues.get(i), winCount, DEN), scoreLabels.get(i)));
-            //System.out.println("123 " + scoreValues.get(i) + " " + scoreLabels.get(i));
         }
 
         scoreChart.setData(entries, getResources().getString(R.string.totalScore), scoreLabels, scoreValues, winCount, scoreHeader);
-    }
-
-    public void initAncientOneArray() {
-        try {
-            if (ancientOneList == null) ancientOneList = new ArrayList<>();
-
-            List<Integer> allAncientOnes = new ArrayList<>();
-            for (Game game : gameList) {
-                if (!allAncientOnes.contains(game.ancientOneID)) {
-                    allAncientOnes.add(game.ancientOneID);
-                    ancientOneList.add(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(game.ancientOneID));
-                }
-            }
-            Collections.sort(ancientOneList);
-            ancientOneList.add(0, getResources().getString(R.string.all_results));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private void initDefeatReasonChart() {
@@ -251,6 +234,59 @@ public class StatisticsActivity extends AppCompatActivity {
         defeatReasonChart.setData(entries, getResources().getString(R.string.defeat_header), scoreLabels, scoreValues, defeatSum, defeatReasonHeader);
         if (scoreValues.isEmpty()) setDefeatReasonCardVisibility(false);
         else setDefeatReasonCardVisibility(true);
+    }
+
+    private void initInvestigatorsChart() {
+        investigatorsChart = findViewById(R.id.investigators_pie_chart);
+        investigatorsChart.setOnChartValueSelectedListener(investigatorsChart);
+
+        scoreValues = new ArrayList<>();
+        scoreLabels = new ArrayList<>();
+        int sum = 0;
+        Float otherSum = 0f;
+        //for (String[] array : investigatorsResults) {
+        for (int i = 0; i < investigatorsResults.size(); i++) {
+            //System.out.println("45454 " + array[1] + " " + array[0] + " " + Float.valueOf(array[1]));
+            if (i < 10) {
+                scoreLabels.add(investigatorsResults.get(i)[0]);
+                scoreValues.add(Float.valueOf(investigatorsResults.get(i)[1]));
+            } else {
+                otherSum += Float.valueOf(investigatorsResults.get(i)[1]);
+            }
+            sum += Integer.parseInt(investigatorsResults.get(i)[1]);
+        }
+
+        if (investigatorsResults.size() > 10) {
+            scoreLabels.add("Другие");
+            scoreValues.add(otherSum);
+        }
+
+        List<PieEntry> entries = new ArrayList<>();
+
+        for (int i = 0; i < scoreValues.size(); i++) {
+            entries.add(new PieEntry(getPercent(scoreValues.get(i), sum, DEN), scoreLabels.get(i)));
+        }
+
+        investigatorsChart.setData(entries, getResources().getString(R.string.investigators), scoreLabels, scoreValues, sum, investigatorsHeader);
+    }
+
+    private void initAncientOneArray() {
+        try {
+            if (ancientOneList == null) ancientOneList = new ArrayList<>();
+
+            List<Integer> allAncientOnes = new ArrayList<>();
+            for (Game game : gameList) {
+                if (!allAncientOnes.contains(game.ancientOneID)) {
+                    allAncientOnes.add(game.ancientOneID);
+                    ancientOneList.add(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(game.ancientOneID));
+                }
+            }
+            Collections.sort(ancientOneList);
+            ancientOneList.add(0, getResources().getString(R.string.all_results));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void initAncientOneSpinner() {
