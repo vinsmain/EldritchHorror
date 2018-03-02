@@ -64,10 +64,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            System.out.println(oldVersion + "    " + newVersion);
             if (oldVersion < 2) {
                 Log.e(TAG, "Update 1 - 2");
-                System.out.println("Update 1 - 2");
                 helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_PRELUDE_ID + " INTEGER DEFAULT 0;");
                 helper.getGameDAO().executeRaw("ALTER TABLE '" + Game.GAME_TABLE_NAME + "' ADD COLUMN " + Game.GAME_FIELD_SOLVED_MYSTERIES_COUNT + " INTEGER DEFAULT 3;");
                 Log.e(TAG, "Finish update 1 - 2");

@@ -99,4 +99,17 @@
     <string name="prelude_header">Прелюдия</string>
 
     <string name="auth_error">Ошибка авторизации</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="auth_header">Авторизация</string>
+    <string name="statistics_header">Статистика</string>
+    <string name="statistics_none">Данные отсутствуют</string>
+    <string name="win_defeat_stat_description">Победы/Поражения</string>
+    <string name="win_stat_label">Победы</string>
+    <string name="defeat_stat_label">Поражения</string>
+    <string name="all_results">Все результаты</string>
+    <string name="other_results">Другие</string>
 </resources>

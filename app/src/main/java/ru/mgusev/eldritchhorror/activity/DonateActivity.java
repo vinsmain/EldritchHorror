@@ -8,17 +8,20 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import ru.mgusev.eldritchhorror.R;
 
 public class DonateActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final static String donateURL = "https://money.yandex.ru/to/410014579099919";
+    private final static String donateURLYandex = "https://money.yandex.ru/to/410014579099919";
+    private final static String donateURLPayPal = "https://www.paypal.me/mgusevstudio";
 
-    TextView version;
-    Toolbar toolbar;
-    Button donateBtn;
+    private TextView version;
+    private Toolbar toolbar;
+    private ImageButton donateYandexBtn;
+    private ImageButton donatePayPalBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,10 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
         String versionText = getResources().getString(R.string.version_header) + getVersionName();
         version.setText(versionText);
 
-        donateBtn = (Button) findViewById(R.id.button_donate);
-        donateBtn.setOnClickListener(this);
+        donateYandexBtn = (ImageButton) findViewById(R.id.donate_yandex_btn);
+        donatePayPalBtn = (ImageButton) findViewById(R.id.donate_paypal_btn);
+        donateYandexBtn.setOnClickListener(this);
+        donatePayPalBtn.setOnClickListener(this);
     }
 
     private void initToolbar() {
@@ -63,9 +68,13 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_donate:
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(donateURL));
-                startActivity(browserIntent);
+            case R.id.donate_yandex_btn:
+                Intent browserIntentYandex = new Intent(Intent.ACTION_VIEW, Uri.parse(donateURLYandex));
+                startActivity(browserIntentYandex);
+                break;
+            case R.id.donate_paypal_btn:
+                Intent browserIntentPayPal = new Intent(Intent.ACTION_VIEW, Uri.parse(donateURLPayPal));
+                startActivity(browserIntentPayPal);
                 break;
             default:
                 break;

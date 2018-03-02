@@ -358,8 +358,6 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
             default:
                 break;
         }
-        System.out.println(activity.getGame().solvedMysteriesCount);
-        System.out.println(maxMysteries);
         if (activity.getGame().solvedMysteriesCount > maxMysteries) mystery3.setChecked(true);
     }
 

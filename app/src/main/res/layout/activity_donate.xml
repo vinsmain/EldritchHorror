@@ -21,13 +21,15 @@
         app:theme="@style/donateTheme" />
 
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_donate">
@@ -56,7 +58,7 @@
             android:layout_weight="1"
             android:text="@string/authors_header"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView15"
@@ -93,22 +95,52 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_donate"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:layout_weight="1"
-        android:background="@color/colorAccent"
-        android:elevation="16dp"
-        android:padding="8dp"
-        android:text="@string/donate"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/donate"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/donate_yandex_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_border"
+            android:backgroundTint="@color/cardview_light_background"
+            android:foreground="?attr/selectableItemBackground"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:theme="@style/AppTheme.ColorHighlight"
+            app:srcCompat="@drawable/yandex_money_logo" />
+
+        <ImageButton
+            android:id="@+id/donate_paypal_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_border"
+            android:backgroundTint="@color/cardview_light_background"
+            android:foreground="?attr/selectableItemBackground"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:theme="@style/AppTheme.ColorHighlight"
+            app:srcCompat="@drawable/paypal_logo" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

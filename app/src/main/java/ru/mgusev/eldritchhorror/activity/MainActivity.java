@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int currentSortMode = SORT_MODE_DATE_UP;
     private MenuItem sortItem;
     private MenuItem authItem;
+    private MenuItem statItem;
 
     private List<Game> gameList;
     private RecyclerView recyclerView;
@@ -171,8 +172,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (isAdvertisingDialog) showDonateDialog();
 
         if (prefHelper.isRate()) initRateDialog();
-        //initSignOutDialog();
-
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -204,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onStart() {
         super.onStart();
         currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) Log.d(TAG, "CURRENT USER: signed_in: " + currentUser.getUid());
         if (currentUser != null) {
             setPhoto();
             fbHelper.getReference(currentUser);
@@ -267,7 +265,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         if (authItem != null) authItem.setIcon(R.drawable.google_signed_in);
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -319,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             gameList.clear();
             gameList.addAll(getSortedGames());
             for (int i = 0; i < gameList.size(); i ++) {
-                System.out.println("gameID " + gameList.get(i).id);
                 gameList.get(i).invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(gameList.get(i).id);
                 if (currentUser != null && gameList.get(i).userID == null) {
                     Log.w(TAG, "addGame " + gameList.get(i).ancientOneID);
@@ -335,6 +331,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             adapter.notifyDataSetChanged();
             setScoreValues();
             showMessageStarting();
+        }
+        setVisibleStatItem();
+    }
+
+    private void setVisibleStatItem() {
+        if (statItem != null) {
+            if (gameList.size() == 0) statItem.setVisible(false);
+            else statItem.setVisible(true);
         }
     }
 
@@ -370,9 +374,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);
         sortItem = menu.findItem(R.id.action_sort);
         authItem = menu.findItem(R.id.action_auth);
+        statItem = menu.findItem(R.id.action_statistics);
         if (currentUser == null) authItem.setIcon(R.drawable.google_icon);
         else setPhoto();
         setSortItemIcon();
+        setVisibleStatItem();
         return true;
     }
 
@@ -393,6 +399,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 prefHelper.saveSortMode(currentSortMode);
                 setSortItemIcon();
                 initGameList();
+                return true;
+            case R.id.action_statistics:
+                Intent intentStatistics = new Intent(this, StatisticsActivity.class);
+                intentStatistics.putParcelableArrayListExtra("gameList", (ArrayList<? extends Parcelable>) gameList);
+                startActivity(intentStatistics);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

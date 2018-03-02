@@ -104,4 +104,14 @@
     <string name="prelude_header">Prelude</string>
 
     <string name="auth_error">Authentication failed</string>
+
+    <string name="auth_header">Sign in</string>
+    <string name="statistics_header">Statistics</string>
+    <string name="statistics_none">No data</string>
+    <string name="win_defeat_stat_description">Victory/Defeat</string>
+    <string name="win_stat_label">Victory</string>
+    <string name="defeat_stat_label">Defeat</string>
+
+    <string name="all_results">All results</string>
+    <string name="other_results">Others</string>
 </resources>

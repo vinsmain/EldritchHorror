@@ -46,6 +46,8 @@
             android:name="com.adcolony.sdk.AdColonyAdViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true" />
+        <activity android:name=".activity.StatisticsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
