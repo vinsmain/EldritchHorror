@@ -2,6 +2,7 @@ package ru.mgusev.eldritchhorror.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -56,7 +57,7 @@ public class DatabaseLocalHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
-        System.out.println("Update DB finish ");
+        Log.d("LocalDB upgrade", "Update DB finish");
 
 
     }

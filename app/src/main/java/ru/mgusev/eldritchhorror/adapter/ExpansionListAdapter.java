@@ -70,8 +70,6 @@ public class ExpansionListAdapter extends RecyclerView.Adapter<ExpansionListAdap
                 break;
             }
         }
-
-        System.out.println(listStorage.get(position).isEnable);
     }
 
     public List<Expansion> getListStorage() {

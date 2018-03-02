@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_statistics"
-        android:title="Статистика"
+        android:title="@string/statistics_header"
         android:icon="@drawable/statistics_icon"
         app:showAsAction="always|collapseActionView" />
 
@@ -22,7 +22,7 @@
 
     <item
         android:id="@+id/action_auth"
-        android:title="@string/about"
+        android:title="@string/auth_header"
         android:icon="@drawable/google_icon"
         app:showAsAction="always|collapseActionView" />
 

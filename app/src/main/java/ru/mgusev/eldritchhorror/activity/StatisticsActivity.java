@@ -22,21 +22,25 @@ import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Game;
 
-public class StatisticsActivity extends AppCompatActivity {
+public class StatisticsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int DEN = 100;
+    private static final int MAX_VALUES_IN_CHART = 12;
 
     private Toolbar toolbarStatistics;
     private List<Game> gameList;
     private int winCount;
     private int defeatCount;
     private Spinner ancientOneSpinner;
+    private CardView filterCard;
     private CardView ancientOneCard;
     private CardView scoreCard;
     private CardView defeatReasonCard;
     private CardView investigatorsCard;
     private ArrayAdapter<String> ancientOneAdapter;
     private List <String> ancientOneList;
+    private List<Float> chartValues;
+    private List<String> chartLabels;
     private List<String[]> scoreResults;
     private List<String[]> investigatorsResults;
     private List<Float> defeatReasonResults;
@@ -48,17 +52,8 @@ public class StatisticsActivity extends AppCompatActivity {
     private TextView investigatorsHeader;
 
     private EHChart winDefeatChart;
-    private List<Float> winDefeatValues;
-    private List<String> winDefeatLabels;
-
     private EHChart ancientOneChart;
-    private List<Float> ancienOneValues;
-    private List<String> ancienOneLabels;
-
     private EHChart scoreChart;
-    private List<Float> scoreValues;
-    private List<String> scoreLabels;
-
     private EHChart defeatReasonChart;
     private EHChart investigatorsChart;
 
@@ -71,6 +66,9 @@ public class StatisticsActivity extends AppCompatActivity {
         initToolbar();
 
         gameList = getIntent().getParcelableArrayListExtra("gameList");
+
+        filterCard = (CardView) findViewById(R.id.filter_stat_card);
+        filterCard.setOnClickListener(this);
         ancientOneCard = (CardView) findViewById(R.id.ancient_one_stat_card);
         scoreCard = (CardView) findViewById(R.id.score_stat_card);
         defeatReasonCard = (CardView) findViewById(R.id.defeat_reason_stat_card);
@@ -127,16 +125,16 @@ public class StatisticsActivity extends AppCompatActivity {
 
         List<PieEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < winDefeatValues.size(); i++) {
-            entries.add(new PieEntry(getPercent(winDefeatValues.get(i), gameList.size(), DEN), winDefeatLabels.get(i)));
+        for (int i = 0; i < chartValues.size(); i++) {
+            entries.add(new PieEntry(getPercent(chartValues.get(i), gameList.size(), DEN), chartLabels.get(i)));
         }
 
-        winDefeatChart.setData(entries, getResources().getString(R.string.win_defeat_stat_description), winDefeatLabels, winDefeatValues, gameList.size(), winDefeatHeader);
+        winDefeatChart.setData(entries, getResources().getString(R.string.win_defeat_stat_description), chartLabels, chartValues, gameList.size(), winDefeatHeader);
     }
 
     private void initWinDefeatValues() {
-        winDefeatValues = new ArrayList<>();
-        winDefeatLabels = new ArrayList<>();
+        chartValues = new ArrayList<>();
+        chartLabels = new ArrayList<>();
         winCount = 0;
         defeatCount = 0;
 
@@ -146,12 +144,12 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         if (winCount != 0) {
-            winDefeatValues.add((float) winCount);
-            winDefeatLabels.add(getResources().getString(R.string.win_stat_label));
+            chartValues.add((float) winCount);
+            chartLabels.add(getResources().getString(R.string.win_stat_label));
         }
         if (defeatCount != 0) {
-            winDefeatValues.add((float) defeatCount);
-            winDefeatLabels.add(getResources().getString(R.string.defeat_stat_label));
+            chartValues.add((float) defeatCount);
+            chartLabels.add(getResources().getString(R.string.defeat_stat_label));
         }
     }
 
@@ -163,12 +161,12 @@ public class StatisticsActivity extends AppCompatActivity {
         ancientOneChart = findViewById(R.id.ancient_one_pie_chart);
         ancientOneChart.setOnChartValueSelectedListener(ancientOneChart);
 
-        ancienOneValues = new ArrayList<>();
-        ancienOneLabels = new ArrayList<>();
+        chartValues = new ArrayList<>();
+        chartLabels = new ArrayList<>();
         try {
             for (String[] array : HelperFactory.getHelper().getGameDAO().getAncientOneCount().getResults()) {
-                ancienOneLabels.add(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(Integer.parseInt(array[0])));
-                ancienOneValues.add(Float.valueOf(array[1]));
+                chartLabels.add(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneNameByID(Integer.parseInt(array[0])));
+                chartValues.add(Float.valueOf(array[1]));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -176,98 +174,104 @@ public class StatisticsActivity extends AppCompatActivity {
 
         List<PieEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < ancienOneValues.size(); i++) {
-            entries.add(new PieEntry(getPercent(ancienOneValues.get(i), gameList.size(), DEN), ancienOneLabels.get(i)));
+        for (int i = 0; i < chartValues.size(); i++) {
+            entries.add(new PieEntry(getPercent(chartValues.get(i), gameList.size(), DEN), chartLabels.get(i)));
         }
 
-        ancientOneChart.setData(entries, getResources().getString(R.string.ancientOne), ancienOneLabels, ancienOneValues, gameList.size(), ancientOneHeader);
+        ancientOneChart.setData(entries, getResources().getString(R.string.ancientOne), chartLabels, chartValues, gameList.size(), ancientOneHeader);
     }
 
     private void initScoreChart() {
         scoreChart = findViewById(R.id.score_pie_chart);
         scoreChart.setOnChartValueSelectedListener(scoreChart);
 
-        scoreValues = new ArrayList<>();
-        scoreLabels = new ArrayList<>();
-        for (String[] array : scoreResults) {
-            System.out.println("45454 " + array[1] + " " + array[0] + " " + Float.valueOf(array[1]));
-            scoreLabels.add(array[0]);
-            scoreValues.add(Float.valueOf(array[1]));
+        chartValues = new ArrayList<>();
+        chartLabels = new ArrayList<>();
+        Float otherSum = 0f;
+        for (int i = 0; i < scoreResults.size(); i++) {
+            if (i < MAX_VALUES_IN_CHART) {
+                chartLabels.add(scoreResults.get(i)[0]);
+                chartValues.add(Float.valueOf(scoreResults.get(i)[1]));
+            } else {
+                otherSum += Float.valueOf(scoreResults.get(i)[1]);
+            }
+        }
+
+        if (scoreResults.size() > MAX_VALUES_IN_CHART) {
+            chartLabels.add(getResources().getString(R.string.other_results));
+            chartValues.add(otherSum);
         }
 
         List<PieEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < scoreValues.size(); i++) {
-            entries.add(new PieEntry(getPercent(scoreValues.get(i), winCount, DEN), scoreLabels.get(i)));
+        for (int i = 0; i < chartValues.size(); i++) {
+            entries.add(new PieEntry(getPercent(chartValues.get(i), winCount, DEN), chartLabels.get(i)));
         }
 
-        scoreChart.setData(entries, getResources().getString(R.string.totalScore), scoreLabels, scoreValues, winCount, scoreHeader);
+        scoreChart.setData(entries, getResources().getString(R.string.totalScore), chartLabels, chartValues, winCount, scoreHeader);
     }
 
     private void initDefeatReasonChart() {
         defeatReasonChart = findViewById(R.id.defeat_reason_pie_chart);
         defeatReasonChart.setOnChartValueSelectedListener(defeatReasonChart);
 
-        scoreValues = defeatReasonResults;
-        scoreLabels = new ArrayList<>();
+        chartValues = new ArrayList<>();
+        chartLabels = new ArrayList<>();
+        chartValues = defeatReasonResults;
 
-        scoreLabels.add(getResources().getString(R.string.defeat_by_awakened_ancient_one));
-        scoreLabels.add(getResources().getString(R.string.defeat_by_elimination));
-        scoreLabels.add(getResources().getString(R.string.defeat_by_mythos_depletion));
+        chartLabels.add(getResources().getString(R.string.defeat_by_awakened_ancient_one));
+        chartLabels.add(getResources().getString(R.string.defeat_by_elimination));
+        chartLabels.add(getResources().getString(R.string.defeat_by_mythos_depletion));
 
-        int defeatSum = Math.round(scoreValues.get(0));
-        scoreValues.remove(0);
-
+        int defeatSum = Math.round(chartValues.get(0) + chartValues.get(1) + chartValues.get(2));
 
         List<PieEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < scoreValues.size();) {
-            if (scoreValues.get(i) == 0) {
-                scoreValues.remove(i);
-                scoreLabels.remove(i);
+        for (int i = 0; i < chartValues.size(); ) {
+            if (chartValues.get(i) == 0) {
+                chartValues.remove(i);
+                chartLabels.remove(i);
             } else {
-                entries.add(new PieEntry(getPercent(scoreValues.get(i), defeatSum, DEN), scoreLabels.get(i)));
+                entries.add(new PieEntry(getPercent(chartValues.get(i), defeatSum, DEN), chartLabels.get(i)));
                 i++;
             }
         }
 
-        defeatReasonChart.setData(entries, getResources().getString(R.string.defeat_header), scoreLabels, scoreValues, defeatSum, defeatReasonHeader);
-        if (scoreValues.isEmpty()) setDefeatReasonCardVisibility(false);
-        else setDefeatReasonCardVisibility(true);
+        defeatReasonChart.setData(entries, getResources().getString(R.string.defeat_table_header), chartLabels, chartValues, defeatSum, defeatReasonHeader);
+        if (chartValues.isEmpty()) setCardVisibility(defeatReasonCard, false);
+        else setCardVisibility(defeatReasonCard, true);
     }
 
     private void initInvestigatorsChart() {
         investigatorsChart = findViewById(R.id.investigators_pie_chart);
         investigatorsChart.setOnChartValueSelectedListener(investigatorsChart);
 
-        scoreValues = new ArrayList<>();
-        scoreLabels = new ArrayList<>();
+        chartValues = new ArrayList<>();
+        chartLabels = new ArrayList<>();
         int sum = 0;
         Float otherSum = 0f;
-        //for (String[] array : investigatorsResults) {
         for (int i = 0; i < investigatorsResults.size(); i++) {
-            //System.out.println("45454 " + array[1] + " " + array[0] + " " + Float.valueOf(array[1]));
-            if (i < 10) {
-                scoreLabels.add(investigatorsResults.get(i)[0]);
-                scoreValues.add(Float.valueOf(investigatorsResults.get(i)[1]));
+            if (i < MAX_VALUES_IN_CHART) {
+                chartLabels.add(investigatorsResults.get(i)[0]);
+                chartValues.add(Float.valueOf(investigatorsResults.get(i)[1]));
             } else {
                 otherSum += Float.valueOf(investigatorsResults.get(i)[1]);
             }
             sum += Integer.parseInt(investigatorsResults.get(i)[1]);
         }
 
-        if (investigatorsResults.size() > 10) {
-            scoreLabels.add("Другие");
-            scoreValues.add(otherSum);
+        if (investigatorsResults.size() > MAX_VALUES_IN_CHART) {
+            chartLabels.add(getResources().getString(R.string.other_results));
+            chartValues.add(otherSum);
         }
 
         List<PieEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < scoreValues.size(); i++) {
-            entries.add(new PieEntry(getPercent(scoreValues.get(i), sum, DEN), scoreLabels.get(i)));
+        for (int i = 0; i < chartValues.size(); i++) {
+            entries.add(new PieEntry(getPercent(chartValues.get(i), sum, DEN), chartLabels.get(i)));
         }
 
-        investigatorsChart.setData(entries, getResources().getString(R.string.investigators), scoreLabels, scoreValues, sum, investigatorsHeader);
+        investigatorsChart.setData(entries, getResources().getString(R.string.investigators), chartLabels, chartValues, sum, investigatorsHeader);
     }
 
     private void initAncientOneArray() {
@@ -290,10 +294,10 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     public void initAncientOneSpinner() {
-        ancientOneAdapter = new ArrayAdapter<String>(this, R.layout.spinner, ancientOneList);
+        ancientOneAdapter = new ArrayAdapter<>(this, R.layout.spinner, ancientOneList);
         ancientOneAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ancientOneSpinner = (Spinner) findViewById(R.id.ancientOneStatSpinner);
+        ancientOneSpinner = findViewById(R.id.ancientOneStatSpinner);
         ancientOneSpinner.setAdapter(ancientOneAdapter);
 
         ancientOneSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -304,18 +308,20 @@ public class StatisticsActivity extends AppCompatActivity {
                         gameList = HelperFactory.getHelper().getGameDAO().getGamesSortAncientOne();
                         scoreResults = HelperFactory.getHelper().getGameDAO().getScoreCount(0).getResults();
                         defeatReasonResults = HelperFactory.getHelper().getGameDAO().getDefeatReasonCount(0);
-                        setAncientOneCardVisibility(true);
-                        setScoreCardVisibility(true);
-                        initCharts();
+                        investigatorsResults = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsCount(0).getResults();
+                        setCardVisibility(ancientOneCard, true);
                     } else {
                         gameList = HelperFactory.getHelper().getGameDAO().getGamesByAncientOne(ancientOneList.get(i));
                         scoreResults = HelperFactory.getHelper().getGameDAO().getScoreCount(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(i))).getResults();
                         defeatReasonResults = HelperFactory.getHelper().getGameDAO().getDefeatReasonCount(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(i)));
-                        if (scoreResults.isEmpty()) setScoreCardVisibility(false);
-                        else setScoreCardVisibility(true);
-                        setAncientOneCardVisibility(false);
-                        initCharts();
+                        investigatorsResults = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsCount(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(i))).getResults();
+                        setCardVisibility(ancientOneCard, false);
                     }
+                    if (scoreResults.isEmpty()) setCardVisibility(scoreCard, false);
+                    else setCardVisibility(scoreCard, true);
+                    if (investigatorsResults.isEmpty()) setCardVisibility(investigatorsCard, false);
+                    else setCardVisibility(investigatorsCard, true);
+                    initCharts();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -328,18 +334,19 @@ public class StatisticsActivity extends AppCompatActivity {
         });
     }
 
-    private void setAncientOneCardVisibility(boolean value) {
-        if (value)ancientOneCard.setVisibility(View.VISIBLE);
-        else ancientOneCard.setVisibility(View.GONE);
+    private void setCardVisibility(CardView card, boolean value) {
+        if (value) card.setVisibility(View.VISIBLE);
+        else card.setVisibility(View.GONE);
     }
 
-    private void setScoreCardVisibility(boolean value) {
-        if (value)scoreCard.setVisibility(View.VISIBLE);
-        else scoreCard.setVisibility(View.GONE);
-    }
-
-    private void setDefeatReasonCardVisibility(boolean value) {
-        if (value)defeatReasonCard.setVisibility(View.VISIBLE);
-        else defeatReasonCard.setVisibility(View.GONE);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.filter_stat_card:
+                ancientOneSpinner.performClick();
+                break;
+            default:
+                break;
+        }
     }
 }

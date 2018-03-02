@@ -316,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             gameList.clear();
             gameList.addAll(getSortedGames());
             for (int i = 0; i < gameList.size(); i ++) {
-                System.out.println("gameID " + gameList.get(i).id);
                 gameList.get(i).invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(gameList.get(i).id);
                 if (currentUser != null && gameList.get(i).userID == null) {
                     Log.w(TAG, "addGame " + gameList.get(i).ancientOneID);

@@ -32,7 +32,6 @@ public class EHChart extends PieChart implements OnChartValueSelectedListener {
     private List<String> labels;
     private List<Float> values;
     private int count;
-    private int width;
     private TextView header;
 
     public EHChart(Context context) {
@@ -50,22 +49,6 @@ public class EHChart extends PieChart implements OnChartValueSelectedListener {
     private void initColors() {
         colors = new ArrayList<Integer>();
 
-        /*for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);*/
-
-        //for (int c : ColorTemplate.LIBERTY_COLORS)
-        //    colors.add(c);
-
-        //for (int c : ColorTemplate.PASTEL_COLORS)
-         //   colors.add(c);
-
-        //colors.add(ColorTemplate.getHoloBlue());
         colors.add(Color.rgb(96,125,139));
         colors.add(Color.rgb(63,81,181));
         colors.add(Color.rgb(139,195,74));
@@ -80,9 +63,22 @@ public class EHChart extends PieChart implements OnChartValueSelectedListener {
         colors.add(Color.rgb(77,208,225));
         colors.add(Color.rgb(77,182,172));
         colors.add(Color.rgb(144,164,174));
-        /*colors.add(Color.rgb(100, 40, 9));
-        colors.add(Color.rgb(100, 40, 9));
-        colors.add(Color.rgb(100, 40, 9));*/
+        colors.add(Color.rgb(81,45,168));
+        colors.add(Color.rgb(149,117,205));
+
+        /*
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+            colors.add(ColorTemplate.getHoloBlue());
+        */
     }
 
     private void initLegend() {
@@ -97,17 +93,12 @@ public class EHChart extends PieChart implements OnChartValueSelectedListener {
         legend.setXEntrySpace(5f); // set the space between the legend entries on the x-axis
         legend.setYEntrySpace(5f);
         legend.setWordWrapEnabled(true);
-        System.out.println("size " + legend.mNeededHeight);
-        //legend.setEnabled(false);
     }
 
     private void initDescription(String desc) {
         description = new Description();
         description.setText("");
         header.setText(desc);
-        //description.setPosition(width / 2 - 20,50f);
-        description.setTextSize(18);
-        //description.setTextAlign(Paint.Align.CENTER);
     }
 
     private void initPieData() {
@@ -138,7 +129,7 @@ public class EHChart extends PieChart implements OnChartValueSelectedListener {
         dataSet.setColors(colors);
         initPieData();
         initPieChart();
-        setCenterTextSize(18);
+        setCenterTextSize(16);
         setDrawEntryLabels(false);
         if (!entries.isEmpty()) highlightValue(0f, 0, true);
         this.setMinimumHeight((int) (1000 + legend.mNeededHeight));
