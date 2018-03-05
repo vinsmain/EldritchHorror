@@ -1,5 +1,6 @@
 package ru.mgusev.eldritchhorror.activity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,19 +9,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.PieEntry;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Game;
+import ru.mgusev.eldritchhorror.model.Investigator;
 
 public class StatisticsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,7 +37,11 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     private List<Game> gameList;
     private int winCount;
     private int defeatCount;
+    private int currentAncientOneID = 0; // 0 - все Древние
+    private int sum;
     private Spinner ancientOneSpinner;
+    private ImageView statBackground;
+    private CardView baseStatCard;
     private CardView filterCard;
     private CardView ancientOneCard;
     private CardView scoreCard;
@@ -51,6 +61,19 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     private TextView defeatReasonHeader;
     private TextView investigatorsHeader;
 
+    private TextView lastGameTV;
+    private TextView bestScoreTV;
+    private ImageView popularInvPhoto1;
+    private ImageView popularInvPhoto2;
+    private ImageView popularInvPhoto3;
+    private TextView popularInvName1;
+    private TextView popularInvName2;
+    private TextView popularInvName3;
+    private TextView popularInvPercent1;
+    private TextView popularInvPercent2;
+    private TextView popularInvPercent3;
+
+
     private EHChart winDefeatChart;
     private EHChart ancientOneChart;
     private EHChart scoreChart;
@@ -67,6 +90,8 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
 
         gameList = getIntent().getParcelableArrayListExtra("gameList");
 
+        statBackground = findViewById(R.id.stat_background);
+        baseStatCard = (CardView) findViewById(R.id.base_stat_card);
         filterCard = (CardView) findViewById(R.id.filter_stat_card);
         filterCard.setOnClickListener(this);
         ancientOneCard = (CardView) findViewById(R.id.ancient_one_stat_card);
@@ -79,6 +104,18 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         scoreHeader = findViewById(R.id.score_stat_header);
         defeatReasonHeader = findViewById(R.id.defeat_reason_stat_header);
         investigatorsHeader = findViewById(R.id.investigators_stat_header);
+
+        lastGameTV = findViewById(R.id.last_game_value);
+        bestScoreTV = findViewById(R.id.best_score_value);
+        popularInvPhoto1 = findViewById(R.id.popular_inv_1_photo);
+        popularInvPhoto2 = findViewById(R.id.popular_inv_2_photo);
+        popularInvPhoto3 = findViewById(R.id.popular_inv_3_photo);
+        popularInvName1 = findViewById(R.id.popular_inv_1_name);
+        popularInvName2 = findViewById(R.id.popular_inv_2_name);
+        popularInvName3 = findViewById(R.id.popular_inv_3_name);
+        popularInvPercent1 = findViewById(R.id.popular_inv_1_percent);
+        popularInvPercent2 = findViewById(R.id.popular_inv_2_percent);
+        popularInvPercent3 = findViewById(R.id.popular_inv_3_percent);
 
         try {
             scoreResults = HelperFactory.getHelper().getGameDAO().getScoreCount(0).getResults();
@@ -94,12 +131,72 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         initCharts();
     }
 
+    private void initBaseStatistic() {
+        Game bestGame = null;
+        Game lastGame = null;
+        String bestScoreValue = "0";
+        String lastScoreValue = "0";
+        try {
+            bestGame = HelperFactory.getHelper().getGameDAO().getTopGameToSort(true, currentAncientOneID);
+            lastGame = HelperFactory.getHelper().getGameDAO().getLastGame(currentAncientOneID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (bestGame != null) {
+            bestScoreValue = bestGame.score + " (" + new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(bestGame.date) + ")";
+        }
+        if (lastGame != null) {
+            lastScoreValue = lastGame.score + " (" + new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(lastGame.date) + ")";
+        }
+        bestScoreTV.setText(bestScoreValue);
+        lastGameTV.setText(lastScoreValue);
+
+        Investigator popularInv;
+        int resourceId;
+        Resources resources = this.getResources();
+        try {
+            if (chartLabels.size() > 0) {
+                popularInv = HelperFactory.getStaticHelper().getInvestigatorDAO().getInvestigatorByName(chartLabels.get(0));
+
+                resourceId = resources.getIdentifier(popularInv.imageResource, "drawable", this.getPackageName());
+                popularInvPhoto1.setImageResource(resourceId);
+                popularInvName1.setText(popularInv.getName());
+                popularInvPercent1.setText(String.valueOf(new DecimalFormat("#0.0").format(getPercent(chartValues.get(0), sum, DEN))) + "%");
+            }
+            if (chartLabels.size() > 1) {
+                popularInv = HelperFactory.getStaticHelper().getInvestigatorDAO().getInvestigatorByName(chartLabels.get(1));
+
+                resourceId = resources.getIdentifier(popularInv.imageResource, "drawable", this.getPackageName());
+                popularInvPhoto2.setImageResource(resourceId);
+                popularInvName2.setText(popularInv.getName());
+                popularInvPercent2.setText(String.valueOf(new DecimalFormat("#0.0").format(getPercent(chartValues.get(1), sum, DEN))) + "%");
+            }
+            if (chartLabels.size() > 2) {
+                popularInv = HelperFactory.getStaticHelper().getInvestigatorDAO().getInvestigatorByName(chartLabels.get(2));
+
+                resourceId = resources.getIdentifier(popularInv.imageResource, "drawable", this.getPackageName());
+                popularInvPhoto3.setImageResource(resourceId);
+                popularInvName3.setText(popularInv.getName());
+                popularInvPercent3.setText(String.valueOf(new DecimalFormat("#0.0").format(getPercent(chartValues.get(2), sum, DEN))) + "%");
+            }
+            if (currentAncientOneID != 0) {
+                resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncienOneByID(currentAncientOneID).imageResource, "drawable", this.getPackageName());
+                //baseStatCard.setBackground(getDrawable(resourceId));
+                statBackground.setImageResource(resourceId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void initCharts() {
         initWinDefeatChart();
         initAncientOneChart();
         initScoreChart();
         initDefeatReasonChart();
         initInvestigatorsChart();
+
+        initBaseStatistic();
     }
 
     private void initToolbar() {
@@ -248,7 +345,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
 
         chartValues = new ArrayList<>();
         chartLabels = new ArrayList<>();
-        int sum = 0;
+        sum = 0;
         Float otherSum = 0f;
         for (int i = 0; i < investigatorsResults.size(); i++) {
             if (i < MAX_VALUES_IN_CHART) {
@@ -305,16 +402,18 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
                     if (i == 0) {
+                        currentAncientOneID = 0;
                         gameList = HelperFactory.getHelper().getGameDAO().getGamesSortAncientOne();
-                        scoreResults = HelperFactory.getHelper().getGameDAO().getScoreCount(0).getResults();
-                        defeatReasonResults = HelperFactory.getHelper().getGameDAO().getDefeatReasonCount(0);
-                        investigatorsResults = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsCount(0).getResults();
+                        scoreResults = HelperFactory.getHelper().getGameDAO().getScoreCount(currentAncientOneID).getResults();
+                        defeatReasonResults = HelperFactory.getHelper().getGameDAO().getDefeatReasonCount(currentAncientOneID);
+                        investigatorsResults = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsCount(currentAncientOneID).getResults();
                         setCardVisibility(ancientOneCard, true);
                     } else {
+                        currentAncientOneID = HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(i));
                         gameList = HelperFactory.getHelper().getGameDAO().getGamesByAncientOne(ancientOneList.get(i));
-                        scoreResults = HelperFactory.getHelper().getGameDAO().getScoreCount(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(i))).getResults();
-                        defeatReasonResults = HelperFactory.getHelper().getGameDAO().getDefeatReasonCount(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(i)));
-                        investigatorsResults = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsCount(HelperFactory.getStaticHelper().getAncientOneDAO().getAncientOneIDByName(ancientOneList.get(i))).getResults();
+                        scoreResults = HelperFactory.getHelper().getGameDAO().getScoreCount(currentAncientOneID).getResults();
+                        defeatReasonResults = HelperFactory.getHelper().getGameDAO().getDefeatReasonCount(currentAncientOneID);
+                        investigatorsResults = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsCount(currentAncientOneID).getResults();
                         setCardVisibility(ancientOneCard, false);
                     }
                     if (scoreResults.isEmpty()) setCardVisibility(scoreCard, false);

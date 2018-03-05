@@ -540,11 +540,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setScoreValues() {
         try {
-            Game game = HelperFactory.getHelper().getGameDAO().getTopGameToSort(true);
+            Game game = HelperFactory.getHelper().getGameDAO().getTopGameToSort(true, 0);
             if (game != null) bestScoreValue = String.valueOf(game.score);
             else bestScoreValue = "";
 
-            game = HelperFactory.getHelper().getGameDAO().getTopGameToSort(false);
+            game = HelperFactory.getHelper().getGameDAO().getTopGameToSort(false, 0);
             if (game != null) worstScoreValue = String.valueOf(game.score);
             else worstScoreValue = "";
         } catch (SQLException e) {

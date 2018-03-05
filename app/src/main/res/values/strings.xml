@@ -114,4 +114,6 @@
 
     <string name="all_results">All results</string>
     <string name="other_results">Others</string>
+    <string name="last_game_header">Last game</string>
+    <string name="popular_investigators_header">Popular investigators</string>
 </resources>

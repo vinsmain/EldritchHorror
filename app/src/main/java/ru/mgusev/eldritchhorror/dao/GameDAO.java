@@ -62,9 +62,10 @@ public class GameDAO extends BaseDaoImpl {
         return qb.query();
     }
 
-    public Game getTopGameToSort(boolean sort) throws SQLException {
+    public Game getTopGameToSort(boolean sort, int ancienOneID) throws SQLException {
         QueryBuilder<Game, Integer> qb = this.queryBuilder();
         qb.where().eq(Game.GAME_FIELD_WIN_GAME, true);
+        if (ancienOneID != 0) qb.where().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancienOneID);
         qb.orderBy(Game.GAME_FIELD_SCORE, sort);
         return qb.queryForFirst();
     }
@@ -138,5 +139,13 @@ public class GameDAO extends BaseDaoImpl {
             results.add((float) qb.query().size());
         }
         return results;
+    }
+
+    public Game getLastGame(int ancientOneID) throws SQLException{
+        QueryBuilder<Game, Integer> qb = this.queryBuilder();
+        if (ancientOneID != 0) qb.where().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID);
+        qb.orderBy(Game.GAME_FIELD_DATE, true);
+        qb.orderBy(Game.GAME_FIELD_ID, true);
+        return qb.queryForFirst();
     }
 }

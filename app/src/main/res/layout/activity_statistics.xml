@@ -76,6 +76,7 @@
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
+                android:id="@+id/base_stat_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp">
@@ -84,158 +85,182 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/stat_background"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:alpha="0.5"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/azathoth" />
+
                     <TextView
-                        android:id="@+id/textView14"
+                        android:id="@+id/last_game_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="TextView"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/last_game_header"
+                        android:textColor="@color/colorPrimaryText"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/last_game_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="16dp"
                         android:text="TextView"
                         android:textAlignment="textEnd"
+                        android:textColor="@color/colorPrimaryText"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView18"
+                        android:id="@+id/best_score_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="TextView"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/best_result"
+                        android:textColor="@color/colorPrimaryText"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+                        app:layout_constraintTop_toBottomOf="@+id/last_game_header" />
 
                     <TextView
-                        android:id="@+id/textView19"
+                        android:id="@+id/best_score_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="16dp"
                         android:text="TextView"
                         android:textAlignment="textEnd"
+                        android:textColor="@color/colorPrimaryText"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                        app:layout_constraintTop_toBottomOf="@+id/last_game_value" />
 
                     <TextView
-                        android:id="@+id/textView20"
+                        android:id="@+id/popular_investigators_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="TextView"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/popular_investigators_header"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+                        app:layout_constraintTop_toBottomOf="@+id/best_score_header" />
 
                     <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="50pt"
-                        android:layout_height="50pt"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
+                        android:id="@+id/popular_inv_1_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView20"
+                        app:layout_constraintTop_toBottomOf="@+id/popular_investigators_header"
                         app:srcCompat="@drawable/agatha_crane" />
 
                     <TextView
-                        android:id="@+id/textView21"
+                        android:id="@+id/popular_inv_1_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:text="TextView"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-                        app:layout_constraintStart_toEndOf="@+id/imageView9"
-                        app:layout_constraintTop_toTopOf="@+id/imageView9" />
+                        android:textColor="@color/colorPrimaryText"
+                        app:layout_constraintBottom_toBottomOf="@+id/popular_inv_1_photo"
+                        app:layout_constraintStart_toEndOf="@+id/popular_inv_1_photo"
+                        app:layout_constraintTop_toTopOf="@+id/popular_inv_1_photo" />
 
                     <TextView
-                        android:id="@+id/textView22"
+                        android:id="@+id/popular_inv_1_percent"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="8dp"
                         android:text="TextView"
                         android:textAlignment="textEnd"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView21"
+                        android:textColor="@color/colorPrimaryText"
+                        app:layout_constraintBottom_toBottomOf="@+id/popular_inv_1_name"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView21"
-                        app:layout_constraintTop_toTopOf="@+id/textView21" />
+                        app:layout_constraintStart_toEndOf="@+id/popular_inv_1_name"
+                        app:layout_constraintTop_toTopOf="@+id/popular_inv_1_name" />
 
                     <ImageView
-                        android:id="@+id/imageView10"
-                        android:layout_width="50pt"
-                        android:layout_height="50pt"
-                        android:layout_marginStart="8dp"
+                        android:id="@+id/popular_inv_2_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView9"
+                        app:layout_constraintTop_toBottomOf="@+id/popular_inv_1_photo"
                         app:srcCompat="@drawable/agatha_crane" />
 
                     <TextView
-                        android:id="@+id/textView23"
+                        android:id="@+id/popular_inv_2_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:text="TextView"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-                        app:layout_constraintStart_toEndOf="@+id/imageView10"
-                        app:layout_constraintTop_toTopOf="@+id/imageView10" />
+                        android:textColor="@color/colorPrimaryText"
+                        app:layout_constraintBottom_toBottomOf="@+id/popular_inv_2_photo"
+                        app:layout_constraintStart_toEndOf="@+id/popular_inv_2_photo"
+                        app:layout_constraintTop_toTopOf="@+id/popular_inv_2_photo" />
 
                     <TextView
-                        android:id="@+id/textView24"
+                        android:id="@+id/popular_inv_2_percent"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="8dp"
                         android:text="TextView"
                         android:textAlignment="textEnd"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView23"
+                        android:textColor="@color/colorPrimaryText"
+                        app:layout_constraintBottom_toBottomOf="@+id/popular_inv_2_name"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView23"
-                        app:layout_constraintTop_toTopOf="@+id/textView23" />
+                        app:layout_constraintStart_toEndOf="@+id/popular_inv_2_name"
+                        app:layout_constraintTop_toTopOf="@+id/popular_inv_2_name" />
 
                     <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="50pt"
-                        android:layout_height="50pt"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
+                        android:id="@+id/popular_inv_3_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView10"
+                        app:layout_constraintTop_toBottomOf="@+id/popular_inv_2_photo"
                         app:srcCompat="@drawable/agatha_crane" />
 
                     <TextView
-                        android:id="@+id/textView25"
+                        android:id="@+id/popular_inv_3_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:text="TextView"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
-                        app:layout_constraintStart_toEndOf="@+id/imageView11"
-                        app:layout_constraintTop_toTopOf="@+id/imageView11" />
+                        android:textColor="@color/colorPrimaryText"
+                        app:layout_constraintBottom_toBottomOf="@+id/popular_inv_3_photo"
+                        app:layout_constraintStart_toEndOf="@+id/popular_inv_3_photo"
+                        app:layout_constraintTop_toTopOf="@+id/popular_inv_3_photo" />
 
                     <TextView
-                        android:id="@+id/textView26"
+                        android:id="@+id/popular_inv_3_percent"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="8dp"
                         android:text="TextView"
                         android:textAlignment="textEnd"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView25"
+                        android:textColor="@color/colorPrimaryText"
+                        app:layout_constraintBottom_toBottomOf="@+id/popular_inv_3_name"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView25"
-                        app:layout_constraintTop_toTopOf="@+id/textView25" />
+                        app:layout_constraintStart_toEndOf="@+id/popular_inv_3_name"
+                        app:layout_constraintTop_toTopOf="@+id/popular_inv_3_name" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
