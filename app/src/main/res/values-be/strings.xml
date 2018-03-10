@@ -112,4 +112,9 @@
     <string name="defeat_stat_label">Поражения</string>
     <string name="all_results">Все результаты</string>
     <string name="other_results">Другие</string>
+    <string name="last_game_header">Последняя игра</string>
+    <string name="popular_investigators_header">Популярные сыщики</string>
+    <string name="summary_stat_header">Сводка</string>
+    <string name="not_available">Данные отсутствуют</string>
+    <string name="best_game">Лучшая игра</string>
 </resources>

@@ -63,4 +63,11 @@ public class InvestigatorDAO extends BaseDaoImpl {
         qb.orderByRaw("COUNT (" + field + ") DESC");
         return qb.queryRaw();
     }
+
+    public Investigator getInvestigatorByName(String name) throws SQLException {
+        if (name.contains("'")) name = name.replace("'", "''");
+        QueryBuilder<Investigator, Integer> qb = this.queryBuilder();
+        qb.where().eq(Investigator.INVESTIGATOR_FIELD_NAME_EN, name).or().eq(Investigator.INVESTIGATOR_FIELD_NAME_RU, name);
+        return qb.queryForFirst();
+    }
 }
