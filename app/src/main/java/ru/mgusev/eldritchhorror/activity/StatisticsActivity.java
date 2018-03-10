@@ -1,5 +1,6 @@
 package ru.mgusev.eldritchhorror.activity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +11,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.PieEntry;
@@ -32,6 +36,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
 
     private static final int DEN = 100;
     private static final int MAX_VALUES_IN_CHART = 12;
+    private static final String DATE_PATTERN = "dd.MM.yyyy";
 
     private Toolbar toolbarStatistics;
     private List<Game> gameList;
@@ -61,6 +66,8 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     private TextView defeatReasonHeader;
     private TextView investigatorsHeader;
 
+    private TableRow lastGameRow;
+    private TableRow bestScoreRow;
     private TextView lastGameTV;
     private TextView bestScoreTV;
     private ImageView popularInvPhoto1;
@@ -73,12 +80,19 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     private TextView popularInvPercent2;
     private TextView popularInvPercent3;
 
+    private TableLayout popularInvTable;
+    private LinearLayout popularInv1;
+    private LinearLayout popularInv2;
+    private LinearLayout popularInv3;
 
     private EHChart winDefeatChart;
     private EHChart ancientOneChart;
     private EHChart scoreChart;
     private EHChart defeatReasonChart;
     private EHChart investigatorsChart;
+
+    private Game bestGame;
+    private Game lastGame;
 
 
     @Override
@@ -105,6 +119,10 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         defeatReasonHeader = findViewById(R.id.defeat_reason_stat_header);
         investigatorsHeader = findViewById(R.id.investigators_stat_header);
 
+        lastGameRow = findViewById(R.id.last_game_row);
+        bestScoreRow = findViewById(R.id.best_score_row);
+        lastGameRow.setOnClickListener(this);
+        bestScoreRow.setOnClickListener(this);
         lastGameTV = findViewById(R.id.last_game_value);
         bestScoreTV = findViewById(R.id.best_score_value);
         popularInvPhoto1 = findViewById(R.id.popular_inv_1_photo);
@@ -116,6 +134,11 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         popularInvPercent1 = findViewById(R.id.popular_inv_1_percent);
         popularInvPercent2 = findViewById(R.id.popular_inv_2_percent);
         popularInvPercent3 = findViewById(R.id.popular_inv_3_percent);
+
+        popularInvTable = findViewById(R.id.popular_inv_table);
+        popularInv1 = findViewById(R.id.popular_inv_1);
+        popularInv2 = findViewById(R.id.popular_inv_2);
+        popularInv3 = findViewById(R.id.popular_inv_3);
 
         try {
             scoreResults = HelperFactory.getHelper().getGameDAO().getScoreCount(0).getResults();
@@ -132,9 +155,9 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initBaseStatistic() {
-        Game bestGame = null;
-        Game lastGame = null;
-        String bestScoreValue = "0";
+        bestGame = null;
+        lastGame = null;
+        String bestScoreValue;
         String lastScoreValue = "0";
         try {
             bestGame = HelperFactory.getHelper().getGameDAO().getTopGameToSort(true, currentAncientOneID);
@@ -143,13 +166,18 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
             e.printStackTrace();
         }
         if (bestGame != null) {
-            bestScoreValue = bestGame.score + " (" + new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(bestGame.date) + ")";
-        }
+            bestScoreValue = bestGame.score + " (" + new SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(bestGame.date) + ")";
+        } else bestScoreValue = getResources().getString(R.string.not_available);
         if (lastGame != null) {
-            lastScoreValue = lastGame.score + " (" + new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(lastGame.date) + ")";
+            if (lastGame.isWinGame) lastScoreValue = lastGame.score + " (" + new SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(lastGame.date) + ")";
+            else lastScoreValue = getResources().getString(R.string.defeat_header) + " (" + new SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(lastGame.date) + ")";
         }
         bestScoreTV.setText(bestScoreValue);
         lastGameTV.setText(lastScoreValue);
+
+        if (chartLabels.size() == 0) popularInvTable.setVisibility(View.GONE);
+        else popularInvTable.setVisibility(View.VISIBLE);
+        hidePopularInvs();
 
         Investigator popularInv;
         int resourceId;
@@ -162,6 +190,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
                 popularInvPhoto1.setImageResource(resourceId);
                 popularInvName1.setText(popularInv.getName());
                 popularInvPercent1.setText(String.valueOf(new DecimalFormat("#0.0").format(getPercent(chartValues.get(0), sum, DEN))) + "%");
+                popularInv1.setVisibility(View.VISIBLE);
             }
             if (chartLabels.size() > 1) {
                 popularInv = HelperFactory.getStaticHelper().getInvestigatorDAO().getInvestigatorByName(chartLabels.get(1));
@@ -170,6 +199,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
                 popularInvPhoto2.setImageResource(resourceId);
                 popularInvName2.setText(popularInv.getName());
                 popularInvPercent2.setText(String.valueOf(new DecimalFormat("#0.0").format(getPercent(chartValues.get(1), sum, DEN))) + "%");
+                popularInv2.setVisibility(View.VISIBLE);
             }
             if (chartLabels.size() > 2) {
                 popularInv = HelperFactory.getStaticHelper().getInvestigatorDAO().getInvestigatorByName(chartLabels.get(2));
@@ -178,15 +208,24 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
                 popularInvPhoto3.setImageResource(resourceId);
                 popularInvName3.setText(popularInv.getName());
                 popularInvPercent3.setText(String.valueOf(new DecimalFormat("#0.0").format(getPercent(chartValues.get(2), sum, DEN))) + "%");
+                popularInv3.setVisibility(View.VISIBLE);
             }
             if (currentAncientOneID != 0) {
                 resourceId = resources.getIdentifier(HelperFactory.getStaticHelper().getAncientOneDAO().getAncienOneByID(currentAncientOneID).imageResource, "drawable", this.getPackageName());
-                //baseStatCard.setBackground(getDrawable(resourceId));
+                statBackground.setImageResource(resourceId);
+            } else {
+                resourceId = resources.getIdentifier("eh_main", "drawable", this.getPackageName());
                 statBackground.setImageResource(resourceId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void hidePopularInvs() {
+        popularInv1.setVisibility(View.GONE);
+        popularInv2.setVisibility(View.GONE);
+        popularInv3.setVisibility(View.GONE);
     }
 
     private void initCharts() {
@@ -443,6 +482,30 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.filter_stat_card:
                 ancientOneSpinner.performClick();
+                break;
+            case R.id.last_game_row:
+                if (lastGame != null) {
+                    try {
+                        lastGame.invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(lastGame.id);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    Intent intentGameDetails = new Intent(this, GameDetailsActivity.class);
+                    intentGameDetails.putExtra("game", lastGame);
+                    startActivity(intentGameDetails);
+                }
+                break;
+            case R.id.best_score_row:
+                if (bestGame != null) {
+                    try {
+                        bestGame.invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(bestGame.id);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    Intent intentGameDetailsBestGame = new Intent(this, GameDetailsActivity.class);
+                    intentGameDetailsBestGame.putExtra("game", bestGame);
+                    startActivity(intentGameDetailsBestGame);
+                }
                 break;
             default:
                 break;

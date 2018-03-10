@@ -6,7 +6,6 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,11 +61,18 @@ public class GameDAO extends BaseDaoImpl {
         return qb.query();
     }
 
-    public Game getTopGameToSort(boolean sort, int ancienOneID) throws SQLException {
+    public Game getTopGameToSort(boolean sort, int ancientOneID) throws SQLException {
         QueryBuilder<Game, Integer> qb = this.queryBuilder();
-        qb.where().eq(Game.GAME_FIELD_WIN_GAME, true);
-        if (ancienOneID != 0) qb.where().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancienOneID);
+
+        Where where = qb.where();
+        where.eq(Game.GAME_FIELD_WIN_GAME, true);
+        if (ancientOneID != 0) {
+            where.and();
+            where.eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID);
+        }
         qb.orderBy(Game.GAME_FIELD_SCORE, sort);
+        qb.orderBy(Game.GAME_FIELD_DATE, false);
+        qb.orderBy(Game.GAME_FIELD_ID, false);
         return qb.queryForFirst();
     }
 
@@ -144,8 +150,8 @@ public class GameDAO extends BaseDaoImpl {
     public Game getLastGame(int ancientOneID) throws SQLException{
         QueryBuilder<Game, Integer> qb = this.queryBuilder();
         if (ancientOneID != 0) qb.where().eq(Game.GAME_FIELD_ANCIENT_ONE_ID, ancientOneID);
-        qb.orderBy(Game.GAME_FIELD_DATE, true);
-        qb.orderBy(Game.GAME_FIELD_ID, true);
+        qb.orderBy(Game.GAME_FIELD_DATE, false);
+        qb.orderBy(Game.GAME_FIELD_ID, false);
         return qb.queryForFirst();
     }
 }

@@ -116,4 +116,7 @@
     <string name="other_results">Others</string>
     <string name="last_game_header">Last game</string>
     <string name="popular_investigators_header">Popular investigators</string>
+    <string name="summary_stat_header">Summary</string>
+    <string name="not_available">Not available</string>
+    <string name="best_game">Best game</string>
 </resources>
