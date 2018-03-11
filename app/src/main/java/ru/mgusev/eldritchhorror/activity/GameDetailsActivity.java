@@ -25,6 +25,7 @@ import java.util.Locale;
 
 import ru.mgusev.eldritchhorror.R;
 import ru.mgusev.eldritchhorror.adapter.InvRVAdapter;
+import ru.mgusev.eldritchhorror.database.FirebaseHelper;
 import ru.mgusev.eldritchhorror.database.HelperFactory;
 import ru.mgusev.eldritchhorror.model.Game;
 
@@ -260,6 +261,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        FirebaseHelper.removeGame(game);
 
         Intent intentDelete = new Intent(this, MainActivity.class);
         intentDelete.putExtra("refreshPartyList", true);

@@ -29,7 +29,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME ="eldritchHorrorDB.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 12;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
     private GameDAO gameDAO = null;
@@ -354,6 +354,23 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                             " WHERE " + Investigator.INVESTIGATOR_FIELD_ID + " = " + investigator.id + ";");
                 }
                 Log.e(TAG, "Finish update 8 - 9");
+            }
+
+            if (oldVersion < 12) {
+                Log.e(TAG, "Update 9 - 12");
+                List<Game> gameList = helper.getGameDAO().getGamesSortDateUp();
+                for (Game game : gameList) {
+                    if (!game.isDefeatByAwakenedAncientOne && !game.isDefeatByMythosDepletion && !game.isDefeatByElimination) {
+                        game.isDefeatByAwakenedAncientOne = true;
+                        game.invList = HelperFactory.getHelper().getInvestigatorDAO().getInvestigatorsListByGameID(game.id);
+                        game.lastModified = (new Date()).getTime();
+                        game.userID = null;
+
+                        //FirebaseHelper.addGame(game);
+                        HelperFactory.getHelper().getGameDAO().writeGameToDB(game);
+                    }
+                }
+                Log.e(TAG, "Finish update 9 - 12");
             }
 
             Log.e(TAG, "Update DB");
