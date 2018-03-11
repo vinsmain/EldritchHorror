@@ -295,7 +295,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
                     defeatByAwakenedAncientOne.setChecked(false);
                     winImage.setImageResource(R.drawable.inestigators_out);
                     addDefeatReasonsToGame();
-                }
+                } else if (!defeatByMythosDeplition.isChecked() && !defeatByAwakenedAncientOne.isChecked()) defeatByAwakenedAncientOne.setChecked(true);
                 break;
             case R.id.defeatByMythosDeplition:
                 if (b) {
@@ -303,7 +303,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
                     defeatByAwakenedAncientOne.setChecked(false);
                     winImage.setImageResource(R.drawable.mythos_empty);
                     addDefeatReasonsToGame();
-                }
+                } else if (!defeatByElimination.isChecked() && !defeatByAwakenedAncientOne.isChecked()) defeatByAwakenedAncientOne.setChecked(true);
                 break;
             case R.id.defeatByAwakenedAncientOne:
                 if (b) {
@@ -311,7 +311,7 @@ public class ResultGameFragment extends Fragment implements TextWatcher, Compoun
                     defeatByMythosDeplition.setChecked(false);
                     winImage.setImageResource(R.drawable.skull);
                     addDefeatReasonsToGame();
-                }
+                } else if (!defeatByElimination.isChecked() && !defeatByMythosDeplition.isChecked()) defeatByMythosDeplition.setChecked(true);
                 break;
             default:
                 break;
